@@ -9,7 +9,7 @@ use Think\Exception;
 /**
  * 文章内容管理
  */
-class EnterController extends CommonController {
+class LensController extends CommonController {
 
     public function index() {
 		$conds = array();

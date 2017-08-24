@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `sekonix`
 --
-
+CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `sekonix`;
 -- --------------------------------------------------------
 
 --

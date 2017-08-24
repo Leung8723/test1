@@ -82,59 +82,88 @@
   <!-- /.navbar-collapse -->
 </nav>
   <div id="page-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid" >
       <!-- Page Heading -->
       <div class="row">
         <div class="col-lg-12">
+
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=enter">入库管理</a>
+              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">产品目录</a>
             </li>
             <li class="active">
-              <i class="fa fa-edit"></i>添加新型号
+              <i class="fa fa-table"></i>现存型号列表
             </li>
           </ol>
         </div>
       </div>
+      <!-- /.row -->
+      <div >
+        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
+      </div>
+      </br>
+      <div class="row">
+        <form action="/admin.php" method="get">
+          <input type="hidden" name="c" value="content"/>
+          <input type="hidden" name="a" value="index"/>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input class="form-control" name="title" type="text" value="" placeholder="型号搜索" />
+                <span class="input-group-btn">
+                  <button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </div>
+          </div>
+        </form>
+      </div>
       <div class="row">
         <div class="col-lg-6">
-          <form class="form-horizontal" id="singcms-form">
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">型号:</label>
-              <div class="col-sm-5">
-                <input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">规格:</label>
-              <div class="col-sm-5">
-                <input type="text" name="specs" class="form-control" id="inputname" placeholder="请填写每板镜片数量">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">色相:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="color">
-                  <option value="">==请选择色相基准==</option>
-                    <?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$color): ?><option value="<?php echo ($key); ?>"><?php echo ($color); ?></option><?php endforeach; endif; ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">材质:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="material">
-					<option value="">==请选择镜片材质==</option>
-						<?php if(is_array($lensMaterialType)): foreach($lensMaterialType as $key=>$material): ?><option value="<?php echo ($key); ?>"><?php echo ($material); ?></option><?php endforeach; endif; ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
-              </div>
-            </div>
-          </form>
+          <h3></h3>
+          <div class="table-responsive">
+            <form id="singcms-listorder">
+              <table class="table table-bordered table-hover singcms-table">
+                <thead>
+                <tr>
+                  <!--暂时不用--<th>序号</th>-->
+                  <th>型号</th>
+                  <th>规格</th>
+                  <th>色相</th>
+                  <th>材质</th>
+                  <!--暂时不用--<th>成型箱号</th>-->
+                  <th>添加时间</th>
+                  <th>更新时间</th>
+				  <th>操作者</th>
+				  <th>状态</th>
+				  <th>编辑</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(is_array($enters)): $i = 0; $__LIST__ = $enters;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$enter): $mod = ($i % 2 );++$i;?><tr>
+                    <!--暂时不用--<td><?php echo ($enter["enter_id"]); ?></td>-->
+                    <td><?php echo ($enter["et_model"]); ?></td>
+                    <td><?php echo ($enter["et_num"]); ?></td>
+					<td><?php echo ($enter["et_date"]); ?></td>
+					<td><?php echo (date("H:i",$enter["et_time"])); ?></td>
+                    <!--暂时不用--<td><?php echo ($enter["et_box"]); ?></td>-->
+                    <td><?php echo ($enter["create_user"]); ?></td>
+                    <td><?php echo ($enter["md_user"]); ?></td>
+                    <td><?php echo (date("H:i",$enter["create_time"])); ?></td>
+                    <td><?php echo ($enter["update_time"]); ?></td>
+                    <td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="<?php echo ($enter["news_id"]); ?>" ></span>
+                      <a href="javascript:void(0)" id="singcms-delete"  attr-id="<?php echo ($enter["news_id"]); ?>"  attr-message="删除">
+                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                      </a>
+                    </td>
+                  </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+                </tbody>
+              </table>
+              <nav>
+              <ul >
+                <?php echo ($pageres); ?>
+              </ul>
+            </nav>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -142,9 +171,8 @@
 </div>
 <script>
   var SCOPE = {
-    'save_url' : '/admin.php?c=enter&a=add',
-    'jump_url' : '/admin.php?c=enter&a=add',
-  };
+    'add_url' : '/admin.php?c=lens&a=add',
+  }
 </script>
 <script src="/Public/js/admin/common.js"></script>
 

@@ -88,7 +88,7 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=enter">入库管理</a>
+              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">现存型号列表</a>
             </li>
             <li class="active">
               <i class="fa fa-edit"></i>添加新型号
@@ -142,8 +142,8 @@
 </div>
 <script>
   var SCOPE = {
-    'save_url' : '/admin.php?c=enter&a=add',
-    'jump_url' : '/admin.php?c=enter&a=add',
+    'save_url' : '/admin.php?c=lens&a=add',
+    'jump_url' : '/admin.php?c=lens&a=add',
   };
 </script>
 <script src="/Public/js/admin/common.js"></script>

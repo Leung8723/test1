@@ -10,17 +10,17 @@
 
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=enter">入库管理</a>
+              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">产品目录</a>
             </li>
             <li class="active">
-              <i class="fa fa-table"></i>当日入库明细
+              <i class="fa fa-table"></i>现存型号列表
             </li>
           </ol>
         </div>
       </div>
       <!-- /.row -->
       <div >
-        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品入库</button>
+        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
       </div>
       </br>
       <div class="row">
@@ -47,14 +47,14 @@
                 <tr>
                   <!--暂时不用--<th>序号</th>-->
                   <th>型号</th>
-                  <th>入库数量</th>
-                  <th>入库日期</th>
-                  <th>入库时间</th>
+                  <th>规格</th>
+                  <th>色相</th>
+                  <th>材质</th>
                   <!--暂时不用--<th>成型箱号</th>-->
-                  <th>入库担当</th>
-                  <th>成型担当</th>
-				  <th>提交时间</th>
-				  <th>更新时间</th>
+                  <th>添加时间</th>
+                  <th>更新时间</th>
+				  <th>操作者</th>
+				  <th>状态</th>
 				  <th>编辑</th>
                 </tr>
                 </thead>
@@ -94,7 +94,7 @@
 </div>
 <script>
   var SCOPE = {
-    'add_url' : '/admin.php?c=enter&a=add',
+    'add_url' : '/admin.php?c=lens&a=add',
   }
 </script>
 <include file="Index/footer" />

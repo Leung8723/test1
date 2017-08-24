@@ -40,7 +40,6 @@
 
 <body>
 <div id="wrapper">
-
   <?php
  $navs = D("Menu")->getAdminMenus(); $username = getLoginUsername(); foreach($navs as $k=>$v) { if($v['c'] == 'admin' && $username != 'jason') { unset($navs[$k]); } } $index = 'index'; ?>
 <!-- Navigation -->
@@ -83,9 +82,7 @@
   <!-- /.navbar-collapse -->
 </nav>
   <div id="page-wrapper">
-
     <div class="container-fluid" >
-
       <!-- Page Heading -->
       <div class="row">
         <div class="col-lg-12">
@@ -102,8 +99,7 @@
       </div>
       <!-- /.row -->
       <div >
-        <button  id="button-enter" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品入库</button>
-        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
+        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品入库</button>
       </div>
       </br>
       <div class="row">
@@ -157,44 +153,25 @@
                       <a href="javascript:void(0)" id="singcms-delete"  attr-id="<?php echo ($enter["news_id"]); ?>"  attr-message="删除">
                         <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                       </a>
-
                     </td>
                   </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-
                 </tbody>
               </table>
               <nav>
-
               <ul >
                 <?php echo ($pageres); ?>
               </ul>
-
             </nav>
-
             </form>
-
-
           </div>
         </div>
-
       </div>
-      <!-- /.row -->
-
-
-
     </div>
-    <!-- /.container-fluid -->
-
   </div>
-  <!-- /#page-wrapper -->
-
 </div>
-<!-- /#wrapper -->
 <script>
   var SCOPE = {
-    'enter_url' : '/admin.php?c=enter&a=enter',
     'add_url' : '/admin.php?c=enter&a=add',
-    'set_status_url' : '/admin.php?c=content&a=setStatus',
   }
 </script>
 <script src="/Public/js/admin/common.js"></script>

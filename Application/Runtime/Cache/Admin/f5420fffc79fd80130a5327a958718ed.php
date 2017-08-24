@@ -97,38 +97,63 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-6">
-          <form class="form-horizontal" id="singcms-form">
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">型号:</label>
-              <div class="col-sm-5">
-                <input type="text" name="title" class="form-control" id="inputname" placeholder="请填写型号全称">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">规格:</label>
-              <div class="col-sm-5">
-                <input type="text" name="specs" class="form-control" id="inputname" placeholder="请填写每板镜片数量">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">色相:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="color">
-                  <option value="">==请选择色相基准==</option>
-                    <?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$color): ?><option value="<?php echo ($key); ?>"><?php echo ($color); ?></option><?php endforeach; endif; ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">材质:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="material">
-					<option value="">==请选择镜片材质==</option>
-						<?php if(is_array($lensMaterialType)): foreach($lensMaterialType as $key=>$material): ?><option value="<?php echo ($key); ?>"><?php echo ($material); ?></option><?php endforeach; endif; ?>
-                </select>
-              </div>
-            </div>
+
+
+			
+			
+              <table class="table table-bordered table-hover singcms-table">
+                <thead>
+                <tr>
+				  <th>
+					<div class="col-lg-6">
+					  <form class="form-horizontal" id="singcms-form">
+						  <label for="inputname" class="col-sm-2 control-label">入库日期:</label>
+						  <div class="col-sm-5">
+							<select class="form-control" name="color">
+							  <option value="">==请选择日期==</option>
+								<?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$color): ?><option value="<?php echo ($key); ?>"><?php echo ($color); ?></option><?php endforeach; endif; ?>
+							</select>
+						  </div>
+						</div>	
+				  </th>
+                  <!--<th>型号</th>
+				  <th>入库数量</th>-->
+				  <th>
+					<div class="form-group">
+					  <label for="inputname" class="col-sm-2 control-label">成型担当:</label>
+					  <div class="col-sm-5">
+						<select class="form-control" name="material">
+							<option value="">==请选择出库担当==</option>
+								<?php if(is_array($lensMaterialType)): foreach($lensMaterialType as $key=>$material): ?><option value="<?php echo ($key); ?>"><?php echo ($material); ?></option><?php endforeach; endif; ?>
+						</select>
+					  </div>
+					</div>				  
+				  </th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+						<div class="col-sm-5">
+							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
+							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
+							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
+							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
+						</div>
+					</td>
+                    <td>
+						<div class="col-sm-5">
+							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
+							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
+							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
+							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
+						</div>
+					</td>
+
+                  </tr>
+                </tbody>
+              </table>			
+			
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
@@ -143,7 +168,7 @@
 <script>
   var SCOPE = {
     'save_url' : '/admin.php?c=enter&a=add',
-    'jump_url' : '/admin.php?c=enter',
+    'jump_url' : '/admin.php?c=enter&a=add',
   };
 </script>
 <script src="/Public/js/admin/common.js"></script>
