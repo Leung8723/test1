@@ -41,84 +41,44 @@ class EnterController extends CommonController {
             if(!isset($_POST['specs']) || !$_POST['specs']|| !is_numeric($_POST['specs'])) {
                 return show(0,'规格未填写或为非数字');
             }
-            if(!isset($_POST['color']) || !$_POST['color']) {
+            if(is_null($_POST['color']) ){
                 return show(0,'色相基准未选择');
             }
+            if(is_null(!$_POST['material'])) {
+                return show(0,'材质不能为空');
+            }
             if($_POST['title']) {
-                return $this->save($_POST);//调用保存方法
+                return $this->lensSave($_POST);//调用保存方法
             }
             $newsId = D("Enter")->insert($_POST);
-            if($newsId) {
-                $newsContentData['news_id'] = $newsId;
-                $cId = D("NewsContent")->insert($newsContentData);
-                if($cId){
-                    return show(1,'新增成功');
-                }else{
-                    return show(1,'主表插入成功，副表插入失败');
-                }
-            }else{
-                return show(0,'新增失败');
-            }
+			if($newsId){
+				return show(1,'新增成功');
+			}else{
+				return show(0,'插入失败');
+			}
         }else {
-            $lensColorType = D("Enter")->getColorType();
-			$lensMaterialType = D("Enter")->getMaterialType();
+			$lensMaterialType = C("LENS_MATERIAL");
+			$lensColorType = C("COLOR_TYPE");
             $this->assign('lensColorType', $lensColorType);
             $this->assign('lensMaterialType', $lensMaterialType);
             $this->display();
         }
 		
     }
-	//入库信息模块
-    public function enter() {
-		/*
-        $newsId = $_GET['id'];
-        if(!$newsId) {
-            // 执行跳转
-            $this->redirect('/admin.php?c=content');
-        }
-        $news = D("News")->find($newsId);
-        if(!$news) {
-            $this->redirect('/admin.php?c=content');
-        }
-        $newsContent = D("NewsContent")->find($newsId);
-        if($newsContent) {
-            $news['content'] = $newsContent['content'];
-        }
 
-        $webSiteMenu = D("Menu")->getBarMenus();
-        $this->assign('webSiteMenu', $webSiteMenu);
-        $this->assign('titleFontColor', C("TITLE_FONT_COLOR"));
-        $this->assign('copyfrom', C("COPY_FROM"));
-
-        $this->assign('news',$news);
-        $this->display();
-		*/
-        $webSiteData = D("Enter")->getEnterData();
-
-        //$res  =  new \Think\Page($count,$pageSize);
-        //$pageres = $res->show();
-        //$this->assign('pageres',$pageres);
-        $this->assign('enters',$webSiteData);
-        $this->display();
-    }
 	//型号添加保存模块
     public function lensSave($data) {
-        $newsId = $data['id'];
-        unset($data['id']);
-
         try {
-            $id = D("Enter")->updateLensById($newsId, $data);
-            $newsContentData['content'] = $data['content'];
-            $condId = D("NewsContent")->updateNewsById($newsId, $newsContentData);
-            if($id === false || $condId === false) {
-                return show(0, '更新失败');
+            $id = D("Enter")->insertLensById($data);
+            if($id === false) {
+                return show(0, '添加新型号失败');
             }
-            return show(1, '更新成功');
+            return show(1, '添加新型号成功');
         }catch(Exception $e) {
             return show(0, $e->getMessage());
         }
-
     }
+
     public function setStatus() {
         try {
             if ($_POST) {
