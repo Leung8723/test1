@@ -30,7 +30,7 @@ $("#singcms-button-submit").click(function(){
     },"JSON");
 });
 /*
-编辑模型
+编辑模型 
  */
 $('.singcms-table #singcms-edit').on('click',function(){
     var id = $(this).attr('attr-id');

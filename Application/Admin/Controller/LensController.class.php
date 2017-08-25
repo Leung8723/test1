@@ -64,8 +64,10 @@ class LensController extends CommonController {
     }
 	
     public function save($data) {
+		$newsId = $data['news_id'];//获取id
+        unset($data['news_id']);
         try {
-            $id = D("Lens")->updateLensById($data);
+            $id = D("Lens")->updateLensById($newsId,$data);
             if($id === false) {
                 return show(0, '更新型号失败');
             }
@@ -77,6 +79,7 @@ class LensController extends CommonController {
 	
     public function edit() {
         $newsId = $_GET['id'];
+		print_r($newsId);exit;
         if(!$newsId) {
             // 执行跳转
             $this->redirect('/admin.php?c=lens');

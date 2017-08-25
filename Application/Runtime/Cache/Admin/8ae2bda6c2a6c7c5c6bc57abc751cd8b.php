@@ -110,7 +110,7 @@
         <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
       </div>
       </br>
-		<table id="table_id_example" class="display">
+		<table id="singcms-table" class="display">
 			<thead>
 			<tr>
 			  <th>型号</th>
@@ -124,16 +124,16 @@
 			</tr>
 			</thead>
 				<tbody>
-					<?php if(is_array($lens)): $i = 0; $__LIST__ = $lens;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$lens): $mod = ($i % 2 );++$i;?><tr>
-						<td><?php echo ($lens["model"]); ?></td>
-						<td><?php echo ($lens["specs"]); ?></td>
-						<td><?php echo ($lens["color"]); ?></td>
-						<td><?php echo ($lens["material"]); ?></td>
-						<td><?php echo ($lens["create_user"]); ?></td>
-						<td><?php echo (date("Y-m-d H:i",$lens["create_time"])); ?></td>
-						<td><?php if($lens['update_time'] == NULL): ?>-<?php else: echo (date("Y-m-d H:i",$lens["update_time"])); endif; ?></td>
-						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="<?php echo ($lens["id"]); ?>" ></span>
-						  <a href="javascript:void(0)" id="singcms-delete"  attr-id="<?php echo ($lens["id"]); ?>"  attr-message="删除">
+					<?php if(is_array($lens)): $i = 0; $__LIST__ = $lens;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$len): $mod = ($i % 2 );++$i;?><tr>
+						<td><?php echo ($len["model"]); ?></td>
+						<td><?php echo ($len["specs"]); ?></td>
+						<td><?php echo ($len["color"]); ?></td>
+						<td><?php echo ($len["material"]); ?></td>
+						<td><?php echo ($len["create_user"]); ?></td>
+						<td><?php echo (date("Y-m-d H:i",$len["create_time"])); ?></td>
+						<td><?php if($lens['update_time'] == NULL): ?>-<?php else: echo (date("Y-m-d H:i",$len["update_time"])); endif; ?></td>
+						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" onclick="javascript:window.open('http://localhost/admin.php?c=lens&a=edit'.'&'.<?php echo ($len["id"]); ?> ></span>
+						  <a href="javascript:void(0)" id="singcms-delete"  attr-id=<?php echo ($len["id"]); ?>  attr-message="删除">
 							<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 						  </a>
 						</td>
@@ -150,7 +150,7 @@ var SCOPE = {
 }
 //初始化DataTables
 $(document).ready( function () {
-	$('#table_id_example').DataTable({
+	$('#singcms-table').DataTable({
 		"iDisplayLength":100,
 		"oLanguage":{
 			"sProcessing":"正在加载中......",

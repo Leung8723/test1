@@ -42,8 +42,7 @@ class LensModel extends Model {
         return $this->_db->where('model='.$id)->find();
     }
 	
-    public function updateLensById($data) {
-		$id = $data['id'];
+    public function updateLensById($id,$data) {
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
         }
