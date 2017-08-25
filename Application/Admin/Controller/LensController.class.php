@@ -17,19 +17,9 @@ class LensController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-/* 
-        if($_GET['catid']) {
-            $conds['catid'] = intval($_GET['catid']);
-        }
-*/
-        $page = $_REQUEST['p'] ? $_REQUEST['p'] : 1;
-        $pageSize = 1;
-        $webSiteData = D("Enter")->getEnterData();
-		$count = D("Enter")->getEnterCount($conds);
-        $res  =  new \Think\Page($count,$pageSize);
-        $pageres = $res->show();
-        $this->assign('pageres',$pageres);
-        $this->assign('enters',$webSiteData);
+
+        $webSiteData = D("Lens")->getLensData();
+        $this->assign('lens',$webSiteData);
         $this->display();
     }
 	//添加型号模块
@@ -72,7 +62,37 @@ class LensController extends CommonController {
             return show(0, $e->getMessage());
         }
     }
-
+	
+    public function save($data) {
+        try {
+            $id = D("Lens")->updateLensById($data);
+            if($id === false) {
+                return show(0, '更新型号失败');
+            }
+            return show(1, $_POST['model'].' 更新型号成功');
+        }catch(Exception $e) {
+            return show(0, $e->getMessage());
+        }
+    }
+	
+    public function edit() {
+        $newsId = $_GET['id'];
+        if(!$newsId) {
+            // 执行跳转
+            $this->redirect('/admin.php?c=lens');
+        }
+        $news = D("Lens")->find($newsId);
+        if(!$news) {
+            $this->redirect('/admin.php?c=lens');
+        }
+		$lensMaterialType = C("LENS_MATERIAL");
+		$lensColorType = C("COLOR_TYPE");
+		$this->assign('lensColorType', $lensColorType);
+		$this->assign('lensMaterialType', $lensMaterialType);
+        $this->assign('lens',$news);
+        $this->display();
+    }
+	
     public function setStatus() {
         try {
             if ($_POST) {
@@ -93,29 +113,4 @@ class LensController extends CommonController {
             return show(0, $e->getMessage());
         }
     }
-/*
-    public function listorder() {
-        $listorder = $_POST['listorder'];
-        $jumpUrl = $_SERVER['HTTP_REFERER'];
-        $errors = array();
-        try {
-            if ($listorder) {
-                foreach ($listorder as $newsId => $v) {
-                    // 执行更新
-                    $id = D("News")->updateNewsListorderById($newsId, $v);
-                    if ($id === false) {
-                        $errors[] = $newsId;
-                    }
-                }
-                if ($errors) {
-                    return show(0, '排序失败-' . implode(',', $errors), array('jump_url' => $jumpUrl));
-                }
-                return show(1, '排序成功', array('jump_url' => $jumpUrl));
-            }
-        }catch (Exception $e) {
-            return show(0, $e->getMessage());
-        }
-        return show(0,'排序数据失败',array('jump_url' => $jumpUrl));
-    }
-*/
 }

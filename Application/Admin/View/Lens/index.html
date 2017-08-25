@@ -4,6 +4,14 @@
   <include file="Index/nav"/>
   <div id="page-wrapper">
     <div class="container-fluid" >
+	
+	<!-- DataTables CSS -->	  
+	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+
       <!-- Page Heading -->
       <div class="row">
         <div class="col-lg-12">
@@ -19,82 +27,70 @@
         </div>
       </div>
       <!-- /.row -->
-      <div >
+      <div>
         <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
       </div>
       </br>
-      <div class="row">
-        <form action="/admin.php" method="get">
-          <input type="hidden" name="c" value="content"/>
-          <input type="hidden" name="a" value="index"/>
-          <div class="col-md-3">
-            <div class="input-group">
-              <input class="form-control" name="title" type="text" value="" placeholder="型号搜索" />
-                <span class="input-group-btn">
-                  <button id="sub_data" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
-                </span>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="row">
-        <div class="col-lg-6">
-          <h3></h3>
-          <div class="table-responsive">
-            <form id="singcms-listorder">
-              <table class="table table-bordered table-hover singcms-table">
-                <thead>
-                <tr>
-                  <!--暂时不用--<th>序号</th>-->
-                  <th>型号</th>
-                  <th>规格</th>
-                  <th>色相</th>
-                  <th>材质</th>
-                  <!--暂时不用--<th>成型箱号</th>-->
-                  <th>添加时间</th>
-                  <th>更新时间</th>
-				  <th>操作者</th>
-				  <th>状态</th>
-				  <th>编辑</th>
-                </tr>
-                </thead>
-                <tbody>
-                <volist name="enters" id="enter">
-                  <tr>
-                    <!--暂时不用--<td>{$enter.enter_id}</td>-->
-                    <td>{$enter.et_model}</td>
-                    <td>{$enter.et_num}</td>
-					<td>{$enter.et_date}</td>
-					<td>{$enter.et_time|date="H:i",###}</td>
-                    <!--暂时不用--<td>{$enter.et_box}</td>-->
-                    <td>{$enter.create_user}</td>
-                    <td>{$enter.md_user}</td>
-                    <td>{$enter.create_time|date="H:i",###}</td>
-                    <td>{$enter.update_time}</td>
-                    <td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="{$enter.news_id}" ></span>
-                      <a href="javascript:void(0)" id="singcms-delete"  attr-id="{$enter.news_id}"  attr-message="删除">
-                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-                      </a>
-                    </td>
-                  </tr>
-                </volist>
-                </tbody>
-              </table>
-              <nav>
-              <ul >
-                {$pageres}
-              </ul>
-            </nav>
-            </form>
-          </div>
-        </div>
-      </div>
+		<table id="table_id_example" class="display">
+			<thead>
+			<tr>
+			  <th>型号</th>
+			  <th>规格</th>
+			  <th>色相</th>
+			  <th>材质</th>
+			  <th>创建人</th>
+			  <th>提交时间</th>
+			  <th>更新时间</th>
+			  <th>编辑</th>
+			</tr>
+			</thead>
+				<tbody>
+					<volist name="lens" id="lens">
+					  <tr>
+						<td>{$lens.model}</td>
+						<td>{$lens.specs}</td>
+						<td>{$lens.color}</td>
+						<td>{$lens.material}</td>
+						<td>{$lens.create_user}</td>
+						<td>{$lens.create_time|date="Y-m-d H:i",###}</td>
+						<td><if condition="$lens['update_time'] eq NULL">-<else/>{$lens.update_time|date="Y-m-d H:i",###}</if></td>
+						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="{$lens.id}" ></span>
+						  <a href="javascript:void(0)" id="singcms-delete"  attr-id="{$lens.id}"  attr-message="删除">
+							<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+						  </a>
+						</td>
+					  </tr>
+					</volist>
+				</tbody>
+		</table>
     </div>
-  </div>
+   </div>
 </div>
 <script>
-  var SCOPE = {
-    'add_url' : '/admin.php?c=lens&a=add',
-  }
+var SCOPE = {
+'edit_url' : '/admin.php?c=lens&a=edit',
+'add_url' : '/admin.php?c=lens&a=add',
+}
+//初始化DataTables
+$(document).ready( function () {
+	$('#table_id_example').DataTable({
+		"iDisplayLength":100,
+		"oLanguage":{
+			"sProcessing":"正在加载中......",
+			"sLengthMenu":"每页显示 _MENU_ 条记录",
+			"sZeroRecords":"对不起，查询不到相关数据！",
+			"sEmptyTable":"表中无数据存在！",
+			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
+			"sSearch":"搜索",
+			"oPaginate":{
+				"sFirst":"首页",
+				"sPrevious":"上一页",
+				"sNext":"下一页",
+				"sLast":"末页"
+			}
+		}
+	});
+});
 </script>
 <include file="Index/footer" />

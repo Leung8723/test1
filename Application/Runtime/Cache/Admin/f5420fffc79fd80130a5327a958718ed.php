@@ -84,6 +84,14 @@
   <div id="page-wrapper">
     <div class="container-fluid">
       <!-- Page Heading -->
+
+	<!-- DataTables CSS -->	  
+	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+
       <div class="row">
         <div class="col-lg-12">
           <ol class="breadcrumb">
@@ -97,10 +105,34 @@
         </div>
       </div>
       <div class="row">
+<!--第二步：添加如下 HTML 代码-->
+<table id="table_id_example" class="display">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+		<?php if(is_array($enters)): $i = 0; $__LIST__ = $enters;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$enter): $mod = ($i % 2 );++$i;?><tr>
+            <td><?php echo ($enter["et_model"]); ?></td>
+            <td><?php echo ($enter["et_num"]); ?></td>
+        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+        <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr>
+    </tbody>
+</table>
+ 
+ 
+ 
+<!--第三步：初始化Datatables-->
 
-
+<?php
+ ?>
 			
-			
+			<!--
               <table class="table table-bordered table-hover singcms-table">
                 <thead>
                 <tr>
@@ -117,7 +149,7 @@
 						</div>	
 				  </th>
                   <!--<th>型号</th>
-				  <th>入库数量</th>-->
+				  <th>入库数量</th>--
 				  <th>
 					<div class="form-group">
 					  <label for="inputname" class="col-sm-2 control-label">成型担当:</label>
@@ -153,7 +185,7 @@
                   </tr>
                 </tbody>
               </table>			
-			
+			-->
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
@@ -170,6 +202,11 @@
     'save_url' : '/admin.php?c=enter&a=add',
     'jump_url' : '/admin.php?c=enter&a=add',
   };
+</script>
+<script>
+	$(document).ready( function () {
+		$('#table_id_example').DataTable();
+	} );
 </script>
 <script src="/Public/js/admin/common.js"></script>
 
