@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-08-24 12:26:58
+-- Generation Time: 2017-08-25 12:30:39
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,14 +19,16 @@ SET time_zone = "+00:00";
 --
 -- Database: `sekonix`
 --
-CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `sekonix`;
+
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_admin`
 --
 
+DROP TABLE IF EXISTS `sk_admin`;
 CREATE TABLE IF NOT EXISTS `sk_admin` (
   `admin_id` mediumint(6) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -43,11 +45,16 @@ CREATE TABLE IF NOT EXISTS `sk_admin` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
+-- 插入之前先把表清空（truncate） `sk_admin`
+--
+
+TRUNCATE TABLE `sk_admin`;
+--
 -- 转存表中的数据 `sk_admin`
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `lastloginip`, `lastlogintime`, `email`, `group`, `status`, `create_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1503552723, 'jason.leung@163.com', 1, 1, 2147483647),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1503639519, 'jason.leung@163.com', 1, 1, 2147483647),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', NULL, 1498696655, NULL, 1, 1, 2147483647);
 
 -- --------------------------------------------------------
@@ -56,6 +63,7 @@ INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `lastlog
 -- 表的结构 `sk_ckdata`
 --
 
+DROP TABLE IF EXISTS `sk_ckdata`;
 CREATE TABLE IF NOT EXISTS `sk_ckdata` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ck_model` smallint(10) unsigned NOT NULL DEFAULT '0',
@@ -97,12 +105,18 @@ CREATE TABLE IF NOT EXISTS `sk_ckdata` (
   KEY `create_user` (`create_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_ckdata`
+--
+
+TRUNCATE TABLE `sk_ckdata`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_ckuser`
 --
 
+DROP TABLE IF EXISTS `sk_ckuser`;
 CREATE TABLE IF NOT EXISTS `sk_ckuser` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ck_name` varchar(20) NOT NULL,
@@ -111,6 +125,11 @@ CREATE TABLE IF NOT EXISTS `sk_ckuser` (
   UNIQUE KEY `name` (`ck_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_ckuser`
+--
+
+TRUNCATE TABLE `sk_ckuser`;
 --
 -- 转存表中的数据 `sk_ckuser`
 --
@@ -124,6 +143,7 @@ INSERT INTO `sk_ckuser` (`id`, `ck_name`, `create_time`) VALUES
 -- 表的结构 `sk_coating`
 --
 
+DROP TABLE IF EXISTS `sk_coating`;
 CREATE TABLE IF NOT EXISTS `sk_coating` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_model` varchar(20) NOT NULL,
@@ -149,12 +169,18 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
   KEY `ct_lot` (`ct_lot`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_coating`
+--
+
+TRUNCATE TABLE `sk_coating`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_color`
 --
 
+DROP TABLE IF EXISTS `sk_color`;
 CREATE TABLE IF NOT EXISTS `sk_color` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `color_type` varchar(20) NOT NULL,
@@ -165,6 +191,11 @@ CREATE TABLE IF NOT EXISTS `sk_color` (
   KEY `color_type` (`color_type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_color`
+--
+
+TRUNCATE TABLE `sk_color`;
 --
 -- 转存表中的数据 `sk_color`
 --
@@ -191,6 +222,7 @@ INSERT INTO `sk_color` (`id`, `color_type`, `create_user`, `create_time`) VALUES
 -- 表的结构 `sk_ctuser`
 --
 
+DROP TABLE IF EXISTS `sk_ctuser`;
 CREATE TABLE IF NOT EXISTS `sk_ctuser` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_name` varchar(20) NOT NULL,
@@ -201,6 +233,11 @@ CREATE TABLE IF NOT EXISTS `sk_ctuser` (
   KEY `creat_user` (`creat_user`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_ctuser`
+--
+
+TRUNCATE TABLE `sk_ctuser`;
 --
 -- 转存表中的数据 `sk_ctuser`
 --
@@ -214,6 +251,7 @@ INSERT INTO `sk_ctuser` (`id`, `ct_name`, `creat_user`, `create_time`) VALUES
 -- 表的结构 `sk_enter`
 --
 
+DROP TABLE IF EXISTS `sk_enter`;
 CREATE TABLE IF NOT EXISTS `sk_enter` (
   `enter_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `et_model` varchar(20) NOT NULL,
@@ -233,6 +271,11 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
+-- 插入之前先把表清空（truncate） `sk_enter`
+--
+
+TRUNCATE TABLE `sk_enter`;
+--
 -- 转存表中的数据 `sk_enter`
 --
 
@@ -248,6 +291,7 @@ INSERT INTO `sk_enter` (`enter_id`, `et_model`, `et_date`, `et_time`, `et_num`, 
 -- 表的结构 `sk_lens`
 --
 
+DROP TABLE IF EXISTS `sk_lens`;
 CREATE TABLE IF NOT EXISTS `sk_lens` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `model` varchar(20) NOT NULL,
@@ -262,17 +306,121 @@ CREATE TABLE IF NOT EXISTS `sk_lens` (
   KEY `model` (`model`),
   KEY `color` (`color`),
   KEY `create_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_lens`
+--
+
+TRUNCATE TABLE `sk_lens`;
 --
 -- 转存表中的数据 `sk_lens`
 --
 
 INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user`, `create_time`, `update_time`) VALUES
-(1, 'MV1419L1-13', 395, 'GREEN#1', 'E48R', '梁国成', 2147483647, NULL),
-(3, 'MV1419L2-13', 395, 'GREEN#1', 'E48R', '梁国成', 2147483647, NULL),
-(5, 'AV1548L2-1', 96, 'GREEN#1', 'OKP4', '梁国成', 2147483647, NULL),
-(6, 'AV1548L3-1', 96, 'GREEN#1', 'E48R', '梁国成', 2147483647, NULL);
+(16, 'AM1663L2-1', 49, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(17, 'AM1663L6-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(18, 'AM1964L2-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(19, 'AM1964L2-2', 49, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(20, 'AM1964L3-1', 96, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(21, 'AM1964L5-1', 164, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(22, 'AM1964L5-2', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(23, 'AM1964L6-1', 164, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(24, 'AM1964L6-2', 96, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(25, 'AV1146L6-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(26, 'AV1241L2-1', 96, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(27, 'AV1241L2-2', 96, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(28, 'AV1241L5-1', 136, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(29, 'AV1241L5-2', 136, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(30, 'AV1446L1-1', 48, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(31, 'AV1446L4-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(32, 'AV1454L2-2', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(33, 'AV1454L3-1', 96, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(34, 'AV1454L5-2', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(35, 'AV1454L5-3', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(36, 'AV1541L2-1', 60, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(37, 'AV1541L3-1', 96, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(38, 'AV1541L6-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(39, 'AV1548L2-1', 96, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(40, 'AV1548L3-1', 96, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(41, 'AV1745L4-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(42, 'GEN4L3-1', 60, '绿色#1', 'OKP4', '梁国成', 1503650000, NULL),
+(43, 'GEN4L6-1', 60, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(44, 'MV1419L1-20', 379, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(45, 'MV1419L1-23', 379, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(46, 'MV1419L2-20', 379, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(47, 'MV1419L2-23', 379, '绿色#1', 'E48R', '梁国成', 1503650000, NULL),
+(48, 'SK0544L1-1', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(49, 'SK0544L1-2', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(50, 'SK0544L2-2', 214, '紫色#2', 'EP5000', '梁国成', 1503650000, NULL),
+(51, 'SK0544L3-2', 175, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(52, 'SK0544L4-1', 175, '紫色#2', 'EP7000', '梁国成', 1503650000, NULL),
+(53, 'SK0544L4-2', 175, '紫色#2', 'EP7000', '梁国成', 1503650000, NULL),
+(54, 'SK0544L5-2', 175, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(55, 'SK0544L6-2', 175, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(56, 'SK0551L1-1', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(57, 'SK0551L2-1', 214, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(58, 'SK0551L3-1', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(59, 'SK0555L1-2', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(60, 'SK0555L1-3', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(61, 'SK0555L1-4', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(62, 'SK0555L2-2', 216, '绿色#1', 'EP6000', '梁国成', 1503650000, NULL),
+(63, 'SK0555L2-3', 216, '绿色#1', 'EP6000', '梁国成', 1503650000, NULL),
+(64, 'SK0555L2-4', 216, '绿色#1', 'EP6000', '梁国成', 1503650000, NULL),
+(65, 'SK0555L3-2', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(66, 'SK0555L3-3', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(67, 'SK0555L3-4', 216, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(68, 'SK0555L4-2', 216, '绿色#2', 'K26R', '梁国成', 1503650000, NULL),
+(69, 'SK0555L4-3', 216, '绿色#2', 'K26R', '梁国成', 1503650000, NULL),
+(70, 'SK0555L4-4', 216, '绿色#2', 'K26R', '梁国成', 1503650000, NULL),
+(71, 'SK0557L1-1', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(72, 'SK0557L2-1', 259, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(73, 'SK0557L3-1', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(74, 'SK0557L4-1', 259, '紫色#2', 'EP7000', '梁国成', 1503650000, NULL),
+(75, 'SK0557L5-1', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(76, 'SK0557L6-1', 259, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(77, 'SK0844L1-1', 175, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(78, 'SK0844L2-1', 175, '绿色#1', 'EP7000', '梁国成', 1503650000, NULL),
+(79, 'SK0844L3-1', 259, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(80, 'SK0844L4-1', 136, '绿色#2', 'K26R', '梁国成', 1503650000, NULL),
+(81, 'SK084CL1-1', 175, '蓝色#1', 'APEL', '梁国成', 1503650000, NULL),
+(82, 'SK084CL2-1', 175, '蓝色#2', 'EP4500', '梁国成', 1503650000, NULL),
+(83, 'SK084CL3-1', 259, '蓝色#1', 'K26R', '梁国成', 1503650000, NULL),
+(84, 'SK084CL4-1', 175, '蓝色#2', 'EP8000', '梁国成', 1503650000, NULL),
+(85, 'SK084CL5-1', 175, '蓝色#1', 'K26R', '梁国成', 1503650000, NULL),
+(86, 'SK084CL6-1', 175, '蓝色#2', 'EP4500', '梁国成', 1503650000, NULL),
+(87, 'SK1335L1-1', 136, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(88, 'SK1335L2-1', 175, '绿色#1', 'OKP1', '梁国成', 1503650000, NULL),
+(89, 'SK1335L3-1', 140, '绿色#2', 'APEL', '梁国成', 1503650000, NULL),
+(90, 'SK1335L4-1', 140, '绿色#2', 'K26R', '梁国成', 1503650000, NULL),
+(91, 'SN0832L4-3', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(92, 'SN0832L4-8', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(93, 'SN0832L1-11', 214, '紫色#2', 'EP5000', '梁国成', 1503650000, NULL),
+(94, 'SN0832L1-3', 214, '紫色#2', 'EP5000', '梁国成', 1503650000, NULL),
+(95, 'SN0832L1-8', 214, '紫色#2', 'EP5000', '梁国成', 1503650000, NULL),
+(96, 'SN0832L1-9', 214, '紫色#2', 'EP5000', '梁国成', 1503650000, NULL),
+(97, 'SN0832L2-11', 175, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(98, 'SN0832L2-3', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(99, 'SN0832L2-8', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(100, 'SN0832L2-9', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(101, 'SN0832L3-12', 259, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(102, 'SN0832L3-3', 259, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(103, 'SN0832L3-8', 259, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(104, 'SN0832L3-9', 257, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(105, 'SN0832L4-12', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(106, 'SN0832L4-9', 259, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(107, 'SN0832L5-12', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(108, 'SN0832L5-3', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(109, 'SN0832L5-8', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(110, 'SN0832L5-9', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(111, 'SN0847L1-1', 216, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(112, 'SN0847L1-2', 216, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(113, 'SN0847L2-1', 216, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(114, 'SN0847L2-2', 216, '紫色#2', 'EP6000', '梁国成', 1503650000, NULL),
+(115, 'SN0847L3-1', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(116, 'SN0847L3-2', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
+(117, 'SN0847L4-1', 136, '青绿#1', 'APEL', '梁国成', 1503650000, NULL),
+(118, 'SN0847L4-2', 136, '青绿#1', 'APEL', '梁国成', 1503650000, NULL);
 
 -- --------------------------------------------------------
 
@@ -280,6 +428,7 @@ INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user
 -- 表的结构 `sk_machine`
 --
 
+DROP TABLE IF EXISTS `sk_machine`;
 CREATE TABLE IF NOT EXISTS `sk_machine` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(10) NOT NULL,
@@ -291,6 +440,11 @@ CREATE TABLE IF NOT EXISTS `sk_machine` (
   KEY `create_user` (`create_user`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_machine`
+--
+
+TRUNCATE TABLE `sk_machine`;
 --
 -- 转存表中的数据 `sk_machine`
 --
@@ -316,6 +470,7 @@ INSERT INTO `sk_machine` (`id`, `name`, `nickname`, `create_user`, `create_time`
 -- 表的结构 `sk_mduser`
 --
 
+DROP TABLE IF EXISTS `sk_mduser`;
 CREATE TABLE IF NOT EXISTS `sk_mduser` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `md_name` varchar(20) NOT NULL,
@@ -326,6 +481,11 @@ CREATE TABLE IF NOT EXISTS `sk_mduser` (
   KEY `create_user` (`create_user`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_mduser`
+--
+
+TRUNCATE TABLE `sk_mduser`;
 --
 -- 转存表中的数据 `sk_mduser`
 --
@@ -339,6 +499,7 @@ INSERT INTO `sk_mduser` (`id`, `md_name`, `create_user`, `create_time`) VALUES
 -- 表的结构 `sk_menu`
 --
 
+DROP TABLE IF EXISTS `sk_menu`;
 CREATE TABLE IF NOT EXISTS `sk_menu` (
   `menu_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL DEFAULT '',
@@ -354,8 +515,13 @@ CREATE TABLE IF NOT EXISTS `sk_menu` (
   KEY `listorder` (`listorder`),
   KEY `parentid` (`parentid`),
   KEY `module` (`m`,`c`,`f`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_menu`
+--
+
+TRUNCATE TABLE `sk_menu`;
 --
 -- 转存表中的数据 `sk_menu`
 --
@@ -363,13 +529,14 @@ CREATE TABLE IF NOT EXISTS `sk_menu` (
 INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `listorder`, `status`, `type`) VALUES
 (1, '菜单管理', 0, 'admin', 'menu', 'index', '', 10, 1, 1),
 (2, '入库管理', 0, 'admin', 'enter', 'index', '', 9, 1, 1),
-(3, '镀膜管理', 0, 'admin', 'coating', 'index', '', 8, 1, 1),
-(4, '分光性能管理', 0, 'admin', 'spec', 'index', '', 6, 1, 1),
-(5, '单品检查', 0, 'admin', 'checkdata', 'index', '', 7, 1, 1),
-(6, '基本管理', 0, 'admin', 'basic', 'index', '', 3, 1, 1),
-(7, '用户管理', 0, 'admin', 'admin', 'index', '', 4, 1, 1),
-(8, '文章管理', 0, 'admin', 'Content', 'index', '', 0, 1, 1),
-(9, '温湿度记录', 0, 'admin', 'temperature', 'index', '', 5, 1, 1);
+(3, '镀膜管理', 0, 'admin', 'coating', 'index', '', 7, 1, 1),
+(4, '分光性能管理', 0, 'admin', 'spec', 'index', '', 5, 1, 1),
+(5, '单品检查', 0, 'admin', 'checkdata', 'index', '', 6, 1, 1),
+(6, '基本管理', 0, 'admin', 'basic', 'index', '', 2, 1, 1),
+(7, '用户管理', 0, 'admin', 'admin', 'index', '', 3, 1, 1),
+(8, '文章管理', 0, 'admin', 'Content', 'index', '', 1, 1, 1),
+(9, '温湿度记录', 0, 'admin', 'temperature', 'index', '', 4, 1, 1),
+(10, '型号管理', 0, 'admin', 'lens', 'index', '', 8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -377,6 +544,7 @@ INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `li
 -- 表的结构 `sk_news`
 --
 
+DROP TABLE IF EXISTS `sk_news`;
 CREATE TABLE IF NOT EXISTS `sk_news` (
   `news_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -401,6 +569,11 @@ CREATE TABLE IF NOT EXISTS `sk_news` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
+-- 插入之前先把表清空（truncate） `sk_news`
+--
+
+TRUNCATE TABLE `sk_news`;
+--
 -- 转存表中的数据 `sk_news`
 --
 
@@ -411,7 +584,7 @@ INSERT INTO `sk_news` (`news_id`, `catid`, `title`, `small_title`, `title_font_c
 (20, 3, '事实上', '11', '', '/upload/2016/02/28/56d3185781237.png', '1', '11', '', 0, -1, '0', 'admin', 1456674909, 0, 0),
 (21, 3, '习近平今日下午出席解放军代表团全体会议', '习近平出席解放军代表团全体会议', '', '/upload/2016/03/13/56e519a185c93.png', '中共中央总书记 国家主席 中央军委主席 习近平', '中共中央总书记', '', 2, 1, '1', 'admin', 1457854896, 0, 60),
 (22, 12, '李克强让部长们当第一新闻发言人', '李克强让部长们当第一新闻发言人', '', '/upload/2016/03/13/56e51b6ac8ce2.jpg', '李克强  新闻发言人', '部长直接面对媒体回应关切，还能直接读到民情民生民意，而不是看别人的舆情汇报。', '', 0, 1, '0', 'admin', 1457855362, 0, 33),
-(23, 3, '重庆美女球迷争芳斗艳', '重庆美女球迷争芳斗艳', '', '/upload/2016/03/13/56e51cbd34470.png', '重庆美女 球迷 争芳斗艳', '重庆美女球迷争芳斗艳', '', 10, 1, '0', 'admin', 1457855680, 0, 22),
+(23, 3, '重庆美女球迷争芳斗艳', '重庆美女球迷争芳斗艳', '', '/upload/2016/03/13/56e51cbd34470.png', '重庆美女 球迷 争芳斗艳', '重庆美女球迷争芳斗艳', '', 10, -1, '0', 'admin', 1457855680, 0, 22),
 (24, 3, '中超-汪嵩世界波制胜 富力客场1-0力擒泰达', '中超-汪嵩世界波制胜 富力客场1-0力擒泰达', '', '/upload/2016/03/13/56e51fc82b13a.png', '中超 汪嵩世界波  富力客场 1-0力擒泰达', '中超-汪嵩世界波制胜 富力客场1-0力擒泰达', '', 1, 1, '0', 'admin', 1457856460, 0, 25);
 
 -- --------------------------------------------------------
@@ -420,6 +593,7 @@ INSERT INTO `sk_news` (`news_id`, `catid`, `title`, `small_title`, `title_font_c
 -- 表的结构 `sk_news_content`
 --
 
+DROP TABLE IF EXISTS `sk_news_content`;
 CREATE TABLE IF NOT EXISTS `sk_news_content` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `news_id` mediumint(8) unsigned NOT NULL,
@@ -430,6 +604,11 @@ CREATE TABLE IF NOT EXISTS `sk_news_content` (
   KEY `news_id` (`news_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_news_content`
+--
+
+TRUNCATE TABLE `sk_news_content`;
 --
 -- 转存表中的数据 `sk_news_content`
 --
@@ -450,6 +629,7 @@ INSERT INTO `sk_news_content` (`id`, `news_id`, `content`, `create_time`, `updat
 -- 表的结构 `sk_position`
 --
 
+DROP TABLE IF EXISTS `sk_position`;
 CREATE TABLE IF NOT EXISTS `sk_position` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(30) NOT NULL DEFAULT '',
@@ -460,6 +640,11 @@ CREATE TABLE IF NOT EXISTS `sk_position` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_position`
+--
+
+TRUNCATE TABLE `sk_position`;
 --
 -- 转存表中的数据 `sk_position`
 --
@@ -477,6 +662,7 @@ INSERT INTO `sk_position` (`id`, `name`, `status`, `description`, `create_time`,
 -- 表的结构 `sk_position_content`
 --
 
+DROP TABLE IF EXISTS `sk_position_content`;
 CREATE TABLE IF NOT EXISTS `sk_position_content` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `position_id` int(5) unsigned NOT NULL,
@@ -491,6 +677,11 @@ CREATE TABLE IF NOT EXISTS `sk_position_content` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_position_content`
+--
+
+TRUNCATE TABLE `sk_position_content`;
 --
 -- 转存表中的数据 `sk_position_content`
 --
@@ -516,6 +707,7 @@ INSERT INTO `sk_position_content` (`id`, `position_id`, `title`, `thumb`, `url`,
 -- 表的结构 `sk_spec`
 --
 
+DROP TABLE IF EXISTS `sk_spec`;
 CREATE TABLE IF NOT EXISTS `sk_spec` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_lot` varchar(20) NOT NULL,
@@ -535,12 +727,18 @@ CREATE TABLE IF NOT EXISTS `sk_spec` (
   KEY `create_user` (`create_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- 插入之前先把表清空（truncate） `sk_spec`
+--
+
+TRUNCATE TABLE `sk_spec`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_spec_data`
 --
 
+DROP TABLE IF EXISTS `sk_spec_data`;
 CREATE TABLE IF NOT EXISTS `sk_spec_data` (
   `id` mediumint(10) NOT NULL AUTO_INCREMENT,
   `ct_lot` varchar(20) NOT NULL,
@@ -552,58 +750,10 @@ CREATE TABLE IF NOT EXISTS `sk_spec_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- 限制导出的表
+-- 插入之前先把表清空（truncate） `sk_spec_data`
 --
 
---
--- 限制表 `sk_ckdata`
---
-ALTER TABLE `sk_ckdata`
-  ADD CONSTRAINT `sk_ckdata_ibfk_1` FOREIGN KEY (`ck_user`) REFERENCES `sk_ckuser` (`ck_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_ckdata_ibfk_2` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_coating`
---
-ALTER TABLE `sk_coating`
-  ADD CONSTRAINT `sk_coating_ibfk_1` FOREIGN KEY (`ct_model`) REFERENCES `sk_lens` (`model`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_coating_ibfk_2` FOREIGN KEY (`ct_machine`) REFERENCES `sk_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_coating_ibfk_3` FOREIGN KEY (`ct_user`) REFERENCES `sk_ctuser` (`ct_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_coating_ibfk_4` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_ctuser`
---
-ALTER TABLE `sk_ctuser`
-  ADD CONSTRAINT `sk_ctuser_ibfk_1` FOREIGN KEY (`creat_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_enter`
---
-ALTER TABLE `sk_enter`
-  ADD CONSTRAINT `sk_enter_ibfk_1` FOREIGN KEY (`et_model`) REFERENCES `sk_lens` (`model`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_enter_ibfk_2` FOREIGN KEY (`md_user`) REFERENCES `sk_mduser` (`md_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_enter_ibfk_3` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_machine`
---
-ALTER TABLE `sk_machine`
-  ADD CONSTRAINT `sk_machine_ibfk_1` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_mduser`
---
-ALTER TABLE `sk_mduser`
-  ADD CONSTRAINT `sk_mduser_ibfk_1` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 限制表 `sk_spec`
---
-ALTER TABLE `sk_spec`
-  ADD CONSTRAINT `sk_spec_ibfk_1` FOREIGN KEY (`ct_lot`) REFERENCES `sk_coating` (`ct_lot`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `sk_spec_ibfk_2` FOREIGN KEY (`create_user`) REFERENCES `sk_admin` (`realname`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+TRUNCATE TABLE `sk_spec_data`;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
