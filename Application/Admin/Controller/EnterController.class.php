@@ -20,4 +20,15 @@ class EnterController extends CommonController {
         $this->assign('enters',$webSiteData);
         $this->display();
     }
+	
+	public function add() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $webSiteData = D("Enter")->getEnterModel();
+        $this->assign('enterlens',$webSiteData);
+        $this->display();
+    }
 }

@@ -38,7 +38,7 @@ class LensController extends CommonController {
                 return show(0,'材质不能为空');
             }
             if($_POST['model']) {
-                return $this->lensSave($_POST);//调用保存方法
+                return $this->lensAdd($_POST);//调用保存方法
             }
         }else {
 			$lensMaterialType = C("LENS_MATERIAL");
@@ -49,11 +49,37 @@ class LensController extends CommonController {
         }
 		
     }
+	//修改型号模块
+	public function updateLens(){
+        if($_POST) {
+            if(!isset($_POST['model']) || !$_POST['model']) {
+                return show(0,'型号名不存在');
+            }
+            if(!isset($_POST['specs']) || !$_POST['specs']|| !is_numeric($_POST['specs'])) {
+                return show(0,'规格未填写或为非数字');
+            }
+            if(is_null($_POST['color']) ){
+                return show(0,'色相基准未选择');
+            }
+            if(is_null(!$_POST['material'])) {
+                return show(0,'材质不能为空');
+            }
+            if($_POST['model']) {
+                return $this->save($_POST);//调用保存方法
+            }
+        }else {
+			$lensMaterialType = C("LENS_MATERIAL");
+			$lensColorType = C("COLOR_TYPE");
+            $this->assign('lensColorType', $lensColorType);
+            $this->assign('lensMaterialType', $lensMaterialType);
+            $this->display();
+        }
+    }
 
 	//型号添加保存模块
-    public function lensSave($data) {
+    public function lensAdd($data) {
         try {
-            $id = D("Enter")->insertLens($data);
+            $id = D("Lens")->insertLens($data);
             if($id === false) {
                 return show(0, '添加新型号失败');
             }
@@ -63,9 +89,10 @@ class LensController extends CommonController {
         }
     }
 	
+	//型号修改保存模块
     public function save($data) {
-		$newsId = $data['news_id'];//获取id
-        unset($data['news_id']);
+		$newsId = $data['id'];//获取id
+        //unset($data['id']);
         try {
             $id = D("Lens")->updateLensById($newsId,$data);
             if($id === false) {
@@ -79,7 +106,6 @@ class LensController extends CommonController {
 	
     public function edit() {
         $newsId = $_GET['id'];
-		print_r($newsId);exit;
         if(!$newsId) {
             // 执行跳转
             $this->redirect('/admin.php?c=lens');

@@ -39,7 +39,7 @@ class LensModel extends Model {
 	
 	//查找id对应型号
 	public function find($id) {
-        return $this->_db->where('model='.$id)->find();
+        return $this->_db->where('id='.$id)->find();
     }
 	
     public function updateLensById($id,$data) {
@@ -50,7 +50,7 @@ class LensModel extends Model {
 			throw_exception('信息不完整');
         }
         $data['create_user'] =  getLoginRealname();
-        $data['update_time'] =  time();
+		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
 }

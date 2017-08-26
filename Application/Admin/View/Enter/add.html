@@ -26,114 +26,36 @@
         </div>
       </div>
       <div class="row">
-<!--第二步：添加如下 HTML 代码-->
-<table id="table_id_example" class="display">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-        </tr>
-    </thead>
-    <tbody>
-		<volist name="enters" id="enter">
-        <tr>
-            <td>{$enter.et_model}</td>
-            <td>{$enter.et_num}</td>
-        </tr>
-		</volist>
-        <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-        </tr>
-    </tbody>
-</table>
- 
- 
- 
-<!--第三步：初始化Datatables-->
-
-<?php
-		/*
-			$rows = 10; //行
-			$cols = 8; //列
-
-			$td_width = floor(100 / $cols)."%";
-			$tab_str = "<table border=\"1\" width=\"80%\" align=\"center\"class=\"table table-bordered table-hover singcms-table\">\n";
-
-			for ($i = 0; $i < $rows; $i++)
-			{
-				$tab_str.="<tr>\n";
-				for ($k = 0; $k < $cols; $k++)
-				{
-					$j = $i * $cols + $k; //单元格序列
-					$tab_str.= "<td width=\"$td_width\">$j</td>\n";
-				}
-				$tab_str.="</tr>\n";
-			}
-			$tab_str.="</table>\n";
-
-			print $tab_str;
-			*/
-		?>
-			
-			<!--
-              <table class="table table-bordered table-hover singcms-table">
-                <thead>
-                <tr>
-				  <th>
-					<div class="col-lg-6">
-					  <form class="form-horizontal" id="singcms-form">
-						  <label for="inputname" class="col-sm-2 control-label">入库日期:</label>
-						  <div class="col-sm-5">
-							<select class="form-control" name="color">
-							  <option value="">==请选择日期==</option>
-								<foreach name="lensColorType" item="color">
-								  <option value="{$key}">{$color}</option>
-								</foreach>
-							</select>
-						  </div>
-						</div>	
-				  </th>
-                  <!--<th>型号</th>
-				  <th>入库数量</th>--
-				  <th>
-					<div class="form-group">
-					  <label for="inputname" class="col-sm-2 control-label">成型担当:</label>
-					  <div class="col-sm-5">
-						<select class="form-control" name="material">
-							<option value="">==请选择出库担当==</option>
-								<foreach name="lensMaterialType" item="material">
-									<option value="{$key}">{$material}</option>
-								</foreach>
-						</select>
-					  </div>
-					</div>				  
-				  </th>
-                </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-						<div class="col-sm-5">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-						</div>
-					</td>
-                    <td>
-						<div class="col-sm-5">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-						</div>
-					</td>
-
-                  </tr>
-                </tbody>
-              </table>			
-			-->
+		<!--第二步：添加如下 HTML 代码-->
+		<table id="example" class="display" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<!--暂时不用--<th>序号</th>-->
+					<th>型号</th>
+					<th>入库板数</th>
+					<th>入库总数</th>
+					<!--暂时不用--<th>箱号</th>-->
+					<th>入库日期</th>
+					<th>入库时间</th>
+					<th>入库担当</th>
+					<th>出库担当</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="enterlens" id="enterlens">
+					<tr>
+						<!--暂时不用--<td>{$enter.enter_id}</td>-->
+						<td>{$enterlens.et_model}</td>
+						<td><input type="text" id="enternum" name="enternum"/></td>
+						<td><input type="text" id="enternum" name="enternum"/></td>
+						<td>时间</td>
+						<td>日期</td>
+						<td><foreach name="lensColorType" item="enteruser"><option value="{$key}">{$enteruser}</option></foreach></td>
+						<td><foreach name="lensColorType" item="mduser"><option value="{$key}">{$mduser}</option></foreach></td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
@@ -146,14 +68,35 @@
   </div>
 </div>
 <script>
-  var SCOPE = {
-    'save_url' : '/admin.php?c=enter&a=add',
-    'jump_url' : '/admin.php?c=enter&a=add',
-  };
-</script>
-<script>
-	$(document).ready( function () {
-		$('#table_id_example').DataTable();
-	} );
+var SCOPE = {
+	'save_url' : '/admin.php?c=enter&a=add',
+	'jump_url' : '/admin.php?c=enter',
+};
+$(document).ready(function() {
+	var table = $('#example').DataTable({
+		"iDisplayLength":100,
+		"oLanguage":{
+			"sProcessing":"正在加载中......",
+			"sLengthMenu":"每页显示 _MENU_ 条记录",
+			"sZeroRecords":"对不起，查询不到相关数据！",
+			"sEmptyTable":"表中无数据存在！",
+			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
+			"sSearch":"搜索",
+			"oPaginate":{
+				"sFirst":"首页",
+				"sPrevious":"上一页",
+				"sNext":"下一页",
+				"sLast":"末页"
+			}
+		},
+	});
+	$('button').click(function() {
+		var data = table.$('input, select').serialize();
+		alert("The following data would have been submitted to the server: \n\n" + data.substr(0, 120) + '...');
+		return false;
+	
+	});
+});
 </script>
 <include file="Index/footer" />

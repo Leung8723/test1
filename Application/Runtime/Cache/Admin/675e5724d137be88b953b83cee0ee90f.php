@@ -131,11 +131,11 @@
 						<td><?php echo ($enter["et_model"]); ?></td>
 						<td><?php echo ($enter["et_num"]); ?></td>
 						<td><?php echo ($enter["et_date"]); ?></td>
-						<td><?php echo (date("H:i",$enter["et_time"])); ?></td>
+						<td><?php echo (date("H:i:s",$enter["et_time"])); ?></td>
 						<!--暂时不用--<td><?php echo ($enter["et_box"]); ?></td>-->
 						<td><?php echo ($enter["create_user"]); ?></td>
 						<td><?php echo ($enter["md_user"]); ?></td>
-						<td><?php echo (date("H:i",$enter["create_time"])); ?></td>
+						<td><?php echo (date("H:i:s",$enter["create_time"])); ?></td>
 						<td><?php echo ($enter["update_time"]); ?></td>
 						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="<?php echo ($enter["news_id"]); ?>" ></span>
 						  <a href="javascript:void(0)" id="singcms-delete"  attr-id="<?php echo ($enter["news_id"]); ?>"  attr-message="删除">
@@ -156,6 +156,8 @@ var SCOPE = {
 $(document).ready( function () {
 	$('#table_id_example').DataTable({
 		"iDisplayLength":100,
+		"aaSorting":[[2,'desc'],[3,'desc'],[0,'asc']],
+		//"bSort":false,//排序开关
 		"oLanguage":{
 			"sProcessing":"正在加载中......",
 			"sLengthMenu":"每页显示 _MENU_ 条记录",

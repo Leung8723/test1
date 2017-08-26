@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-08-25 12:30:39
+-- Generation Time: 2017-08-26 05:57:59
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -54,7 +54,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `lastloginip`, `lastlogintime`, `email`, `group`, `status`, `create_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1503639519, 'jason.leung@163.com', 1, 1, 2147483647),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1503706291, 'jason.leung@163.com', 1, 1, 2147483647),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', NULL, 1498696655, NULL, 1, 1, 2147483647);
 
 -- --------------------------------------------------------
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   KEY `et_model` (`et_model`) USING BTREE,
   KEY `md_user` (`md_user`),
   KEY `et_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_enter`
@@ -283,7 +283,9 @@ INSERT INTO `sk_enter` (`enter_id`, `et_model`, `et_date`, `et_time`, `et_num`, 
 (5, 'MV1419L1-13', '2017-08-22', '16:40:21', 3950, 1, '丁林英', '王云', 1, 2147483647, NULL),
 (6, 'MV1419L2-13', '2017-08-22', '16:41:13', 3950, 2, '丁林英', '王云', 1, 2147483647, NULL),
 (7, 'AV1548L2-1', '2017-08-22', '16:41:46', 960, 3, '丁林英', '王云', 1, 2147483647, NULL),
-(8, 'AV1548L3-1', '2017-08-22', '16:42:15', 960, 3, '丁林英', '王云', 1, 2147483647, NULL);
+(8, 'AV1548L3-1', '2017-08-22', '16:42:15', 960, 3, '丁林英', '王云', 1, 2147483647, NULL),
+(9, 'AV1548L3-1', '2017-08-26', '16:42:15', 120, 1, '丁林英', '王云', 1, 214748364, 0),
+(10, 'AV1548L3-1', '2017-08-26', '16:42:15', 120, 1, '丁林英', '王云', 1, 214748364, NULL);
 
 -- --------------------------------------------------------
 
@@ -306,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `sk_lens` (
   KEY `model` (`model`),
   KEY `color` (`color`),
   KEY `create_user` (`create_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=127 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_lens`
@@ -318,7 +320,7 @@ TRUNCATE TABLE `sk_lens`;
 --
 
 INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user`, `create_time`, `update_time`) VALUES
-(16, 'AM1663L2-1', 49, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
+(16, 'AM1663L2-1', 49, '绿色#2', 'E48R', '梁国成', 1503711807, 1503711884),
 (17, 'AM1663L6-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
 (18, 'AM1964L2-1', 96, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
 (19, 'AM1964L2-2', 49, '绿色#2', 'E48R', '梁国成', 1503650000, NULL),
@@ -420,7 +422,10 @@ INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user
 (115, 'SN0847L3-1', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
 (116, 'SN0847L3-2', 214, '紫色#1', 'APEL', '梁国成', 1503650000, NULL),
 (117, 'SN0847L4-1', 136, '青绿#1', 'APEL', '梁国成', 1503650000, NULL),
-(118, 'SN0847L4-2', 136, '青绿#1', 'APEL', '梁国成', 1503650000, NULL);
+(118, 'SN0847L4-2', 136, '青绿#1', 'APEL', '梁国成', 1503650000, NULL),
+(120, 'AV1654L2-1', 44, '绿色#2', 'APEL', '梁国成', 1503706856, NULL),
+(121, 'AV1654L3-1', 60, '绿色#2', 'APEL', '梁国成', 1503706874, NULL),
+(122, 'AV1654L4-1', 96, '绿色#1', 'EP7000', '梁国成', 1503706896, 1503706896);
 
 -- --------------------------------------------------------
 

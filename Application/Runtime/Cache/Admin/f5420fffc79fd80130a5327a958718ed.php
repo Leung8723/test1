@@ -105,87 +105,34 @@
         </div>
       </div>
       <div class="row">
-<!--第二步：添加如下 HTML 代码-->
-<table id="table_id_example" class="display">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-        </tr>
-    </thead>
-    <tbody>
-		<?php if(is_array($enters)): $i = 0; $__LIST__ = $enters;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$enter): $mod = ($i % 2 );++$i;?><tr>
-            <td><?php echo ($enter["et_model"]); ?></td>
-            <td><?php echo ($enter["et_num"]); ?></td>
-        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-        <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-        </tr>
-    </tbody>
-</table>
- 
- 
- 
-<!--第三步：初始化Datatables-->
-
-<?php
- ?>
-			
-			<!--
-              <table class="table table-bordered table-hover singcms-table">
-                <thead>
-                <tr>
-				  <th>
-					<div class="col-lg-6">
-					  <form class="form-horizontal" id="singcms-form">
-						  <label for="inputname" class="col-sm-2 control-label">入库日期:</label>
-						  <div class="col-sm-5">
-							<select class="form-control" name="color">
-							  <option value="">==请选择日期==</option>
-								<?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$color): ?><option value="<?php echo ($key); ?>"><?php echo ($color); ?></option><?php endforeach; endif; ?>
-							</select>
-						  </div>
-						</div>	
-				  </th>
-                  <!--<th>型号</th>
-				  <th>入库数量</th>--
-				  <th>
-					<div class="form-group">
-					  <label for="inputname" class="col-sm-2 control-label">成型担当:</label>
-					  <div class="col-sm-5">
-						<select class="form-control" name="material">
-							<option value="">==请选择出库担当==</option>
-								<?php if(is_array($lensMaterialType)): foreach($lensMaterialType as $key=>$material): ?><option value="<?php echo ($key); ?>"><?php echo ($material); ?></option><?php endforeach; endif; ?>
-						</select>
-					  </div>
-					</div>				  
-				  </th>
-                </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-						<div class="col-sm-5">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-							<input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
-						</div>
-					</td>
-                    <td>
-						<div class="col-sm-5">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-							<input type="text" name="enternum" class="form-control" id="inputname" placeholder="请填写入库数量">
-						</div>
-					</td>
-
-                  </tr>
-                </tbody>
-              </table>			
-			-->
+		<!--第二步：添加如下 HTML 代码-->
+		<table id="example" class="display" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<!--暂时不用--<th>序号</th>-->
+					<th>型号</th>
+					<th>入库板数</th>
+					<th>入库总数</th>
+					<!--暂时不用--<th>箱号</th>-->
+					<th>入库日期</th>
+					<th>入库时间</th>
+					<th>入库担当</th>
+					<th>出库担当</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if(is_array($enterlens)): $i = 0; $__LIST__ = $enterlens;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$enterlens): $mod = ($i % 2 );++$i;?><tr>
+						<!--暂时不用--<td><?php echo ($enter["enter_id"]); ?></td>-->
+						<td><?php echo ($enterlens["et_model"]); ?></td>
+						<td><input type="text" id="enternum" name="enternum"/></td>
+						<td><input type="text" id="enternum" name="enternum"/></td>
+						<td>时间</td>
+						<td>日期</td>
+						<td><?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$enteruser): ?><option value="<?php echo ($key); ?>"><?php echo ($enteruser); ?></option><?php endforeach; endif; ?></td>
+						<td><?php if(is_array($lensColorType)): foreach($lensColorType as $key=>$mduser): ?><option value="<?php echo ($key); ?>"><?php echo ($mduser); ?></option><?php endforeach; endif; ?></td>
+					</tr><?php endforeach; endif; else: echo "" ;endif; ?>
+			</tbody>
+		</table>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
@@ -198,15 +145,36 @@
   </div>
 </div>
 <script>
-  var SCOPE = {
-    'save_url' : '/admin.php?c=enter&a=add',
-    'jump_url' : '/admin.php?c=enter&a=add',
-  };
-</script>
-<script>
-	$(document).ready( function () {
-		$('#table_id_example').DataTable();
-	} );
+var SCOPE = {
+	'save_url' : '/admin.php?c=enter&a=add',
+	'jump_url' : '/admin.php?c=enter',
+};
+$(document).ready(function() {
+	var table = $('#example').DataTable({
+		"iDisplayLength":100,
+		"oLanguage":{
+			"sProcessing":"正在加载中......",
+			"sLengthMenu":"每页显示 _MENU_ 条记录",
+			"sZeroRecords":"对不起，查询不到相关数据！",
+			"sEmptyTable":"表中无数据存在！",
+			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
+			"sSearch":"搜索",
+			"oPaginate":{
+				"sFirst":"首页",
+				"sPrevious":"上一页",
+				"sNext":"下一页",
+				"sLast":"末页"
+			}
+		},
+	});
+	$('button').click(function() {
+		var data = table.$('input, select').serialize();
+		alert("The following data would have been submitted to the server: \n\n" + data.substr(0, 120) + '...');
+		return false;
+	
+	});
+});
 </script>
 <script src="/Public/js/admin/common.js"></script>
 

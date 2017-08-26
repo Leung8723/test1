@@ -31,9 +31,10 @@
         <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
       </div>
       </br>
-		<table id="singcms-table" class="display">
+		<table id="lens-table" class="display">
 			<thead>
 			<tr>
+			  <th>ID</th>
 			  <th>型号</th>
 			  <th>规格</th>
 			  <th>色相</th>
@@ -47,14 +48,15 @@
 				<tbody>
 					<volist name="lens" id="len">
 					  <tr>
+						<td>{$len.id}</td>
 						<td>{$len.model}</td>
 						<td>{$len.specs}</td>
 						<td>{$len.color}</td>
 						<td>{$len.material}</td>
 						<td>{$len.create_user}</td>
 						<td>{$len.create_time|date="Y-m-d H:i",###}</td>
-						<td><if condition="$lens['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
-						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="singcms-edit" attr-id="{$len.id}" ></span>
+						<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
+						<td><span class="sing_cursor glyphicon glyphicon-edit" aria-hidden="true" id="lens-edit" attr-id=16></span>
 						  <a href="javascript:void(0)" id="singcms-delete"  attr-id="{$len.id}"  attr-message="删除">
 							<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 						  </a>
@@ -73,7 +75,7 @@ var SCOPE = {
 }
 //初始化DataTables
 $(document).ready( function () {
-	$('#singcms-table').DataTable({
+	$('#lens-table').DataTable({
 		"iDisplayLength":100,
 		"oLanguage":{
 			"sProcessing":"正在加载中......",

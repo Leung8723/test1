@@ -17,7 +17,17 @@ class EnterModel extends Model {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('enter_id desc')->select();
+		$res = $this->_db->where($data)->order('et_date desc,et_time desc,et_model asc')->select();
+		//print_r($res);exit;
+		return $res;
+    }
+	
+	public function getEnterModel() {
+		$data = array(
+			'status' => array('eq',1),
+		);
+		$res = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
+		//print_r($res);exit;
 		return $res;
     }
 

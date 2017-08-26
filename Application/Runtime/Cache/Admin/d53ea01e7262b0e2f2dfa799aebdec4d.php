@@ -91,7 +91,7 @@
               <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">现存型号列表</a>
             </li>
             <li class="active">
-              <i class="fa fa-edit"></i>添加新型号
+              <i class="fa fa-edit"></i>更改型号数据
             </li>
           </ol>
         </div>
@@ -142,7 +142,7 @@
 </div>
 <script>
   var SCOPE = {
-    'save_url' : '/admin.php?c=lens&a=save',
+    'save_url' : '/admin.php?c=lens&a=updateLens',
     'jump_url' : '/admin.php?c=lens',
   };
 </script>
