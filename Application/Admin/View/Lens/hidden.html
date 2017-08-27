@@ -21,16 +21,12 @@
               <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">产品目录</a>
             </li>
             <li class="active">
-              <i class="fa fa-table"></i>现存型号列表
+              <i class="fa fa-table"></i>已删除型号列表
             </li>
           </ol>
         </div>
       </div>
       <!-- /.row -->
-      <div>
-        <button  id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加新型号</button>
-        <button  onClick="window.open('/admin.php?c=lens&a=hidden','_self')" type="sumbit" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">已删型号列表</button>
-      </div>
       </br>
 	   <!-- <div class="display"> -->
 		<table id="lens-table" class="cell-border display">
@@ -68,15 +64,6 @@
    </div>
 </div>
 <script>
-var SCOPE = {
-'edit_url' : '/admin.php?c=lens&a=edit',
-'add_url' : '/admin.php?c=lens&a=add',
-'del_url' : '/admin.php?c=lens&a=del',
-'hidden_url' : '/admin.php?c=lens&a=hidden',
-}
-function jump(){
-	;
-}
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
@@ -86,7 +73,7 @@ $(document).ready( function () {
 				"class":"but_xq",
 				"data":null,
 				"bSortable":false,
-				"defaultContent":"&nbsp;&nbsp;<a id=\"edit\" href=\"#\">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id=\"del\"  href=\"#\">删除</a>"
+				"defaultContent":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id=\"del\"  href=\"#\">恢复</a>"
 		}],
 		"columnDefs":[{
 				"visible": false,
@@ -111,16 +98,10 @@ $(document).ready( function () {
 			}
 		}
 	});
-	//修改
-	$('#lens-table tbody').on( 'click', 'a#edit', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		var url = SCOPE.edit_url + '&id=' + data[0];
-		window.location.href=url;
-	});
 	//删除
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0});
+		$.post("/admin.php?c=lens&a=del", {id:data[0],status:1});
 		table
 			.order([[1,'asc']])
 			.draw(false);

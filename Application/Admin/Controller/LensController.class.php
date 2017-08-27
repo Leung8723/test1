@@ -47,7 +47,18 @@ class LensController extends CommonController {
             $this->assign('lensMaterialType', $lensMaterialType);
             $this->display();
         }
-		
+    }
+	    
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+
+        $webSiteData = D("Lens")->getHiddenLensData();
+        $this->assign('lens',$webSiteData);
+        $this->display();
     }
 	//修改型号模块
 	public function updateLens(){
@@ -122,7 +133,7 @@ class LensController extends CommonController {
         $this->display();
     }
 	
-    public function setStatus() {
+    public function del() {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
@@ -130,7 +141,7 @@ class LensController extends CommonController {
                 if (!$id) {
                     return show(0, 'ID不存在');
                 }
-                $res = D("News")->updateStatusById($id, $status);
+                $res = D("Lens")->updateStatusById($id, $status);
                 if ($res) {
                     return show(1, '操作成功');
                 } else {
