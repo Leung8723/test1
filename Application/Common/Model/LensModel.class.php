@@ -3,8 +3,8 @@ namespace Common\Model;
 use Think\Model;
 
 /**
- * 文章内容model操作
- * @author  singwa
+ * 型号管理model操作
+ * @author  Jason
  */
 class LensModel extends Model {
     private $_db = '';

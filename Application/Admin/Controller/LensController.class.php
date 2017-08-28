@@ -5,9 +5,8 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
 /**
- * 文章内容管理
+ * 型号管理
  */
 class LensController extends CommonController {
 

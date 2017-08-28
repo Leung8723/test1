@@ -27,7 +27,7 @@
       </div>
       <div class="row">
 		<!--第二步：添加如下 HTML 代码-->
-		<table id="example" class="display" cellspacing="0" width="100%">
+		<table id="example" class="cell-border display">
 			<thead>
 				<tr>
 					<!--暂时不用--<th>序号</th>-->
@@ -46,8 +46,8 @@
 					<tr>
 						<!--暂时不用--<td>{$enter.enter_id}</td>-->
 						<td>{$enterlens.et_model}</td>
-						<td><input type="text" id="enternum" name="enternum"/></td>
-						<td><input type="text" id="enternum" name="enternum"/></td>
+						<td><input type="text" id="row-jig-num" name="row-jig-num" value=""/></td>
+						<td><input type="text" id="row-enter-num" name="row-enter-num" value=""/></td>
 						<td>时间</td>
 						<td>日期</td>
 						<td><foreach name="lensColorType" item="enteruser"><option value="{$key}">{$enteruser}</option></foreach></td>
@@ -92,9 +92,10 @@ $(document).ready(function() {
 		},
 	});
 	$('button').click(function() {
-		var data = table.$('input, select').serialize();
-		alert("The following data would have been submitted to the server: \n\n" + data.substr(0, 120) + '...');
-		return false;
+		var data = table.$('input, select');
+		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0});
+		alert("The following data would have been submitted to the server: \n\n" + data + 'aaa');
+		//return false;
 	
 	});
 });

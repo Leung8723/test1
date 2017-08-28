@@ -7,6 +7,7 @@
 	
 	<!-- DataTables CSS -->	  
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
 	<!-- DataTables -->
@@ -74,9 +75,6 @@ var SCOPE = {
 'del_url' : '/admin.php?c=lens&a=del',
 'hidden_url' : '/admin.php?c=lens&a=hidden',
 }
-function jump(){
-	;
-}
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
@@ -86,7 +84,7 @@ $(document).ready( function () {
 				"class":"but_xq",
 				"data":null,
 				"bSortable":false,
-				"defaultContent":"&nbsp;&nbsp;<a id=\"edit\" href=\"#\">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id=\"del\"  href=\"#\">删除</a>"
+				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"button button-primary button-rounded button-tiny\">edit</a>&nbsp;&nbsp<a id=\"del\"  href=\"#\" class=\"button button-caution button-rounded button-tiny\">del</a>"
 		}],
 		"columnDefs":[{
 				"visible": false,
