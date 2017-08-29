@@ -18,22 +18,16 @@ class EnterModel extends Model {
 			'status' => array('eq',1),
 		);
 		$res = $this->_db->where($data)->order('et_date desc,et_time desc,et_model asc')->select();
-		//print_r($res);exit;
 		return $res;
     }
-	
-	public function getEnterModel() {
+	//筛选入库数非空型号列表
+	public function getNotNullModel() {
 		$data = array(
 			'status' => array('eq',1),
+			'et_num' => array('neq',0),
 		);
 		$res = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
-		//print_r($res);exit;
 		return $res;
-    }
-
-    public function find($id) {
-        $data = $this->_db->where('et_model='.$id)->find();
-        return $data;
     }
 
     public function updateStatusById($id, $status) {

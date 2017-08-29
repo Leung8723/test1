@@ -27,7 +27,7 @@ class EnterController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $webSiteData = D("Enter")->getEnterModel();
+        $webSiteData = D("Enter")->getNotNullModel();
         $this->assign('enterlens',$webSiteData);
         $this->display();
     }
