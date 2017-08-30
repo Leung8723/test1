@@ -16,8 +16,8 @@ class EnterController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $webSiteData = D("Enter")->getEnterData();
-        $this->assign('enters',$webSiteData);
+        $enterdata = D("Enter")->getEnterData();
+        $this->assign('enters',$enterdata);
         $this->display();
     }
 	
@@ -27,8 +27,12 @@ class EnterController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $webSiteData = D("Enter")->getNotNullModel();
-        $this->assign('enterlens',$webSiteData);
+        //$lensModelData = D("Lens")->getLensData();//获取全部存在型号
+        $lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
+        $enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
+        $this->assign('enterlens',$lensModelData);
+        $this->assign('lastlens',$enterLastDate);
+		//print_r($lensModelData);exit;
         $this->display();
     }
 }

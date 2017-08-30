@@ -3,74 +3,133 @@
 <div id="wrapper">
   <include file="Index/nav"/>
   <div id="page-wrapper">
-    <div class="container-fluid">
-      <!-- Page Heading -->
+    <div class="container-fluid" >
+	
+<!-- DataTables CSS -->	  
+<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css" media="all">
+<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 
-	<!-- DataTables CSS -->	  
-	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
-	<link rel="stylesheet" type="text/css" href="../Public/js/Datatables/jquery.dataTables.min.css">
-	<!-- jQuery -->
-	<script type="text/javascript" charset="utf8" src="../Public/js/jquery.js"></script>
-	<script type="text/javascript" charset="utf8" src="../Public/css/layui/layui.js"></script>
-	<!-- DataTables -->
-	<script type="text/javascript" charset="utf8" src="../Public/js/Datatables/jquery.dataTables.min.js"></script>
-	<!-- 1 -->
-      <div class="row">
-        <div class="col-lg-12">
-          <ol class="breadcrumb">
-            <li>
-              <i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
-            </li>
-            <li class="active">
-              <i class="fa fa-edit"></i>添加新型号
-            </li>
-          </ol>
-        </div>
-      </div>
-	  <!-- <input type="text" class="layui-input" id="test1"> -->
-		<!--第二步：添加如下 HTML 代码-->
-		  <div class="layui-row">
-			<div class="layui-col-xs6 layui-col-sm3 layui-col-md3"><input type="text" name="title" required lay-verify="required" placeholder="入库型号" autocomplete="off" class="layui-input"></div>
-			<div class="layui-col-xs6 layui-col-sm3 layui-col-md3"><input type="text" name="title" required lay-verify="required" placeholder="入库数量" autocomplete="off" class="layui-input"></div>
-			
+		<!-- Page Heading -->
+		</br></br></br></br>
+		<div class="row">
+		  <div class="col-lg-12">
+			<ol class="breadcrumb">
+		      <li>
+				<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
+			  </li>
+			  <li class="active">
+				<i class="fa fa-edit"></i>添加新型号
+			  </li>
+			</ol>
 		  </div>
+		</div>
+		</br>
+	<!-- /.row -->
+		<div class="layui-row">
+		<form class="layui-form" action="">
+		   <div class="layui-form-item">
+			<div class="layui-col-md3">
+			  <label class="layui-form-label">日期</label>
+				<div class="layui-input-inline">
+				  <input class="layui-input" id="date01" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+				</div>
+			</div>
+			<!-- 1 -->
+			</br></br></br>
+			<tr>
+			  <td>
+				<div class="layui-col-md3">
+				  <label class="layui-form-label">型号</label>
+				  <div class="layui-input-inline">
+					<select name="model" lay-verify="required" lay-search>
+					  <volist name="enterlens" id="lens">
+						<option value="{$lens.et_model}">{$lens.model}</option>
+					  </volist>
+					</select>
+				  </div>
+				</div>
+			  </td>
+			  <td>
+				<div class="layui-col-md3">
+				<label class="layui-form-label">数量</label>
+				  <div class="layui-input-inline">
+					<input name="etnum01 lay-verify="number" autocomplete="off" class="layui-input" type="text">
+				  </div>
+				</div>
+			  </td>
+			  <td>
+				<div class="layui-col-md6">
+				<label class="layui-form-label">备注</label>
+				  <div class="layui-input-inline">
+					<input name="etnum01 lay-verify="text" autocomplete="off" class="layui-input" type="text">
+				  </div>
+				</div>
+			  </td>
+			  <!-- 2 -->
+			  <td>
+				<div class="layui-col-md3">
+				  <label class="layui-form-label">型号</label>
+				  <div class="layui-input-inline">
+					<select name="model" lay-verify="required" lay-search>
+					  <volist name="enterlens" id="lens">
+						<option value="{$lens.et_model}">{$lens.model}</option>
+					  </volist>
+					</select>
+				  </div>
+				</div>
+			  </td>
+			  <td>
+				<div class="layui-col-md3">
+				<label class="layui-form-label">数量</label>
+				  <div class="layui-input-inline">
+					<input name="etnum01 lay-verify="number" autocomplete="off" class="layui-input" type="text">
+				  </div>
+				</div>
+			  </td>
+			  <td>
+				<div class="layui-col-md6">
+				<label class="layui-form-label">备注</label>
+				  <div class="layui-input-inline">
+					<input name="etnum01 lay-verify="text" autocomplete="off" class="layui-input" type="text">
+				  </div>
+				</div>
+			  </td>
+			  
+			</tr>
+			</br></br></br></br>
+			
+		    <div class="layui-form-item">
+			  <div class="layui-input-block">
+			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			  </div>
+		    </div>
+		  </div>
+		</form>
 		  
-		<table id="1" class="cell-border row-border hover order-column" cellspacing="0" width="50%">
-			<thead>
-				<tr>
-					<!--暂时不用--<th>序号</th>-->
-					
-					</th>
-					<th>入库总数</th>
-					<!--暂时不用--<th>箱号</th>-->
-					<!-- <th>入库担当</th> -->
-					<!-- <th>出库担当</th> -->
-				</tr>
-			</thead>
-			<tbody>
-				<volist name="enterlens" id="enterlens">
-					<tr>
-						<!--暂时不用--<td>{$enter.enter_id}</td>-->
-						<td>{$enterlens.et_model}</td>
-						<td><input type="text" id="row-jig-num" name="row-jig-num" value=""/></td>
-						<td><input type="text" id="row-enter-num" name="row-enter-num" value=""/></td>
-						<!-- <td><foreach name="lensColorType" item="enteruser"><option value="{$key}">{$enteruser}</option></foreach></td> -->
-						<!-- <td><foreach name="lensColorType" item="mduser"><option value="{$key}">{$mduser}</option></foreach></td> -->
-					</tr>
-				</volist>
-			</tbody>
-		</table>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
-              </div>
-            </div>
-          </form>
-      <!-- </div> -->
+		</div>
     </div>
+    <!-- /.container-fluid -->
   </div>
+  <!-- /#page-wrapper -->
 </div>
+<!-- /#wrapper -->
 <script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+});
+
 var SCOPE = {
 	'save_url' : '/admin.php?c=enter&a=add',
 	'jump_url' : '/admin.php?c=enter',
@@ -106,15 +165,10 @@ $(document).ready(function() {
 
 layui.use('laydate', function(){
   var laydate = layui.laydate;
-  
   //执行一个laydate实例
   laydate.render({
-    elem: '#test1' //指定元素
+    elem: '#date01' //指定元素
 	,type: 'date'
-  });
-  laydate.render({
-    elem: '#test2' //指定元素
-	,type: 'time'
   });
 });
 </script>

@@ -29,7 +29,16 @@ class EnterModel extends Model {
 		$res = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
 		return $res;
     }
-
+	//查找最后一条记录
+    public function getLastDate() {
+		$data = array(
+			'status' => array('eq',1),
+		);
+		$data1 = $this->_db->where($data)->order('et_model desc')->field('et_date')->limit('1')->select();
+		$data2 = $data1[0];
+		$res = $data2['et_date'];
+		return $res;
+    }
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception('status不能为非数字');
