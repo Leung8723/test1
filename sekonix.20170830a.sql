@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-08-27 09:58:10
+-- Generation Time: 2017-08-31 03:16:50
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -54,7 +54,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `lastloginip`, `lastlogintime`, `email`, `group`, `status`, `create_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1503799067, 'jason.leung@163.com', 1, 1, 2147483647),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', NULL, 1504060519, 'jason.leung@163.com', 1, 1, 2147483647),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', NULL, 1498696655, NULL, 1, 1, 2147483647),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', NULL, NULL, NULL, 0, 1, 0);
 
