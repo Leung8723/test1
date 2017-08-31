@@ -29,7 +29,7 @@ class EnterModel extends Model {
 		$res = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
 		return $res;
     }
-	//查找最后一条记录
+	//查找最后一条入库记录
     public function getLastDate() {
 		$data = array(
 			'status' => array('eq',1),
