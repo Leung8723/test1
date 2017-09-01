@@ -26,7 +26,8 @@ class EnterModel extends Model {
 			'status' => array('eq',1),
 			'et_num' => array('neq',0),
 		);
-		$res = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
+		$lensdata = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
+		$res = array_column($lensdata,'et_model');
 		return $res;
     }
 	//查找最后一条入库记录

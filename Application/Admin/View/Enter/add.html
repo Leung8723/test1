@@ -40,15 +40,28 @@
 				</div>
 			</div>
 			<!-- 1 -->
+
+			  <!-- <td> -->
+				<!-- <div class="layui-col-md3"> -->
+				  <!-- <label class="layui-form-label">型号</label> -->
+				  <!-- <div class="layui-input-inline"> -->
+					<!-- <input name="<?php echo "model".$keynum?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" lay-search> -->
+				  <!-- </div> -->
+				<!-- </div> -->
+			  <!-- </td> -->
+			<?php 
+				foreach ($enterlens as $key => $value){
+					$keynum =$key + 1;
+			?>
 			</br></br></br>
 			<tr>
 			  <td>
 				<div class="layui-col-md3">
 				  <label class="layui-form-label">型号</label>
 				  <div class="layui-input-inline">
-					<select name="model" lay-verify="required" lay-search>
+					<select name="<?php echo "model".$keynum ?>" lay-verify="required" lay-search>
 					  <volist name="enterlens" id="lens">
-						<option value="{$lens.et_model}">{$lens.et_model}</option>
+						<option value="<?php echo $enterlens[$key]?>" <?php if($keynum=$lens['id']){echo "selected";} ?>>{$lens}</option>
 					  </volist>
 					</select>
 				  </div>
@@ -58,7 +71,7 @@
 				<div class="layui-col-md3">
 				<label class="layui-form-label">数量</label>
 				  <div class="layui-input-inline">
-					<input name="etnum01" lay-verify="number" autocomplete="off" class="layui-input" type="text">
+					<input name="<?php echo "etnum".$keynum ?>" required lay-verify="number" autocomplete="off" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
@@ -66,41 +79,12 @@
 				<div class="layui-col-md6">
 				<label class="layui-form-label">备注</label>
 				  <div class="layui-input-inline">
-					<input name="etnum01" lay-verify="text" autocomplete="off" class="layui-input" type="text">
-				  </div>
-				</div>
-			  </td>
-			  <!-- 2 -->
-			  <td>
-				<div class="layui-col-md3">
-				  <label class="layui-form-label">型号</label>
-				  <div class="layui-input-inline">
-					<select name="model" lay-verify="required" lay-search>
-					  <volist name="enterlens" id="lens">
-						<option value="{$lens.et_model}">{$lens.et_model}</option>
-					  </volist>
-					</select>
-				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md3">
-				<label class="layui-form-label">数量</label>
-				  <div class="layui-input-inline">
-					<input name="etnum01" lay-verify="number" autocomplete="off" class="layui-input" type="text">
-				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md6">
-				<label class="layui-form-label">备注</label>
-				  <div class="layui-input-inline">
-					<input name="etnum01" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+					<input name="<?php echo "tips".$keynum ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
 			</tr>
-
+			<?php }?>
 		  </div>
 		</form>
 		    <div class="layui-form-item">
