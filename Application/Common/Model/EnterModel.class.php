@@ -40,6 +40,7 @@ class EnterModel extends Model {
 		$res = $data2['et_date'];
 		return $res;
     }
+	
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception('status不能为非数字');

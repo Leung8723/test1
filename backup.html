@@ -1,0 +1,42 @@
+<html>
+
+
+
+getField('et_model',true)
+
+
+{"date01":"2017-08-22","model1":"AV1548L2-1","etnum1":"1","tips1":"2","model2":"AV1548L3-1","etnum2":"3","tips2":"4","model3":"MV1419L1-13","etnum3":"5","tips3":"6","model4":"MV1419L2-13","etnum4":"7","tips4":"8"}
+
+
+<td>
+  <div class="layui-bg-red layui-inputlayui-col-md3">
+	<?php 
+	  if("2017-7-28"!="2017-8-22"){
+		echo "您确定要对"."2017-8-22"."的日志进行入库操作吗?";
+	}?>
+  </div>
+</td>
+
+
+
+var SCOPE = {
+	'save_url' : '/admin.php?c=enter&a=add',
+	'jump_url' : '/admin.php?c=enter',
+
+	
+	
+
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    //layer.msg(JSON.stringify(data.field));
+	$.post("/admin.php?c=enter&a=add", data.field,function(res){;
+    return false;
+  });
+});
+
+
+
+
+</html>

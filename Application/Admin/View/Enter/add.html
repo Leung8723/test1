@@ -23,47 +23,39 @@
 				<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
 			  </li>
 			  <li class="active">
-				<i class="fa fa-edit"></i>添加新型号
+				<i class="fa fa-edit"></i>产品入库
 			  </li>
 			</ol>
 		  </div>
 		</div>
 		</br>
 	<!-- /.row -->
-		<div class="layui-row">
+
 		<form class="layui-form" action="">
+		  <div class="layui-row">
 		   <div class="layui-form-item">
+		   <td>
 			<div class="layui-col-md3">
 			  <label class="layui-form-label">日期</label>
 				<div class="layui-input-inline">
-				  <input class="layui-input" id="date01" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+				  <input class="layui-input" name="date01" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+
 				</div>
 			</div>
+			</td>
 			<!-- 1 -->
-
-			  <!-- <td> -->
-				<!-- <div class="layui-col-md3"> -->
-				  <!-- <label class="layui-form-label">型号</label> -->
-				  <!-- <div class="layui-input-inline"> -->
-					<!-- <input name="<?php echo "model".$keynum?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" lay-search> -->
-				  <!-- </div> -->
-				<!-- </div> -->
-			  <!-- </td> -->
 			<?php 
 				foreach ($enterlens as $key => $value){
 					$keynum =$key + 1;
 			?>
 			</br></br></br>
 			<tr>
+			
 			  <td>
 				<div class="layui-col-md3">
-				  <label class="layui-form-label">型号</label>
+				  <label for="inputId" class="layui-form-label">型号</label>
 				  <div class="layui-input-inline">
-					<select name="<?php echo "model".$keynum ?>" lay-verify="required" lay-search>
-					  <volist name="enterlens" id="lens">
-						<option value="<?php echo $enterlens[$key]?>" <?php if($keynum=$lens['id']){echo "selected";} ?>>{$lens}</option>
-					  </volist>
-					</select>
+					<input name="<?php echo "model".$keynum?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" lay-search>
 				  </div>
 				</div>
 			  </td>
@@ -93,7 +85,7 @@
 			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			  </div>
 		    </div>		  
-		</div>
+		  </div>
     </div>
     <!-- /.container-fluid -->
   </div>
@@ -102,18 +94,30 @@
 <!-- /#wrapper -->
 <script>
 //Demo
-layui.use('form', function(){
-  var form = layui.form;
-  //监听提交
-  form.on('submit(formDemo)', function(data){
-    layer.msg(JSON.stringify(data.field));
-    return false;
-  });
+layui.use(['form'],function(){
+	var form = layui.form();
+	form.on('submit(formDemo)',function(data){
+		
+		var loading2 = layer.load();
+		$.ajax({
+			url:'/admin.php?c=enter&a=add',
+			type:"POST",
+			data:data.field,
+			dataType:"json",
+			success:function(json){
+				layer.close(loading2);
+				alert(json.status);
+			},
+			error:function(res){
+				alert(res);
+			}
+		});
+		return false;
+	});
 });
-
 var SCOPE = {
 	'save_url' : '/admin.php?c=enter&a=add',
-	'jump_url' : '/admin.php?c=enter',
+	'jump_url' : '/admin.php?c=enter&a=add',
 };
 $(document).ready(function() {
 	var table = $('#example').DataTable({
@@ -134,13 +138,6 @@ $(document).ready(function() {
 				"sLast":"末页"
 			}
 		},
-	});
-	$('button').click(function() {
-		var data = table.$('input, select');
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0});
-		alert("The following data would have been submitted to the server: \n\n" + data + 'aaa');
-		//return false;
-	
 	});
 });
 
