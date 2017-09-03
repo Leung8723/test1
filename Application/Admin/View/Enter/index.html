@@ -8,6 +8,7 @@
 	<!-- DataTables CSS -->	  
 	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
 	<!-- DataTables -->
@@ -33,12 +34,13 @@
 	  
       <!-- /.row -->
 		<a href="/admin.php?c=enter&a=add" class="layui-btn">
-		  <i class="layui-icon">&#xe654</i>产品入库
+		  <i class="layui-icon ">&#xe654</i>产品入库
 		</a>
       </br>
       </br>
       </br>
-		<table id="table_id_example" class="cell-border row-border hover order-column" cellspacing="0" width="100%">
+	  <form>
+		<table id="table_id_example" class="cell-border stripe hover order-column" cellspacing="0" width="100%">
 			<thead>
 			<tr>
 			  <!--暂时不用--<th>序号</th>-->
@@ -72,6 +74,7 @@
 					</volist>
 				</tbody>
 		</table>
+	  </form>
     </div>
    </div>
 </div>
@@ -93,6 +96,17 @@ $(document).ready( function () {
 				"bSortable":false,
 				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a>&nbsp;&nbsp<a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
 		}],
+		buttons: [
+			{
+				extend: 'excelHtml5',
+				text: 'Save current page',
+				exportOptions: {
+					modifier: {
+						page: 'current'
+					}
+				}
+			}
+		],
 		"columnDefs":[{
 				"visible": false,
 				"targets": -1

@@ -1085,7 +1085,8 @@ a cite {
 	border-radius: 2px;
 	cursor: pointer;
 	opacity: .9;
-	filter: alpha(opacity=90)
+	filter: alpha(opacity=90);
+	text-decoration:none
 }
 
 .layui-btn:hover {
@@ -1111,7 +1112,8 @@ a cite {
 	margin-right: 3px;
 	font-size: 18px;
 	vertical-align: bottom;
-	vertical-align: middle\9
+	vertical-align: middle\9;
+	text-decoration:none
 }
 
 .layui-btn-primary {

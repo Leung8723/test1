@@ -20,11 +20,18 @@ class EnterController extends CommonController {
         $this->assign('enters',$enterdata);
         $this->display();
     }
+
+	public function enter(){
+		if($_POST) {
+			print_r($_POST);exit;
+			//return $this->enterAdd($_POST);//调用保存方法
+		}
+	}
 	
 	public function add() {
-
-		if($_POST['date01']) {
-			return $this->enterAdd($_POST);//调用保存方法
+		if($_POST) {
+			print_r(json_decode($_POST));exit;
+			//return $this->enterAdd($_POST);//调用保存方法
         }else {
 			//$lensModelData = D("Lens")->getLensData();//获取全部存在型号
 			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
@@ -35,6 +42,7 @@ class EnterController extends CommonController {
 			$this->display();
 		}
 	}
+	
 	public function enterAdd($data){
 		print_r($data);exit;
         try {

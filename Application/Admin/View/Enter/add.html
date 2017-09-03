@@ -38,7 +38,7 @@
 			<div class="layui-col-md3">
 			  <label class="layui-form-label">日期</label>
 				<div class="layui-input-inline">
-				  <input class="layui-input" id="date01" name="date01" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+				  <input class="layui-input" id="date" name="date" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
 
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 			<!-- 1 -->
 			<?php 
 				foreach ($enterlens as $key => $value){
-					$keynum =$key + 1;
+					//$keynum =$key++;
 			?>
 			</br></br></br>
 			<tr>
@@ -55,7 +55,7 @@
 				<div class="layui-col-md3">
 				  <label for="inputId" class="layui-form-label">型号</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "model".$keynum?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" lay-search>
+					<input name="<?php echo "model".$key?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly">
 				  </div>
 				</div>
 			  </td>
@@ -63,7 +63,7 @@
 				<div class="layui-col-md3">
 				<label class="layui-form-label">数量</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "etnum".$keynum ?>" required lay-verify="number" autocomplete="off" class="layui-input" type="text">
+					<input name="<?php echo "etnum".$key ?>" lay-verify="number" autocomplete="off" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
@@ -71,14 +71,14 @@
 				<div class="layui-col-md6">
 				<label class="layui-form-label">备注</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "tips".$keynum ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+					<input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
 			</tr>
 			<?php }?>
 		  </div>
-		</form>
+
 		    <div class="layui-form-item">
 			  <div class="layui-input-block">
 			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -86,6 +86,7 @@
 			  </div>
 		    </div>		  
 		  </div>
+		</form>  
     </div>
     <!-- /.container-fluid -->
   </div>
@@ -94,31 +95,16 @@
 <!-- /#wrapper -->
 <script>
 //Demo
-layui.use(['form'],function(){
-	var form = layui.form();
-	form.on('submit(formDemo)',function(data){
-		
-		var loading2 = layer.load();
-		$.ajax({
-			url:'/admin.php?c=enter&a=add',
-			type:"POST",
-			data:data.field,
-			dataType:"json",
-			success:function(json){
-				layer.close(loading2);
-				alert(json.status);
-			},
-			error:function(res){
-				alert(res);
-			}
-		});
-		return false;
-	});
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
 });
-var SCOPE = {
-	'save_url' : '/admin.php?c=enter&a=add',
-	'jump_url' : '/admin.php?c=enter&a=add',
-};
+
 $(document).ready(function() {
 	var table = $('#example').DataTable({
 		"iDisplayLength":100,
@@ -145,7 +131,7 @@ layui.use('laydate', function(){
   var laydate = layui.laydate;
   //执行一个laydate实例
   laydate.render({
-    elem: '#date01' //指定元素
+    elem: '#date' //指定元素
 	,type: 'date'
   });
 });
