@@ -37,7 +37,29 @@ class EnterController extends CommonController {
 	
 	public function enterAdd($data,$length){
         try {
-            $id = D("Enter")->insertEnter($data,$length);
+            //$id = D("Enter")->insertEnter($data,$length);
+			$data['et_time'] = time();
+			$data['et_box'] = NULL;
+			$data['create_user'] = '梁国成';
+			$data['md_user'] =  '王云';
+			$data['status'] = 1;
+			$data['create_time'] = time();
+			$data['update_time'] = NULL;
+			$arr = array();
+			for($i=0;$i<$length;$i++){
+				$model='model'.$i;
+				$etnum='etnum'.$i;
+				$arr = array(NULL,$data[$model],$data['date'],$data['et_time'],$data[$etnum],NULL,$data['create_user'],$data['md_user'],'1',$data['create_time'],NULL);
+			}
+			print_r($arr);exit;
+			foreach($arr as $row){
+				return $this->_db->add($arr);//插入数据
+			}			
+			
+			
+			
+			
+			
             if($id === false) {
                 return show(0, '产品入库失败');
             }

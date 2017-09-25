@@ -65,10 +65,10 @@ class EnterModel extends Model {
         $data['update_time'] =  NULL;
 		$arr = array();
 		for($i=0;$i<$length;$i++){
-			$arr[] = array(NULL,$data['model'.$i],$data['date'],$data['et_time'],$data['etnum'.$i],NULL,$data['create_user'],$data['md_user'],'1',$data['create_time'],NULL);
+			$arr[i] = array(NULL,$data['model'.$i],$data['date'],$data['et_time'],$data['etnum'.$i],NULL,$data['create_user'],$data['md_user'],'1',$data['create_time'],NULL);
 		}
 		foreach($arr as $row){
-			$this->_db->add($arr);//插入数据
+			return $this->_db->add($arr);//插入数据
 		}
 	}
 }
