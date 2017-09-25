@@ -13,7 +13,6 @@
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
 	<!-- DataTables -->
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
-	
 	<!-- Page Heading -->
 	</br>
 	</br>
@@ -33,6 +32,11 @@
       </div>
 	  
       <!-- /.row -->
+		<div class="layui-form-item">
+		  <div class="layui-input-block">
+			<button class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon ">&#xe654</i>立即提交</button>
+		  </div>
+		</div>
 		<a href="/admin.php?c=enter&a=add" class="layui-btn">
 		  <i class="layui-icon ">&#xe654</i>产品入库
 		</a>
@@ -94,7 +98,7 @@ $(document).ready( function () {
 				"class":"but_xq",
 				"data":null,
 				"bSortable":false,
-				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a>&nbsp;&nbsp<a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
+				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
 		}],
 		buttons: [
 			{
@@ -111,6 +115,7 @@ $(document).ready( function () {
 				"visible": false,
 				"targets": -1
 		}],
+		"text-align":"center",
 		"iDisplayLength":100,
 		"vertical-align":"middle",
 		"ordering":true,

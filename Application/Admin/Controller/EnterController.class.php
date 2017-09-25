@@ -21,36 +21,27 @@ class EnterController extends CommonController {
         $this->display();
     }
 
-	public function enter(){
-		if($_POST) {
-			print_r($_POST);exit;
-			//return $this->enterAdd($_POST);//调用保存方法
-		}
-	}
-	
 	public function add() {
 		if($_POST) {
-			print_r(json_decode($_POST));exit;
-			//return $this->enterAdd($_POST);//调用保存方法
+			$length = (count($database)-1)/3;
+			//print_r($length);exit;
+			return $this->enterAdd($_POST,$length);
         }else {
-			//$lensModelData = D("Lens")->getLensData();//获取全部存在型号
 			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
-			//print_r($lensModelData);exit;
 			$this->display();
 		}
 	}
 	
-	public function enterAdd($data){
-		print_r($data);exit;
+	public function enterAdd($data,$length){
         try {
-            $id = D("Lens")->insertLens($data);
+            $id = D("Enter")->insertEnter($data,$length);
             if($id === false) {
-                return show(0, '添加新型号失败');
+                return show(0, '产品入库失败');
             }
-            return show(1, $_POST['model'].' 添加新型号成功');
+            return show(1, '产品入库成功');
         }catch(Exception $e) {
             return show(0, $e->getMessage());
 		}

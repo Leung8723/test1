@@ -31,7 +31,8 @@ table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTabl
 
 table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc,table.dataTable thead .sorting_asc_disabled,table.dataTable thead .sorting_desc_disabled {
 	background-repeat: no-repeat;
-	background-position: center right
+	background-position: center right;
+	text-align:center
 }
 
 table.dataTable thead .sorting {
@@ -63,7 +64,9 @@ table.dataTable tbody tr.selected {
 }
 
 table.dataTable tbody th,table.dataTable tbody td {
-	padding: 8px 10px
+	padding: 8px 10px;
+	text-align:center
+}  
 }
 
 table.dataTable.row-border tbody th,table.dataTable.row-border tbody td,table.dataTable.display tbody th,table.dataTable.display tbody td {

@@ -30,6 +30,7 @@ class LensModel extends Model {
 	//插入型号模块
     public function insertLens($data) {
         if(!$data || !is_array($data)) {
+			throw_exception('信息不完整');
         }
         $data['create_user'] =  getLoginRealname();
 		$data['create_time']  = time();

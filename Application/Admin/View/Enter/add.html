@@ -31,7 +31,7 @@
 		</br>
 	<!-- /.row -->
 
-		<form class="layui-form" action="">
+		<form class="layui-form" method="post" action="">
 		  <div class="layui-row">
 		   <div class="layui-form-item">
 		   <td>
@@ -84,7 +84,7 @@
 			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
 			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			  </div>
-		    </div>		  
+		    </div>
 		  </div>
 		</form>  
     </div>
@@ -97,11 +97,11 @@
 //Demo
 layui.use('form', function(){
   var form = layui.form;
-  
   //监听提交
   form.on('submit(formDemo)', function(data){
-    layer.msg(JSON.stringify(data.field));
-    return false;
+    //layer.msg(JSON.stringify(data.field));
+    $.post("admin.php?c=enter&a=add",data.field);
+	//return false;
   });
 });
 
