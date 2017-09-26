@@ -51,26 +51,19 @@ class EnterModel extends Model {
         $data['status'] = $status;
         return $this->_db->where('enter_id='.$id)->save($data);
     }
-		
-	public function insertEnter($data,$length){
+	
+	public function insertEnter($data){
 		if(!data||!is_array($data)){
 			throw_exception('入库信息不合法');
 		}
-		$data['et_time']  = time();
-		$data['et_box']  = NULL;
-		$data['create_user'] =  getLoginRealname();
-		$data['md_user'] =  getLoginRealname();
-		$data['status']  = 1;
-		$data['create_time']  = time();
-        $data['update_time'] =  NULL;
-		$arr = array();
-		for($i=0;$i<$length;$i++){
-			$arr[i] = array(NULL,$data['model'.$i],$data['date'],$data['et_time'],$data['etnum'.$i],NULL,$data['create_user'],$data['md_user'],'1',$data['create_time'],NULL);
-		}
-		foreach($arr as $row){
-			return $this->_db->add($arr);//插入数据
-		}
+		return $this->_db->addAll($data);
 	}
+	
+	
+	
+	
+	
+	
 }
 
 

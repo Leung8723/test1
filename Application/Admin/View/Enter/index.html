@@ -8,7 +8,7 @@
 	<!-- DataTables CSS -->	  
 	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
+	<!-- <link rel="stylesheet" type="text/css" href="Public/css/buttons.css"> -->
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
 	<!-- DataTables -->
@@ -30,21 +30,12 @@
           </ol>
         </div>
       </div>
-	  
       <!-- /.row -->
-		<div class="layui-form-item">
-		  <div class="layui-input-block">
-			<button class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon ">&#xe654</i>立即提交</button>
-		  </div>
-		</div>
-		<a href="/admin.php?c=enter&a=add" class="layui-btn">
-		  <i class="layui-icon ">&#xe654</i>产品入库
-		</a>
-      </br>
-      </br>
-      </br>
+	  <div class="layui-form-item">
+		<a href="/admin.php?c=enter&a=add" class="layui-btn layui-btn-normal layui-icon">&#xe654产品入库</a>
+	  </div>
 	  <form>
-		<table id="table_id_example" class="cell-border stripe hover order-column" cellspacing="0" width="100%">
+		<table id="table_id_example" class="cell-border stripe hover compact order-column" >
 			<thead>
 			<tr>
 			  <!--暂时不用--<th>序号</th>-->
@@ -79,19 +70,18 @@
 				</tbody>
 		</table>
 	  </form>
+	  
     </div>
    </div>
 </div>
 <script>
-function tz(){
-    window.location.href=add_url;
-}
 var SCOPE = {
 'add_url' : '/admin.php?c=enter&a=add',
 }
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#table_id_example').DataTable({
+		"order": [[ 6, "desc" ],[ 0, "asc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,

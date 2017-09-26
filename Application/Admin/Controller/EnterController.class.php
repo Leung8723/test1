@@ -5,7 +5,6 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
 /**
  * 文章内容管理
  */
@@ -23,8 +22,8 @@ class EnterController extends CommonController {
 
 	public function add() {
 		if($_POST) {
-			$length = (count($database)-1)/3;
-			//print_r($length);exit;
+			$length = (count($_POST)-2)/3;
+			// print_r($_POST);exit;
 			return $this->enterAdd($_POST,$length);
         }else {
 			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
@@ -34,38 +33,47 @@ class EnterController extends CommonController {
 			$this->display();
 		}
 	}
-	
+	//入库模块
 	public function enterAdd($data,$length){
         try {
-            //$id = D("Enter")->insertEnter($data,$length);
-			$data['et_time'] = time();
-			$data['et_box'] = NULL;
-			$data['create_user'] = '梁国成';
-			$data['md_user'] =  '王云';
-			$data['status'] = 1;
-			$data['create_time'] = time();
-			$data['update_time'] = NULL;
 			$arr = array();
 			for($i=0;$i<$length;$i++){
 				$model='model'.$i;
 				$etnum='etnum'.$i;
-				$arr = array(NULL,$data[$model],$data['date'],$data['et_time'],$data[$etnum],NULL,$data['create_user'],$data['md_user'],'1',$data['create_time'],NULL);
+				$tips='tips'.$i;
+				if($data[$etnum]){
+					$arr[] = array(
+						'enter_id' => NULL,
+						'et_model' => $data[$model],
+						'et_date' => $data['date'],
+						'et_time' => time(),
+						'et_num' => $data[$etnum],
+						'create_user' => getLoginRealname(),
+						'md_user' => $data['md_user'],
+						'status' => '1',
+						'create_time' => time(),
+						'update_time' => NULL,
+						'tips' => $data[$tips]
+					);
+				}else{
+					continue;
+				}
 			}
-			print_r($arr);exit;
-			foreach($arr as $row){
-				return $this->_db->add($arr);//插入数据
-			}			
-			
-			
-			
-			
-			
+			$id = D("Enter")->insertEnter($arr);
             if($id === false) {
-                return show(0, '产品入库失败');
+            return '入库失败';
             }
-            return show(1, '产品入库成功');
-        }catch(Exception $e) {
-            return show(0, $e->getMessage());
+            return '入库成功';
+        }catch(Exception $e){
+            return $e->getMessage();
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

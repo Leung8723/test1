@@ -9,14 +9,12 @@ use Think\Exception;
  * 型号管理
  */
 class LensController extends CommonController {
-
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
         if($title) {
             $conds['id'] = $title;
         }
-
         $webSiteData = D("Lens")->getLensData();
         $this->assign('lens',$webSiteData);
         $this->display();
@@ -88,7 +86,6 @@ class LensController extends CommonController {
 
 	//型号添加保存模块
     public function lensAdd($data) {
-		//print_r($data);exit;
         try {
             $id = D("Lens")->insertLens($data);
             if($id === false) {

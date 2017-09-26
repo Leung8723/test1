@@ -39,9 +39,16 @@
 			  <label class="layui-form-label">日期</label>
 				<div class="layui-input-inline">
 				  <input class="layui-input" id="date" name="date" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
-
 				</div>
 			</div>
+			</td>
+			<td>
+			  <div class="layui-col-md3">
+				<label for="inputId" class="layui-form-label">成型</label>
+				  <div class="layui-input-inline">
+					<input name="md_user" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+				  </div>
+			  </div>
 			</td>
 			<!-- 1 -->
 			<?php 
@@ -95,15 +102,40 @@
 <!-- /#wrapper -->
 <script>
 //Demo
-layui.use('form', function(){
+layui.use(['layer','form','laydate'], function(){
+  var layer = layui.layer;
   var form = layui.form;
+  var laydate = layui.laydate;
   //监听提交
   form.on('submit(formDemo)', function(data){
-    //layer.msg(JSON.stringify(data.field));
-    $.post("admin.php?c=enter&a=add",data.field);
-	//return false;
+	<!-- $.post("admin.php?c=enter&a=add",data.field); -->
+	$.ajax({
+		type: 'POST',
+		url: 'admin.php?c=enter&a=add',
+		dataType:'json',
+		data:data.field,
+		success: function(result){
+			layer.msg('success:入库成功',{icon: 1, time:1000});
+			setTimeout(function(){
+				top.layer.closeAll('iframe');
+				//刷新父亲的页面
+				parent.refreshIframe();
+			},800);
+		}
+	});
+	return false;
+  });
+  //弹出层
+  layer.open({
+	layer.msg('入库成功');
+  });
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#date' //指定元素
+	,type: 'date'
   });
 });
+
 
 $(document).ready(function() {
 	var table = $('#example').DataTable({
@@ -125,15 +157,6 @@ $(document).ready(function() {
 			}
 		},
 	});
-});
-
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#date' //指定元素
-	,type: 'date'
-  });
 });
 </script>
 <include file="Index/footer" />
