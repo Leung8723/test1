@@ -14,10 +14,7 @@
 	<!-- DataTables -->
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
-	</br>
-	</br>
-	</br>
-	</br>
+	</br></br></br></br>
       <div class="row">
         <div class="col-lg-12">
           <ol class="breadcrumb">
@@ -32,13 +29,14 @@
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-		<a href="/admin.php?c=enter&a=add" class="layui-btn layui-btn-normal layui-icon">&#xe654产品入库</a>
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654常规入库</button>
+	    <!-- <button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654新产品入库</button> -->
 	  </div>
 	  <form>
 		<table id="table_id_example" class="cell-border stripe hover compact order-column" >
 			<thead>
 			<tr>
-			  <!--暂时不用--<th>序号</th>-->
+			  <th>ID</th>
 			  <th>型号</th>
 			  <th>入库数量</th>
 			  <th>入库日期</th>
@@ -48,13 +46,14 @@
 			  <th>成型担当</th>
 			  <th>提交时间</th>
 			  <th>更新时间</th>
+			  <th>备注</th>
 			  <th>编辑</th>
 			</tr>
 			</thead>
 				<tbody>
 					<volist name="enters" id="enter">
 					  <tr>
-						<!--暂时不用--<td>{$enter.enter_id}</td>-->
+						<td>{$enter.enter_id}</td>
 						<td>{$enter.et_model}</td>
 						<td>{$enter.et_num}</td>
 						<td>{$enter.et_date}</td>
@@ -63,7 +62,8 @@
 						<td>{$enter.create_user}</td>
 						<td>{$enter.md_user}</td>
 						<td>{$enter.create_time|date="H:i:s",###}</td>
-						<td>{$enter.update_time}</td>
+						<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time}</if></td>
+						<td>{$enter.tips}</td>
 						<td></td>
 					  </tr>
 					</volist>
@@ -76,12 +76,15 @@
 </div>
 <script>
 var SCOPE = {
+'edit_url' : '/admin.php?c=enter&a=edit',
 'add_url' : '/admin.php?c=enter&a=add',
+'del_url' : '/admin.php?c=enter&a=del',
+'hidden_url' : '/admin.php?c=enter&a=hidden',
 }
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#table_id_example').DataTable({
-		"order": [[ 6, "desc" ],[ 0, "asc" ]],
+		"order": [ 0, "desc" ],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
@@ -135,7 +138,7 @@ $(document).ready( function () {
 	//删除
 	$('#table_id_example tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0});
+		$.post("/admin.php?c=enter&a=del", {id:data[0],status:0});
 		table
 			.order([[1,'asc']])
 			.draw(false);

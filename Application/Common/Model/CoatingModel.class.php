@@ -6,18 +6,18 @@ use Think\Model;
  * 文章内容model操作
  * @author  singwa
  */
-class EnterModel extends Model {
+class CoatingModel extends Model {
     private $_db = '';
     public function __construct() {
-        $this->_db = M('enter');
+        $this->_db = M('coating');
     }
 
 	//入库信息查询
-    public function getEnterData() {
+    public function getCoatingData() {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('et_date desc,et_time desc,et_model asc')->select();
+		$res = $this->_db->where($data)->order('ct_date desc,start_time desc,ct_model asc')->select();
 		return $res;
     }
 	//筛选入库数非空型号列表

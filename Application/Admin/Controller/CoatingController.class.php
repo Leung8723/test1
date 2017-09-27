@@ -8,15 +8,16 @@ use Think\Exception;
 /**
  * 文章内容管理
  */
-class EnterController extends CommonController {
+class CoatingController extends CommonController {
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
+		// print_r($title);exit;
         if($title) {
             $conds['id'] = $title;
         }
-        $enterdata = D("Enter")->getEnterData();
-        $this->assign('enters',$enterdata);
+        $coatingData = D("Coating")->getCoatingData();
+        $this->assign('coating',$coatingData);
         $this->display();
     }
 
