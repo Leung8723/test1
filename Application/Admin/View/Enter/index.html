@@ -33,7 +33,7 @@
 	    <!-- <button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654新产品入库</button> -->
 	  </div>
 	  <form>
-		<table id="table_id_example" class="cell-border stripe hover compact order-column" >
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
 			<thead>
 			<tr>
 			  <th>ID</th>
@@ -83,7 +83,7 @@ var SCOPE = {
 }
 //初始化DataTables
 $(document).ready( function () {
-	var table = $('#table_id_example').DataTable({
+	var table = $('#lens-table').DataTable({
 		"order": [ 0, "desc" ],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
@@ -130,13 +130,13 @@ $(document).ready( function () {
 		}
 	});
 	//修改
-	$('#table_id_example tbody').on( 'click', 'a#edit', function () {
+	$('#lens-table tbody').on( 'click', 'a#edit', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
 		var url = SCOPE.edit_url + '&id=' + data[0];
 		window.location.href=url;
 	});
 	//删除
-	$('#table_id_example tbody').on( 'click', 'a#del', function () {
+	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
 		$.post("/admin.php?c=enter&a=del", {id:data[0],status:0});
 		table

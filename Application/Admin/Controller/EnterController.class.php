@@ -29,7 +29,7 @@ class EnterController extends CommonController {
 			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
-			// print_r($enterMdUser);exit;
+			// print_r($lensModelData);exit;
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mduser',$enterMdUser);

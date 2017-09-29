@@ -23,15 +23,11 @@
                 <i class="fa fa-dashboard"></i>
                 <a href="/admin.php?c=coating">镀膜管理</a></li>
               <li class="active">
-                <i class="fa fa-edit"></i>产品镀膜</li>
+                <i class="fa fa-edit"></i>镀膜信息编辑</li>
             </ol>
           </div>
         </div>
         <!-- /.row -->
-		<script>
-		var myDate = new date();
-		var myHour = myDate.getHours();
-		</script>
         <form class="layui-form" method="post" action="">
           <!-- -->
           <div class="layui-form-item">
@@ -41,14 +37,14 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="coatingdate" id="coatingdate" type="text" placeholder="yyyy-MM-dd"></div>
+                      <input class="layui-input" name="coatingdate" id="coatingdate" type="text" value="{$coatingData.ct_date}"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">时间</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="coatingtime" id="coatingtime" type="text" placeholder="hh:mm:ss"></div>
+                      <input class="layui-input" name="coatingtime" id="coatingtime" type="text" value="{$coatingData.start_time}"></div>
                   </div>
                   </br>
                 </td>
@@ -64,9 +60,9 @@
                     <label class="layui-form-label">设备</label>
                     <div class="layui-input-inline">
                       <select name="machine" id="machine" lay-verify="required" lay-search="">
-                        <option value="">==请选择镀膜设备==</option>
-                        <foreach name="machine" item="machine">
-                          <option value="{$machine.name}">{$machine.name}号机</option></foreach>
+                        <option value={$coatingData.ct_machine}>==请选择镀膜设备==</option>
+                        <foreach name="machine" item="ctmachine">
+                          <option value="{$key}">{$machine}号机</option></foreach>
                       </select>
                     </div>
                   </div>
@@ -75,7 +71,7 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">批次</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="lotnum" id="lotnum" required type="text" lay-verify="text" placeholder="输入设备代码+LOT号码!"></div>
+                      <input class="layui-input" name="lotnum" id="lotnum" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
                   </div>
                 </td>
                 <td>
@@ -83,41 +79,39 @@
                     <label for="inputId" class="layui-form-label">担当</label>
                     <div class="layui-input-inline">
                       <select name="ctuser" lay-verify="required" lay-search="">
-                        <option value="">==请选择设备担当==</option>
-                        <foreach name="ctuser" item="ctuser">
-                          <option value="{$ctuser.ct_name}">{$ctuser.ct_name}</option></foreach>
+                        <option value="{$coatingData.ct_user}">==请选择设备担当==</option>
+                        <foreach name="ctuser" item="coatinguser">
+                          <option value="{$key}">{$ctuser}</option></foreach>
                       </select>
                     </div>
                   </div>
                 </td>
             </tr>
-            <?php foreach ($lensnum as $key=>$value){ ?>
               <tr>
                 <div class="layui-row">
                   <td>
                     <div class="layui-col-md3">
                       <label for="inputId" class="layui-form-label">型号</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "model".$key?>" value="<?php echo $value[et_model]?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
+                        <input name="model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
                     </div>
                   </td>
                   <td>
                     <div class="layui-col-md3">
                       <label class="layui-form-label">数量</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "ctnum".$key ?>" value="<?php echo $value[etnum]?>" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
+                        <input name="ct_num" value="{$coatingData.ct_num}" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
                     </div>
                   </td>
                   <td>
                     <div class="layui-col-md6">
                       <label class="layui-form-label">备注</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
+                        <input name="tips" value="{$coatingData.tips}" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
                     </div>
                   </td>
                 </div>
               </tr>
-              <?php }?>
                 <div class="layui-input-block">
                   <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
@@ -127,74 +121,10 @@
       </div>
     </div>
   </div>
-  
 <script>
-	var SCOPE = {
-        'add_url': '/admin.php?c=enter&a=newdata',
-      }
-
-      //lay-form
-      layui.use('form',function() {
-        var form = layui.form;
-        //监听提交
-        form.on('submit(formDemo)',function(data){
-          $.post("admin.php?c=coating&a=add", data.field);
-          //return false;
-        });
-      });
-
-      //laydate
-      layui.use('laydate',function() {
-        var laydate = layui.laydate;
-        //date
-        laydate.render({
-          elem: '#coatingdate' //指定元素
-          ,type: 'date'
-		  ,value: new Date()
-		  ,theme: 'molv'
-        });
-        //time
-        laydate.render({
-          elem: '#coatingtime'
-          ,type: 'time'
-          ,value: new Date()
-          ,theme: 'molv'
-        });
-      });
-
-      //格式化时间
-      function checkTime(i) {
-        if (i < 10) {
-          i = "0" + i;
-        }
-        return i;
-      }
-      var myDate = new Date();
-      var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
-      var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-      document.getElementById("coatingtime").value = result;
-      document.getElementById("coatingdate").value = result2;
-
-      //datatables设置
-      $(document).ready(function() {
-        var table = $('#example').DataTable({
-          "iDisplayLength": 100,
-          "ordering": false,
-          "oLanguage": {
-            "sProcessing": "正在加载中......",
-            "sLengthMenu": "每页显示 _MENU_ 条记录",
-            "sZeroRecords": "对不起，查询不到相关数据！",
-            "sEmptyTable": "表中无数据存在！",
-            "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-            "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
-            "sSearch": "搜索",
-            "oPaginate": {
-              "sFirst": "首页",
-              "sPrevious": "上一页",
-              "sNext": "下一页",
-              "sLast": "末页"
-            }
-          },
-        });
-      });</script>
-    <include file="Index/footer" />
+  var SCOPE = {
+    'save_url' : '/admin.php?c=lens&a=updateLens',
+    'jump_url' : '/admin.php?c=lens',
+  };
+</script>
+<include file="Index/footer" />

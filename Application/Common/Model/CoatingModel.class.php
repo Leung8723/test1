@@ -11,8 +11,7 @@ class CoatingModel extends Model {
     public function __construct() {
         $this->_db = M('coating');
     }
-
-	//入库信息查询
+	//镀膜记录信息查询
     public function getCoatingData() {
 		$data = array(
 			'status' => array('eq',1),
@@ -24,26 +23,22 @@ class CoatingModel extends Model {
 	public function getNotNullModel() {
 		$data = array(
 			'status' => array('eq',1),
-			'et_num' => array('neq',0),
 		);
-		$lensdata = $this->_db->where($data)->field('et_model')->order('et_model asc')->distinct(true)->select();
-		$res = array_column($lensdata,'et_model');
-		return $res;
+		$lensdata = M('enter')->where($data)->field('et_model,SUM(et_num) AS etnum')->order('et_model asc')->group('et_model')->distinct(true)->select();
+		// $res = array_column($lensdata,'et_num','et_model');
+		return $lensdata;
     }
-	//查找最后一条入库记录
-    public function getLastDate() {
-		$data = array(
-			'status' => array('eq',1),
-		);
-		$data1 = $this->_db->where($data)->order('et_model desc')->field('et_date')->limit('1')->select();
-		$data2 = $data1[0];
-		$res = $data2['et_date'];
-		return $res;
-    }
-	
-    public function getMdUser() {
-		$data = M('mduser')->field('md_name')->distinct(true)->select();
+	//查找镀膜担当列表
+    public function getCtUser() {
+		$data = M('ctuser')->field('ct_name')->distinct(true)->select();
+		//$res = array_column($data,'ct_name');
 		return $data;
+    }
+	//查找镀膜机列表
+	public function getMachineList() {
+		$machine = M('machine')->order('nickname asc')->distinct(true)->select();
+		//res = array_column($machine,'nickname','name');
+		return $machine;
     }
 	
     public function updateStatusById($id, $status) {
@@ -54,10 +49,13 @@ class CoatingModel extends Model {
             throw_exception('id不合法');
         }
         $data['status'] = $status;
-        return $this->_db->where('enter_id='.$id)->save($data);
+        return $this->_db->where('id='.$id)->save($data);
     }
 	
-	public function insertEnter($data){
+	public function find($id) {
+        return $this->_db->where('id='.$id)->find();
+    }
+	public function insertCoating($data){
 		if(!data||!is_array($data)){
 			throw_exception('入库信息不合法');
 		}

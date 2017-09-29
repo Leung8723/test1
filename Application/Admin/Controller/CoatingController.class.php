@@ -23,43 +23,43 @@ class CoatingController extends CommonController {
 
 	public function add() {
 		if($_POST){
-			$length = (count($_POST)-3)/3;
-			// print_r($_POST);print_r($length);exit;
-			return $this->enterAdd($_POST,$length);
+			$length = (count($_POST)-5)/3;
+			return $this->coatingAdd($_POST,$length);
         }else{
-			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
-			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
-			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
-			// print_r($enterMdUser);exit;
-			$this->assign('enterlens',$lensModelData);
-			$this->assign('lastlens',$enterLastDate);
-			$this->assign('mduser',$enterMdUser);
+			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
+			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+			$machineList = D("Coating")->getMachineList();//获取镀膜担当列表
+			$this->assign('lensnum',$lensNumData);
+			$this->assign('ctuser',$coatingUser);
+			$this->assign('machine',$machineList);
 			$this->display();
 		}
 	}
 	
-	public function newdata(){
-		echo "hello";
-	}
-	
 	//入库模块
-	public function enterAdd($data,$length){
+	public function coatingAdd($data,$length){
         try {
 			$arr = array();
 			for($i=0;$i<$length;$i++){
 				$model='model'.$i;
-				$etnum='etnum'.$i;
+				$ctnum='ctnum'.$i;
 				$tips='tips'.$i;
-				if($data[$etnum]){
+				if($data[$ctnum]){
 					$arr[] = array(
-						'enter_id' => NULL,
-						'et_model' => $data[$model],
-						'et_date' => $data['enterdate'],
-						'et_time' => $data['entertime'],
-						'et_num' => $data[$etnum],
+						'id' => NULL,
+						'ct_model' => $data[$model],
+						'ct_machine' => $data['machine'],
+						'ct_date' => $data['coatingdate'],
+						'ct_lot' => $data['lotnum'],
+						'ct_user' => $data['ctuser'],
+						'start_time' => $data['coatingtime'],
+						'over_time' => NULL,
+						'ct_num' => $data[$ctnum],
 						'create_user' => getLoginRealname(),
-						'md_user' => $data['mduser'],
+						'spec_t' => NULL,
+						'spec_r' => NULL,
 						'status' => '1',
+						'ck_num' => NULL,
 						'create_time' => time(),
 						'update_time' => NULL,
 						'tips' => $data[$tips]
@@ -68,7 +68,7 @@ class CoatingController extends CommonController {
 					continue;
 				}
 			}
-			$id = D("Enter")->insertEnter($arr);
+			$id = D("Coating")->insertCoating($arr);
             if($id === false){
             return '入库失败';
             }
@@ -83,7 +83,7 @@ class CoatingController extends CommonController {
 		$newsId = $data['id'];//获取id
         //unset($data['id']);
         try {
-            $id = D("Lens")->updateLensById($newsId,$data);
+            $id = D("Coating")->updateLensById($newsId,$data);
             if($id === false) {
                 return show(0, '更新型号失败');
             }
@@ -94,20 +94,21 @@ class CoatingController extends CommonController {
     }
 	
     public function edit() {
-        $newsId = $_GET['id'];
-        if(!$newsId) {
+        $coatingId = $_GET['id'];
+        if(!$coatingId) {
             // 执行跳转
-            $this->redirect('/admin.php?c=lens');
+            $this->redirect('/admin.php?c=coating');
         }
-        $news = D("Lens")->find($newsId);
-        if(!$news) {
-            $this->redirect('/admin.php?c=lens');
+        $id = D("Coating")->find($coatingId);
+        if(!$id) {
+            $this->redirect('/admin.php?c=coating');
         }
-		$lensMaterialType = C("LENS_MATERIAL");
-		$lensColorType = C("COLOR_TYPE");
-		$this->assign('lensColorType', $lensColorType);
-		$this->assign('lensMaterialType', $lensMaterialType);
-        $this->assign('lens',$news);
+		$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+		$machineList = D("Coating")->getMachineList();//获取镀膜担当列表
+		// print_r($id);exit;
+		$this->assign('coatingData',$id);
+		$this->assign('ctuser',$coatingUser);
+		$this->assign('machine',$machineList);
         $this->display();
     }
 	
@@ -119,7 +120,7 @@ class CoatingController extends CommonController {
                 if (!$id) {
                     return show(0, 'ID不存在');
                 }
-                $res = D("Lens")->updateStatusById($id, $status);
+                $res = D("Coating")->updateStatusById($id, $status);
                 if ($res) {
                     return show(1, '操作成功');
                 } else {

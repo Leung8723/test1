@@ -19,10 +19,10 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i><a href="/admin.php?c=coating">入库管理</a>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=coating">镀膜管理</a>
             </li>
             <li class="active">
-              <i class="fa fa-edit"></i>当日入库明细
+              <i class="fa fa-edit"></i>当日镀膜明细
             </li>
           </ol>
         </div>
@@ -33,7 +33,7 @@
 	    <!-- <button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654新产品入库</button> -->
 	  </div>
 	  <form>
-		<table id="table_id_example" class="cell-border stripe hover compact order-column" >
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
 			<thead>
 			<tr>
 			  <th>ID</th>
@@ -49,7 +49,7 @@
 			  <th>更新时间</th>
 			  <th>分光状态</th>
 			  <th>备注</th>
-			  <th>编辑</th>
+			  <th>操作</th>
 			</tr>
 			</thead>
 				<tbody>
@@ -79,14 +79,14 @@
 </div>
 <script>
 var SCOPE = {
-'edit_url' : '/admin.php?c=enter&a=edit',
-'add_url' : '/admin.php?c=enter&a=add',
-'del_url' : '/admin.php?c=enter&a=del',
-'hidden_url' : '/admin.php?c=enter&a=hidden',
+'edit_url' : '/admin.php?c=coating&a=edit',
+'add_url' : '/admin.php?c=coating&a=add',
+'del_url' : '/admin.php?c=coating&a=del',
+'hidden_url' : '/admin.php?c=coating&a=hidden',
 }
 //初始化DataTables
 $(document).ready( function () {
-	var table = $('#table_id_example').DataTable({
+	var table = $('#lens-table').DataTable({
 		"order": [[ 3, "desc" ],[ 4, "asc" ],[ 5, "asc" ],[ 1, "asc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
@@ -133,15 +133,15 @@ $(document).ready( function () {
 		}
 	});
 	//修改
-	$('#table_id_example tbody').on( 'click', 'a#edit', function () {
+	$('#lens-table tbody').on( 'click', 'a#edit', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
 		var url = SCOPE.edit_url + '&id=' + data[0];
 		window.location.href=url;
 	});
 	//删除
-	$('#table_id_example tbody').on( 'click', 'a#del', function () {
+	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=enter&a=del", {id:data[0],status:0});
+		$.post("/admin.php?c=coating&a=del", {id:data[0],status:0});
 		table
 			.order([[1,'asc']])
 			.draw(false);

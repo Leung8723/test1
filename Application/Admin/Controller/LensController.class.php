@@ -124,6 +124,7 @@ class LensController extends CommonController {
         }
 		$lensMaterialType = C("LENS_MATERIAL");
 		$lensColorType = C("COLOR_TYPE");
+		print_r($lensMaterialType);print_r($lensColorType);exit;
 		$this->assign('lensColorType', $lensColorType);
 		$this->assign('lensMaterialType', $lensMaterialType);
         $this->assign('lens',$news);
