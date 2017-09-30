@@ -70,9 +70,9 @@ class CoatingController extends CommonController {
 			}
 			$id = D("Coating")->insertCoating($arr);
             if($id === false){
-            return '入库失败';
+            return show(0, '入库失败');
             }
-            return '入库成功';
+            return show(0, '入库成功');
         }catch(Exception $e){
             return $e->getMessage();
 		}
