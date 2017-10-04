@@ -60,9 +60,9 @@
                     <label class="layui-form-label">设备</label>
                     <div class="layui-input-inline">
                       <select name="machine" id="machine" lay-verify="required" lay-search="">
-                        <option value={$coatingData.ct_machine}>==请选择镀膜设备==</option>
-                        <foreach name="machine" item="ctmachine">
-                          <option value="{$key}">{$machine}号机</option></foreach>
+                        <option value="">==请选择镀膜设备==</option>
+                        <foreach name="machineList" item="machineList">
+                          <option value="{$machineList.name}">{$machineList.name}号机</option></foreach>
                       </select>
                     </div>
                   </div>
@@ -76,12 +76,12 @@
                 </td>
                 <td>
                   <div class="layui-col-md3">
-                    <label for="inputId" class="layui-form-label">担当</label>
+                    <label class="layui-form-label">担当</label>
                     <div class="layui-input-inline">
-                      <select name="ctuser" lay-verify="required" lay-search="">
-                        <option value="{$coatingData.ct_user}">==请选择设备担当==</option>
-                        <foreach name="ctuser" item="coatinguser">
-                          <option value="{$key}">{$ctuser}</option></foreach>
+                      <select name="ctuser" id="ctuser" lay-verify="required" lay-search="">
+                        <option value="">==请选择设备担当==</option>
+                        <foreach name="coatingUser" item="coatingUser">
+                          <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
                       </select>
                     </div>
                   </div>
@@ -91,7 +91,7 @@
                 <div class="layui-row">
                   <td>
                     <div class="layui-col-md3">
-                      <label for="inputId" class="layui-form-label">型号</label>
+                      <label class="layui-form-label">型号</label>
                       <div class="layui-input-inline">
                         <input name="model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
                     </div>
@@ -113,7 +113,7 @@
                 </div>
               </tr>
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
                 </div>
         </form>
@@ -123,8 +123,40 @@
   </div>
 <script>
   var SCOPE = {
-    'save_url' : '/admin.php?c=lens&a=updateLens',
-    'jump_url' : '/admin.php?c=lens',
+    'save_url' : '/admin.php?c=coating&a=updateLens',
+    'jump_url' : '/admin.php?c=coating',
   };
+
+      //lay-form
+      layui.use('form',function() {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemo)',function(data){
+          $.post("admin.php?c=coating&a=updateLens", data.field);
+          return false;
+        });
+      });
+
+      //laydate
+      layui.use('laydate',function() {
+        var laydate = layui.laydate;
+        //date
+        laydate.render({
+          elem: '#coatingdate' //指定元素
+          ,type: 'date'
+		  ,value: new Date()
+		  ,theme: 'molv'
+        });
+        //time
+        laydate.render({
+          elem: '#coatingtime'
+          ,type: 'time'
+          ,value: new Date()
+          ,theme: 'molv'
+        });
+      });
+
+      //格式化时间
+
 </script>
 <include file="Index/footer" />

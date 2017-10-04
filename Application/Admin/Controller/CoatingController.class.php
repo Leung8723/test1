@@ -28,7 +28,7 @@ class CoatingController extends CommonController {
         }else{
 			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
 			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜担当列表
+			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);
 			$this->assign('ctuser',$coatingUser);
 			$this->assign('machine',$machineList);
@@ -104,11 +104,11 @@ class CoatingController extends CommonController {
             $this->redirect('/admin.php?c=coating');
         }
 		$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-		$machineList = D("Coating")->getMachineList();//获取镀膜担当列表
-		// print_r($id);exit;
+		$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
+		// print_r($machineList);exit;
 		$this->assign('coatingData',$id);
-		$this->assign('ctuser',$coatingUser);
-		$this->assign('machine',$machineList);
+		$this->assign('coatingUser',$coatingUser);
+		$this->assign('machineList',$machineList);
         $this->display();
     }
 	
@@ -132,5 +132,25 @@ class CoatingController extends CommonController {
             return show(0, $e->getMessage());
         }
     }
-	
+	//修改更新镀膜明细
+	public function updateLens(){
+        try {
+            if ($_POST) {
+                $id = $_POST['id'];
+                $status = $_POST['status'];
+                if (!$id) {
+                    return show(0, 'ID不存在');
+                }
+                $res = D("Coating")->updateStatusById($id, $status);
+                if ($res) {
+                    return show(1, '操作成功');
+                } else {
+                    return show(0, '操作失败');
+                }
+            }
+            return show(0, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(0, $e->getMessage());
+        }
+	}
 }
