@@ -40,7 +40,7 @@ class CoatingModel extends Model {
 		//res = array_column($machine,'nickname','name');
 		return $machine;
     }
-	
+	//修改状态,删除&恢复
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception('status不能为非数字');
@@ -51,22 +51,30 @@ class CoatingModel extends Model {
         $data['status'] = $status;
         return $this->_db->where('id='.$id)->save($data);
     }
-	
+	//查找相关id数据
 	public function find($id) {
         return $this->_db->where('id='.$id)->find();
     }
+	//插入镀膜数据
 	public function insertCoating($data){
 		if(!data||!is_array($data)){
-			throw_exception('入库信息不合法');
+			throw_exception('插入镀膜数据不合法');
 		}
 		return $this->_db->addAll($data);
 	}
-	
-	
-	
-	
-	
-	
+	//修改镀膜数据
+    public function updateLensById($id,$data) {
+        if(!$id || !is_numeric($id)) {
+            throw_exception('id不合法');
+        }
+        if(!$data || !is_array($data)) {
+			throw_exception('信息不完整');
+        }
+        $data['id'] =  $id;
+        $data['create_user'] =  getLoginRealname();
+		$data['update_time'] =  time();
+        return $this->_db->where('id='.$id)->save($data);
+    }
 }
 
 

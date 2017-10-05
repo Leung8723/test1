@@ -10,7 +10,7 @@
         <!-- jQuery -->
         <script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
         <script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
-		<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
+		<!-- <script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script> -->
         <script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
         <!-- Page Heading --></br>
         </br>
@@ -132,7 +132,8 @@
         var form = layui.form;
         //监听提交
         form.on('submit(formDemo)',function(data){
-          $.post("admin.php?c=coating&a=updateLens", data.field);
+
+          $.post("admin.php?c=coating&a=edit", data.field);
           return false;
         });
       });

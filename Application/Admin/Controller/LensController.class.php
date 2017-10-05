@@ -101,6 +101,7 @@ class LensController extends CommonController {
     public function save($data) {
 		$newsId = $data['id'];//获取id
         //unset($data['id']);
+		// print_r($newsId);exit;
         try {
             $id = D("Lens")->updateLensById($newsId,$data);
             if($id === false) {
@@ -124,7 +125,7 @@ class LensController extends CommonController {
         }
 		$lensMaterialType = C("LENS_MATERIAL");
 		$lensColorType = C("COLOR_TYPE");
-		print_r($lensMaterialType);print_r($lensColorType);exit;
+		// print_r($lensMaterialType);print_r($lensColorType);exit;
 		$this->assign('lensColorType', $lensColorType);
 		$this->assign('lensMaterialType', $lensMaterialType);
         $this->assign('lens',$news);
