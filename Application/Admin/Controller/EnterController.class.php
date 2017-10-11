@@ -49,7 +49,7 @@ class EnterController extends CommonController {
 				$model='model'.$i;
 				$etnum='etnum'.$i;
 				$tips='tips'.$i;
-				if($data[$etnum]){
+				if($data[$etnum]>0){
 					$arr[] = array(
 						'enter_id' => NULL,
 						'et_model' => $data[$model],
@@ -68,10 +68,11 @@ class EnterController extends CommonController {
 				}
 			}
 			$id = D("Enter")->insertEnter($arr);
-            if($id === false){
-            return '入库失败';
-            }
-            return '入库成功';
+            if($id){
+				return show(0,'入库成功');
+            }else{
+				return show(1,'入库失败');
+			}
         }catch(Exception $e){
             return $e->getMessage();
 		}

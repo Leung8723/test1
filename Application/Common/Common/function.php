@@ -10,7 +10,6 @@ function  show($status, $message,$data=array()) {
         'message' => $message,
         'data' => $data,
     );
-
     exit(json_encode($reuslt));
 }
 function getMd5Password($password) {
@@ -74,7 +73,6 @@ function isThumb($thumb) {
     }
     return '无';
 }
-
 /**
 +----------------------------------------------------------
  * 字符串截取，支持中文和其他编码
@@ -115,8 +113,3 @@ function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true)
     if($suffix) return $slice."…";
     return $slice;
 }
-
-
-
-
-

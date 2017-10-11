@@ -58,7 +58,7 @@ class EnterModel extends Model {
     }
 	
 	public function insertEnter($data){
-		if(!data||!is_array($data)){
+		if(!$data||!is_array($data)){
 			throw_exception('入库信息不合法');
 		}
 		return $this->_db->addAll($data);
