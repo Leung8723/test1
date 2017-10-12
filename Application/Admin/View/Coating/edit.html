@@ -122,42 +122,48 @@
     </div>
   </div>
 <script>
-  var SCOPE = {
-    'save_url' : '/admin.php?c=coating&a=updateLens',
-    'jump_url' : '/admin.php?c=coating',
-  };
+var SCOPE = {
+  'jump_url': '/admin.php?c=coating',
+}
 
-      //lay-form
-      layui.use('form',function() {
-        var form = layui.form;
-        //监听提交
-        form.on('submit(formDemo)',function(data){
+//lay-form
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+//监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=coating&a=save",data.field,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 2000});
+			window.location.href=url;
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 2000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
 
-          $.post("admin.php?c=coating&a=edit", data.field);
-          return false;
-        });
-      });
 
-      //laydate
-      layui.use('laydate',function() {
-        var laydate = layui.laydate;
-        //date
-        laydate.render({
-          elem: '#coatingdate' //指定元素
-          ,type: 'date'
-		  ,value: new Date()
-		  ,theme: 'molv'
-        });
-        //time
-        laydate.render({
-          elem: '#coatingtime'
-          ,type: 'time'
-          ,value: new Date()
-          ,theme: 'molv'
-        });
-      });
-
-      //格式化时间
+//laydate
+layui.use('laydate',function() {
+  var laydate = layui.laydate;
+	//date
+	laydate.render({
+	  elem: '#coatingdate' //指定元素
+	  ,type: 'date'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	});
+	//time
+	laydate.render({
+	  elem: '#coatingtime'
+	  ,type: 'time'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	  });
+});
 
 </script>
 <include file="Index/footer" />

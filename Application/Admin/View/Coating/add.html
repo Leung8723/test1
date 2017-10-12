@@ -129,72 +129,59 @@
   </div>
 
 <script>
-	var SCOPE = {
-        'add_url': '/admin.php?c=enter&a=newdata',
-      }
+var SCOPE = {
+  'add_url': '/admin.php?c=coating&a=newdata',
+  'jump_url': '/admin.php?c=coating',
+}
 
-      //lay-form
-      layui.use('form',function() {
-        var form = layui.form;
-        //监听提交
-        form.on('submit(formDemo)',function(data){
-          $.post("admin.php?c=coating&a=add", data.field);
-          return false;
-        });
-      });
+//lay-form
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+//监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=coating&a=add",data.field,function(result){;
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
 
-      //laydate
-      layui.use('laydate',function() {
-        var laydate = layui.laydate;
-        //date
-        laydate.render({
-          elem: '#coatingdate' //指定元素
-          ,type: 'date'
-		  ,value: new Date()
-		  ,theme: 'molv'
-        });
-        //time
-        laydate.render({
-          elem: '#coatingtime'
-          ,type: 'time'
-          ,value: new Date()
-          ,theme: 'molv'
-        });
-      });
+//laydate
+layui.use('laydate',function() {
+  var laydate = layui.laydate;
+	//date
+	laydate.render({
+	  elem: '#coatingdate' //指定元素
+	  ,type: 'date'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	});
+	//time
+	laydate.render({
+	  elem: '#coatingtime'
+	  ,type: 'time'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	  });
+});
 
-      //格式化时间
-      function checkTime(i) {
-        if (i < 10) {
-          i = "0" + i;
-        }
-        return i;
-      }
-      var myDate = new Date();
-      var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
-      var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-      document.getElementById("coatingtime").value = result;
-      document.getElementById("coatingdate").value = result2;
-
-      //datatables设置
-      $(document).ready(function() {
-        var table = $('#example').DataTable({
-          "iDisplayLength": 100,
-          "ordering": false,
-          "oLanguage": {
-            "sProcessing": "正在加载中......",
-            "sLengthMenu": "每页显示 _MENU_ 条记录",
-            "sZeroRecords": "对不起，查询不到相关数据！",
-            "sEmptyTable": "表中无数据存在！",
-            "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-            "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
-            "sSearch": "搜索",
-            "oPaginate": {
-              "sFirst": "首页",
-              "sPrevious": "上一页",
-              "sNext": "下一页",
-              "sLast": "末页"
-            }
-          },
-        });
-      });</script>
-    <include file="Index/footer" />
+  //格式化时间
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+var myDate = new Date();
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("coatingtime").value = result;
+document.getElementById("coatingdate").value = result2;
+</script>
+<include file="Index/footer" />

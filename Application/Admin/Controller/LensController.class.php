@@ -99,9 +99,7 @@ class LensController extends CommonController {
 	
 	//型号修改保存模块
     public function save($data) {
-		$newsId = $data['id'];//获取id
-        //unset($data['id']);
-		// print_r($newsId);exit;
+		$newsId = $data['id'];
         try {
             $id = D("Lens")->updateLensById($newsId,$data);
             if($id === false) {
@@ -116,7 +114,6 @@ class LensController extends CommonController {
     public function edit() {
         $newsId = $_GET['id'];
         if(!$newsId) {
-            // 执行跳转
             $this->redirect('/admin.php?c=lens');
         }
         $news = D("Lens")->find($newsId);
@@ -125,7 +122,6 @@ class LensController extends CommonController {
         }
 		$lensMaterialType = C("LENS_MATERIAL");
 		$lensColorType = C("COLOR_TYPE");
-		// print_r($lensMaterialType);print_r($lensColorType);exit;
 		$this->assign('lensColorType', $lensColorType);
 		$this->assign('lensMaterialType', $lensMaterialType);
         $this->assign('lens',$news);

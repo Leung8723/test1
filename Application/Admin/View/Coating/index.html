@@ -80,6 +80,7 @@
 <script>
 var SCOPE = {
 'edit_url' : '/admin.php?c=coating&a=edit',
+'jump_url' : '/admin.php?c=coating',
 'add_url' : '/admin.php?c=coating&a=add',
 'del_url' : '/admin.php?c=coating&a=del',
 'hidden_url' : '/admin.php?c=coating&a=hidden',
@@ -87,7 +88,7 @@ var SCOPE = {
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [[ 3, "desc" ],[ 4, "asc" ],[ 5, "asc" ],[ 1, "asc" ]],
+		"order": [[ 3, "desc" ],[ 4, "asc" ],[ 5, "desc" ],[ 1, "asc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
@@ -141,7 +142,15 @@ $(document).ready( function () {
 	//删除
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=coating&a=del", {id:data[0],status:0});
+		$.post("/admin.php?c=coating&a=del", {id:data[0],status:0},function(result){
+			if(result.status == 1){
+				layer.msg(result.message, {icon: 2,time: 3000});
+				window.location.href=SPOPE.jump_url;
+			}else if(result.status == 0){
+				layer.msg(result.message, {icon: 1,time: 3000});
+				self.location.reload();
+			}
+		},"JSON");
 		table
 			.order([[1,'asc']])
 			.draw(false);
