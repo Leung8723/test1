@@ -1,8 +1,16 @@
 /**
- * 添加按钮操作
+ * 添加/新建/删除 按钮操作
  */
 $("#button-add").click(function(){
     var url = SCOPE.add_url;
+    window.location.href=url;
+});
+$("#button-new").click(function(){
+    var url = SCOPE.new_url;
+    window.location.href=url;
+});
+$("#button-hide").click(function(){
+    var url = SCOPE.hide_url;
     window.location.href=url;
 });
 

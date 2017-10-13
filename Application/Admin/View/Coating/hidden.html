@@ -5,64 +5,70 @@
   <div id="page-wrapper">
     <div class="container-fluid" >
 	
-	<!-- CSS -->	  
+	<!-- DataTables CSS -->	  
 	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
-	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
+	<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
-
-    <!-- Page Heading -->
-	  </br></br></br></br>
+	<!-- Page Heading -->
+	</br></br></br></br>
       <div class="row">
         <div class="col-lg-12">
-
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens">产品目录</a>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=coating">镀膜管理</a>
             </li>
             <li class="active">
-              <i class="fa fa-table"></i>已删除型号列表
+              <i class="fa fa-edit"></i>删除列表
             </li>
           </ol>
         </div>
       </div>
-      <!-- /.row -->
-      </br>
-	   <!-- <div class="display"> -->
-		<table id="lens-table" class="cell-border display">
+	  <form>
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
 			<thead>
 			<tr>
 			  <th>ID</th>
 			  <th>型号</th>
-			  <th>规格</th>
-			  <th>色相</th>
-			  <th>材质</th>
-			  <th>创建人</th>
+			  <th>镀膜数量</th>
+			  <th>镀膜日期</th>
+			  <th>镀膜设备</th>
+			  <th>批次</th>
+			  <th>担当</th>
+			  <th>投入时间</th>
+			  <th>取出时间</th>
 			  <th>提交时间</th>
 			  <th>更新时间</th>
-			  <th>数据操作</th>
+			  <th>分光状态</th>
+			  <th>备注</th>
+			  <th>操作</th>
 			</tr>
 			</thead>
 				<tbody>
-					<volist name="lens" id="len">
+					<volist name="coating" id="coating">
 					  <tr>
-						<td>{$len.id}</td>
-						<td>{$len.model}</td>
-						<td>{$len.specs}</td>
-						<td>{$len.color}</td>
-						<td>{$len.material}</td>
-						<td>{$len.create_user}</td>
-						<td>{$len.create_time|date="Y-m-d H:i",###}</td>
-						<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
+						<td>{$coating.id}</td>
+						<td>{$coating.ct_model}</td>
+						<td>{$coating.ct_num}</td>
+						<td>{$coating.ct_date}</td>
+						<td>{$coating.ct_machine}号机</td>
+						<td>{$coating.ct_lot}</td>
+						<td>{$coating.ct_user}</td>
+						<td>{$coating.start_time}</td>
+						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
+						<td>{$coating.create_time|date="H:i",###}</td>
+						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
+						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
+						<td>{$coating.tips}</td>
 						<td></td>
 					  </tr>
 					</volist>
 				</tbody>
 		</table>
-      <!-- </div> -->
+	  </form>
     </div>
    </div>
 </div>
@@ -76,7 +82,7 @@ $(document).ready( function () {
 				"class":"but_xq",
 				"data":null,
 				"bSortable":false,
-				"defaultContent":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id=\"del\"  href=\"#\">恢复</a>"
+				"defaultContent":"<a id=\"del\"  href=\"#\">恢复</a>"
 		}],
 		"columnDefs":[{
 				"visible": false,
@@ -101,11 +107,18 @@ $(document).ready( function () {
 			}
 		}
 	});
-	//删除
+	//恢复
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:1});
-		self.location.reload();
+		$.post("/admin.php?c=coating&a=restatus", {id:data[0],status:1},function(result){
+			if(result.status == 1){
+				layer.msg(result.message, {icon: 2,time: 3000});
+				window.location.href=SPOPE.jump_url;
+			}else if(result.status == 0){
+				layer.msg(result.message, {icon: 1,time: 3000});
+				self.location.reload()
+			}
+		},"JSON");
 	});
 });
 </script>

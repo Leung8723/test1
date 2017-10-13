@@ -137,9 +137,9 @@ class LensController extends CommonController {
                     return show(0, 'ID不存在');
                 }
                 $res = D("Lens")->updateStatusById($id, $status);
-                if ($res) {
+                if($res){
                     return show(1, '操作成功');
-                } else {
+                }else{
                     return show(0, '操作失败');
                 }
             }

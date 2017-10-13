@@ -35,21 +35,25 @@
               <div class="layui-row">
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">日期</label>
+                    <label class="layui-form-label">ID</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="coatingdate" id="coatingdate" type="text" value="{$coatingData.ct_date}"></div>
+                      <input class="layui-input" name="id" id="id" type="text" value="{$coatingData.id}" readonly="readonly"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">时间</label>
+                    <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="coatingtime" id="coatingtime" type="text" value="{$coatingData.start_time}"></div>
+                      <input class="layui-input" name="ct_date" id="ct_date" type="text" value="{$coatingData.ct_date}"></div>
                   </div>
-                  </br>
                 </td>
                 <td>
-                  <div class="layui-col-md3"></div>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">投入</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="start_time" id="start_time" type="text" value="{$coatingData.start_time}"></div>
+                  </div>
+                  </br>
                 </td>
               </div>
             </tr>
@@ -59,7 +63,7 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">设备</label>
                     <div class="layui-input-inline">
-                      <select name="machine" id="machine" lay-verify="required" lay-search="">
+                      <select name="ct_machine" id="ct_machine" lay-verify="required" lay-search="">
                         <option value="">==请选择镀膜设备==</option>
                         <foreach name="machineList" item="machineList">
                           <option value="{$machineList.name}">{$machineList.name}号机</option></foreach>
@@ -71,14 +75,14 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">批次</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="lotnum" id="lotnum" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
+                      <input class="layui-input" name="ct_lot" id="ct_lot" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">担当</label>
                     <div class="layui-input-inline">
-                      <select name="ctuser" id="ctuser" lay-verify="required" lay-search="">
+                      <select name="ct_user" id="ct_user" lay-verify="required" lay-search="">
                         <option value="">==请选择设备担当==</option>
                         <foreach name="coatingUser" item="coatingUser">
                           <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
@@ -93,7 +97,7 @@
                     <div class="layui-col-md3">
                       <label class="layui-form-label">型号</label>
                       <div class="layui-input-inline">
-                        <input name="model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
+                        <input name="ct_model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
                     </div>
                   </td>
                   <td>
@@ -132,13 +136,13 @@ layui.use(['form','layer'],function() {
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
-	$.post("admin.php?c=coating&a=save",data.field,function(result){
+	$.post("admin.php?c=coating&a=edit",data.field,function(result){
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 2000});
-			window.location.href=url;
+			self.location.reload();
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 2000});
-			window.location.href=url;
+			<!-- window.location.href=url; -->
 		}
 	},"JSON");
 	return false;
@@ -151,19 +155,32 @@ layui.use('laydate',function() {
   var laydate = layui.laydate;
 	//date
 	laydate.render({
-	  elem: '#coatingdate' //指定元素
+	  elem: '#ct_date' //指定元素
 	  ,type: 'date'
 	  ,value: new Date()
 	  ,theme: 'molv'
 	});
 	//time
 	laydate.render({
-	  elem: '#coatingtime'
+	  elem: '#start_time'
 	  ,type: 'time'
 	  ,value: new Date()
 	  ,theme: 'molv'
 	  });
 });
+
+  //格式化时间
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+var myDate = new Date();
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("start_time").value = result;
+document.getElementById("ct_date").value = result2;
 
 </script>
 <include file="Index/footer" />

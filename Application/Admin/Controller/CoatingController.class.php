@@ -40,7 +40,7 @@ class CoatingController extends CommonController {
     public function edit() {
 		$coatingId = $_GET['id'];
 		if($_POST){
-			return $this->save($coatingId,$_POST);
+			return $this->coatingSave($_POST);
 		}else{
 			if(!$coatingId) {
 				$this->redirect('/admin.php?c=coating');
@@ -57,6 +57,23 @@ class CoatingController extends CommonController {
 			$this->display();
 		}
     }
+	//删除列表
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $hiddenLensData = D("Coating")->getHiddenData();
+        $this->assign('coating',$hiddenLensData);
+        $this->display();
+    }	
+	
+	
+	
+	
+	
+	
 	//添加模块
 	public function coatingAdd($data,$length){
         try {
@@ -100,28 +117,13 @@ class CoatingController extends CommonController {
 		}
 	}
 	//编辑模块
-    public function save($id,$data) {
-		print_r($data);print_r($id);exit;
+    public function coatingSave($data) {
         try {
-			$arr[] = array(
-				'id' => $id,
-				'ct_model' => $data['model'],
-				'ct_machine' => $data['machine'],
-				'ct_date' => $data['coatingdate'],
-				'ct_lot' => $data['lotnum'],
-				'ct_user' => $data['ctuser'],
-				'start_time' => $data['coatingtime'],
-				'ct_num' => $data[$ctnum],
-				'create_user' => getLoginRealname(),
-				'status' => '1',
-				'update_time' => time(),
-				'tips' => $data[$tips]
-			);
-            $id = D("Coating")->updateLensById($id,$data);
+            $id = D("Coating")->updateLensById($data);
             if($id === false) {
-                return show(1, '更新镀膜信息失败');
+                return show(1, '镀膜信息更新失败!');
             }else{
-				return show(0, $_POST['model'].' 更新镀膜信息成功');
+				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
 			}
         }catch(Exception $e) {
             return show(1, $e->getMessage());
@@ -148,5 +150,25 @@ class CoatingController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
-
+	
+    public function restatus() {
+        try {
+            if ($_POST) {
+                $id = $_POST['id'];
+                $status = $_POST['status'];
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Coating")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '恢复成功');
+                }else{
+                    return show(1, '恢复失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
 }

@@ -6,12 +6,11 @@
     <div class="container-fluid" >
 	
 	<!-- DataTables CSS -->	  
-	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
-	<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
-	<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
+
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
 	</br></br></br></br>
@@ -29,8 +28,9 @@
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654常规入库</button>
-	    <!-- <button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654新产品入库</button> -->
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规入库</button>
+	    <button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品入库</button>
+	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 删除列表</button> 
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
@@ -62,8 +62,8 @@
 						<td>{$coating.ct_machine}号机</td>
 						<td>{$coating.ct_lot}</td>
 						<td>{$coating.ct_user}</td>
-						<td>{$coating.start_time|date="H:i",###}</td>
-						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time|date="H:i",###}</if></td>
+						<td>{$coating.start_time}</td>
+						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
 						<td>{$coating.create_time|date="H:i",###}</td>
 						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
 						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
@@ -80,15 +80,14 @@
 <script>
 var SCOPE = {
 'edit_url' : '/admin.php?c=coating&a=edit',
-'jump_url' : '/admin.php?c=coating',
 'add_url' : '/admin.php?c=coating&a=add',
-'del_url' : '/admin.php?c=coating&a=del',
-'hidden_url' : '/admin.php?c=coating&a=hidden',
+'new_url' : '/admin.php?c=coating&a=new',
+'hide_url' : '/admin.php?c=coating&a=hidden',
 }
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [[ 3, "desc" ],[ 4, "asc" ],[ 5, "desc" ],[ 1, "asc" ]],
+		"order": [[ 0, "desc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
@@ -97,15 +96,15 @@ $(document).ready( function () {
 				"bSortable":false,
 				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
 		}],
-		buttons: [
+		"buttons": [
 			{
-				extend: 'excelHtml5',
-				text: 'Save current page',
+				extend: 'excel',
+				text: '导出',
 				exportOptions: {
 					modifier: {
 						page: 'current'
 					}
-				}
+				},
 			}
 		],
 		"columnDefs":[{
@@ -148,12 +147,9 @@ $(document).ready( function () {
 				window.location.href=SPOPE.jump_url;
 			}else if(result.status == 0){
 				layer.msg(result.message, {icon: 1,time: 3000});
-				self.location.reload();
+				self.location.reload()
 			}
 		},"JSON");
-		table
-			.order([[1,'asc']])
-			.draw(false);
 	});
 });
 </script>
