@@ -19,26 +19,41 @@ class EnterController extends CommonController {
         $this->assign('enters',$enterdata);
         $this->display();
     }
-
+	//入库主页
 	public function add() {
 		if($_POST){
 			$length = (count($_POST)-3)/3;
 			// print_r($_POST);print_r($length);exit;
 			return $this->enterAdd($_POST,$length);
         }else{
-			$lensModelData = D("Enter")->getNotNullModel();//获取入库过得全部型号
+			$lensModelData = D("Enter")->getNotNullModel();//获取月间入库的型号列表
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
-			// print_r($lensModelData);exit;
+			$lastMdUser = D("Enter")->getLastMdUser();//获取成型入库担当列表
+			// print_r($enterLastDate);exit;
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mduser',$enterMdUser);
+			$this->assign('lastmduser',$lastMdUser);
 			$this->display();
 		}
 	}
-	
-	public function newdata(){
-		echo "hello";
+	//新型号入库
+	public function addnew() {
+		if($_POST){
+			return $this->enterAdd($_POST);
+        }else{
+			$lensModelData = D("Enter")->getNewModel();//获取月间未入库过得全部型号列表
+			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
+			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
+			$lastMdUser = D("Enter")->getLastMdUser();//获取成型入库担当列表
+			// print_r($lastMdUser);exit;
+			$this->assign('enterlens',$lensModelData);
+			$this->assign('lastlens',$enterLastDate);
+			$this->assign('mduser',$enterMdUser);
+			$this->assign('lastmduser',$lastMdUser);
+			$this->display();
+		}
 	}
 	
 	//入库模块

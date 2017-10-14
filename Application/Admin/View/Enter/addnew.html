@@ -23,16 +23,12 @@
 				<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
 			  </li>
 			  <li class="active">
-				<i class="fa fa-edit"></i>产品入库
+				<i class="fa fa-edit"></i>旧产品入库
 			  </li>
 			</ol>
 		  </div>
 		</div>
-		
-	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654新产品入库</button>
-	  </div>
-	<!-- /.row -->
+		<!-- /.row -->
 		<form class="layui-form" method="post" action="">
 		  <div class="layui-row">
 		   <div class="layui-form-item">
@@ -62,20 +58,22 @@
 					    <option value="{$mduser.md_name}">{$mduser.md_name}</option>
 					  </foreach>
 				  </select>
-					<!-- <input name="md_user" lay-verify="text" autocomplete="off" class="layui-input" type="text"> -->
 				  </div>
 			  </div>
 			</td>
 			<!-- 1 -->
-			<?php foreach ($enterlens as $key => $value){ ?>
 			</br></br></br>
 			<tr>
-			
 			  <td>
 				<div class="layui-col-md3">
 				  <label for="inputId" class="layui-form-label">型号</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "model".$key?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly">
+				  <select name="model" lay-verify="required" lay-search="">
+				    <option value="">==请输入型号全称==</option>
+					  <foreach name="enterlens" item="enterlens">
+					    <option value="{$enterlens.model}">{$enterlens.model}</option>
+					  </foreach>
+				  </select>
 				  </div>
 				</div>
 			  </td>
@@ -83,7 +81,7 @@
 				<div class="layui-col-md3">
 				<label class="layui-form-label">数量</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "etnum".$key ?>" value=0 lay-verify="number" autocomplete="on" class="layui-input" type="text">
+					<input name="etnum" value=0 lay-verify="number" autocomplete="on" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
@@ -91,14 +89,12 @@
 				<div class="layui-col-md6">
 				<label class="layui-form-label">备注</label>
 				  <div class="layui-input-inline">
-					<input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+					<input name="tips" lay-verify="text" autocomplete="off" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
 			</tr>
-			<?php }?>
 		  </div>
-
 		    <div class="layui-form-item">
 			  <div class="layui-input-block">
 			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -115,7 +111,6 @@
 <!-- /#wrapper -->
 <script>
 var SCOPE = {
-'add_url' : '/admin.php?c=enter&a=addnew',
 'jump_url' : '/admin.php?c=enter',
 }
 
