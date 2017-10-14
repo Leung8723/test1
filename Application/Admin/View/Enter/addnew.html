@@ -81,7 +81,7 @@
 				<div class="layui-col-md3">
 				<label class="layui-form-label">数量</label>
 				  <div class="layui-input-inline">
-					<input name="etnum" value=0 lay-verify="number" autocomplete="on" class="layui-input" type="text">
+					<input name="etnum" lay-verify="number" autocomplete="on" class="layui-input" type="text">
 				  </div>
 				</div>
 			  </td>
@@ -120,7 +120,7 @@ layui.use(['form','layer'], function(){
   var url = SCOPE.jump_url;
   //监听提交
   form.on('submit(formDemo)', function(data){
-	$.post("admin.php?c=enter&a=add",data.field,function(result){;
+	$.post("admin.php?c=enter&a=addnew",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 2000});
 		}else if(result.status == 0){
@@ -158,8 +158,10 @@ function checkTime(i){
     return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
-document.getElementById("entertime").value=result;
+var result1 = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("entertime").value=result1;
+document.getElementById("enterdate").value=result2;
 
 </script>
 <include file="Index/footer" />

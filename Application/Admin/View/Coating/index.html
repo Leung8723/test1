@@ -28,9 +28,9 @@
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规入库</button>
-	    <button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品入库</button>
-	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 删除列表</button> 
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规镀膜投入</button>
+	    <button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品镀膜投入</button>
+	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
@@ -58,12 +58,12 @@
 						<td>{$coating.id}</td>
 						<td>{$coating.ct_model}</td>
 						<td>{$coating.ct_num}</td>
-						<td>{$coating.ct_date}</td>
+						<td>{$coating.ct_date|date="Y-m-d",###}</td>
 						<td>{$coating.ct_machine}号机</td>
 						<td>{$coating.ct_lot}</td>
 						<td>{$coating.ct_user}</td>
-						<td>{$coating.start_time}</td>
-						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
+						<td>{$coating.start_time|date="H:i",###}</td>
+						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time|date="H:i",###}</if></td>
 						<td>{$coating.create_time|date="H:i",###}</td>
 						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
 						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>

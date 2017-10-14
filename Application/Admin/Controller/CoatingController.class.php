@@ -13,7 +13,6 @@ class CoatingController extends CommonController {
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
-		// print_r($title);exit;
         if($title) {
             $conds['id'] = $title;
         }
@@ -67,13 +66,7 @@ class CoatingController extends CommonController {
         $hiddenLensData = D("Coating")->getHiddenData();
         $this->assign('coating',$hiddenLensData);
         $this->display();
-    }	
-	
-	
-	
-	
-	
-	
+    }
 	//添加模块
 	public function coatingAdd($data,$length){
         try {
@@ -87,10 +80,10 @@ class CoatingController extends CommonController {
 						'id' => NULL,
 						'ct_model' => $data[$model],
 						'ct_machine' => $data['machine'],
-						'ct_date' => $data['coatingdate'],
+						'ct_date' => strtotime($data['coatingdate']),
 						'ct_lot' => $data['lotnum'],
 						'ct_user' => $data['ctuser'],
-						'start_time' => $data['coatingtime'],
+						'start_time' => strtotime($data['coatingtime']),
 						'over_time' => NULL,
 						'ct_num' => $data[$ctnum],
 						'create_user' => getLoginRealname(),
@@ -150,7 +143,7 @@ class CoatingController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
-	
+	//删除项目恢复模块
     public function restatus() {
         try {
             if ($_POST) {

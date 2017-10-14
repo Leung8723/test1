@@ -9,6 +9,7 @@ use Think\Exception;
  * 文章内容管理
  */
 class EnterController extends CommonController {
+	//入库主页
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
@@ -19,11 +20,10 @@ class EnterController extends CommonController {
         $this->assign('enters',$enterdata);
         $this->display();
     }
-	//入库主页
+	//添加主页
 	public function add() {
 		if($_POST){
 			$length = (count($_POST)-3)/3;
-			// print_r($_POST);print_r($length);exit;
 			return $this->enterAdd($_POST,$length);
         }else{
 			$lensModelData = D("Enter")->getNotNullModel();//获取月间入库的型号列表
@@ -38,16 +38,48 @@ class EnterController extends CommonController {
 			$this->display();
 		}
 	}
+	//编辑主页
+    public function edit() {
+		$enterId = $_GET['id'];
+		if($_POST){
+			return $this->enterSave($_POST);
+		}else{
+			if(!$enterId) {
+				$this->redirect('/admin.php?c=enter');
+			}
+			$id = D("Enter")->find($enterId);
+			if(!$id) {
+				$this->redirect('/admin.php?c=enter');
+			}
+			$coatingUser = D("Enter")->getCtUser();//获取镀膜担当列表
+			$machineList = D("Enter")->getMachineList();//获取镀膜设备列表
+			$this->assign('coatingData',$id);
+			$this->assign('coatingUser',$coatingUser);
+			$this->assign('machineList',$machineList);
+			$this->display();
+		}
+    }
+	//删除列表
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $hiddenLensData = D("Enter")->getHiddenData();
+        $this->assign('enters',$hiddenLensData);
+        $this->display();
+    }
 	//新型号入库
 	public function addnew() {
 		if($_POST){
-			return $this->enterAdd($_POST);
+			return $this->enterNewAdd($_POST);
         }else{
 			$lensModelData = D("Enter")->getNewModel();//获取月间未入库过得全部型号列表
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
 			$lastMdUser = D("Enter")->getLastMdUser();//获取成型入库担当列表
-			// print_r($lastMdUser);exit;
+			
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mduser',$enterMdUser);
@@ -55,7 +87,6 @@ class EnterController extends CommonController {
 			$this->display();
 		}
 	}
-	
 	//入库模块
 	public function enterAdd($data,$length){
         try {
@@ -66,10 +97,10 @@ class EnterController extends CommonController {
 				$tips='tips'.$i;
 				if($data[$etnum]>0){
 					$arr[] = array(
-						'enter_id' => NULL,
+						'id' => NULL,
 						'et_model' => $data[$model],
-						'et_date' => $data['enterdate'],
-						'et_time' => $data['entertime'],
+						'et_date' => strtotime($data['enterdate']),
+						'et_time' => strtotime($data['entertime']),
 						'et_num' => $data[$etnum],
 						'create_user' => getLoginRealname(),
 						'md_user' => $data['mduser'],
@@ -92,53 +123,59 @@ class EnterController extends CommonController {
             return $e->getMessage();
 		}
 	}
-	
-	//型号修改保存模块
-    public function save($data) {
-		$newsId = $data['id'];//获取id
-        //unset($data['id']);
+	//addnew入库模块
+	public function enterNewAdd($data){
         try {
-            $id = D("Lens")->updateLensById($newsId,$data);
+			$arr[] = array(
+				'id' => NULL,
+				'et_model' => $data['model'],
+				'et_date' => strtotime($data['enterdate']),
+				'et_time' => strtotime($data['entertime']),
+				'et_num' => $data['etnum'],
+				'create_user' => getLoginRealname(),
+				'md_user' => $data['mduser'],
+				'status' => '1',
+				'create_time' => time(),
+				'update_time' => NULL,
+				'tips' => $data['tip']
+			);
+			$id = D("Enter")->insertEnter($arr);
+            if($id){
+				return show(0,'入库成功');
+            }else{
+				return show(1,'入库失败');
+			}
+        }catch(Exception $e){
+            return $e->getMessage();
+		}
+	}
+	//编辑模块
+    public function enterSave($data) {
+        try {
+            $id = D("Enter")->updateLensById($data);
             if($id === false) {
-                return show(0, '更新型号失败');
-            }
-            return show(1, $_POST['model'].' 更新型号成功');
+                return show(1, '镀膜信息更新失败!');
+            }else{
+				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
+			}
         }catch(Exception $e) {
-            return show(0, $e->getMessage());
+            return show(1, $e->getMessage());
         }
     }
-	
-    public function edit() {
-        $newsId = $_GET['id'];
-        if(!$newsId) {
-            // 执行跳转
-            $this->redirect('/admin.php?c=lens');
-        }
-        $news = D("Lens")->find($newsId);
-        if(!$news) {
-            $this->redirect('/admin.php?c=lens');
-        }
-		$lensMaterialType = C("LENS_MATERIAL");
-		$lensColorType = C("COLOR_TYPE");
-		$this->assign('lensColorType', $lensColorType);
-		$this->assign('lensMaterialType', $lensMaterialType);
-        $this->assign('lens',$news);
-        $this->display();
-    }
-	
+	//删除模块
     public function del() {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
                 $status = $_POST['status'];
                 if (!$id) {
-                    return show(0, 'ID不存在');
+                    return show(1, 'ID不存在');
                 }
-                $res = D("Lens")->updateStatusById($id, $status);
+                $res = D("Enter")->updateStatusById($id, $status);
                 if ($res) {
-                    return show(1, '操作成功');
+                    return show(0, '删除成功');
                 } else {
-                    return show(0, '操作失败');
+                    return show(1, '删除失败');
                 }
             }
             return show(0, '没有提交的内容');
@@ -146,5 +183,25 @@ class EnterController extends CommonController {
             return show(0, $e->getMessage());
         }
     }
-	
+	//删除项目恢复模块
+    public function restatus() {
+        try {
+            if ($_POST) {
+                $id = $_POST['id'];
+                $status = $_POST['status'];
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Enter")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '恢复成功');
+                }else{
+                    return show(1, '恢复失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
 }

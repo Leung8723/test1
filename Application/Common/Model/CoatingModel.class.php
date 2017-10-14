@@ -25,19 +25,16 @@ class CoatingModel extends Model {
 			'status' => array('eq',1),
 		);
 		$lensdata = M('enter')->where($data)->field('et_model,SUM(et_num) AS etnum')->order('et_model asc')->group('et_model')->distinct(true)->select();
-		// $res = array_column($lensdata,'et_num','et_model');
 		return $lensdata;
     }
 	//查找镀膜担当列表
     public function getCtUser() {
 		$data = M('ctuser')->field('ct_name')->distinct(true)->select();
-		//$res = array_column($data,'ct_name');
 		return $data;
     }
 	//查找镀膜机列表
 	public function getMachineList() {
 		$machine = M('machine')->order('nickname asc')->distinct(true)->select();
-		//res = array_column($machine,'nickname','name');
 		return $machine;
     }
 	//修改状态,删除&恢复

@@ -11,7 +11,7 @@ class EnterModel extends Model {
     public function __construct() {
         $this->_db = M('enter');
     }
-	//入库信息查询
+	//入库记录信息查询
     public function getEnterData() {
 		$data = array(
 			'status' => array('eq',1),
@@ -52,12 +52,12 @@ class EnterModel extends Model {
     }
 	//查找最后一条成型入库担当
     public function getLastMdUser() {
-		$data1 = $this->_db->order('enter_id desc')->field('md_user')->limit('1')->select();
+		$data1 = $this->_db->order('id desc')->field('md_user')->limit('1')->select();
 		$res = $data1[0]['md_user'];
 		
 		return $res;
     }
-	//更新 删除/显示状态
+	//修改状态,删除&恢复
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception('status不能为非数字');
@@ -66,30 +66,43 @@ class EnterModel extends Model {
             throw_exception('id不合法');
         }
         $data['status'] = $status;
-        return $this->_db->where('enter_id='.$id)->save($data);
+        return $this->_db->where('id='.$id)->save($data);
     }
-	//插入记录
+	//查找相关id数据
+	public function find($id) {
+        return $this->_db->where('id='.$id)->find();
+    }
+	//插入入库数据
 	public function insertEnter($data){
 		if(!$data||!is_array($data)){
 			throw_exception('入库信息不合法');
 		}
 		return $this->_db->addAll($data);
 	}
-	
-	
+	//修改入库数据
+    public function updateLensById($data) {
+		$id = $data['id'];
+        if(!$id || !is_numeric($id)) {
+            throw_exception('id不合法');
+        }
+        if(!$data || !is_array($data)) {
+			throw_exception('信息不完整');
+        }
+        $data['status'] =  '1';
+        $data['create_user'] =  getLoginRealname();
+		$data['update_time'] =  time();
+        return $this->_db->where('id='.$id)->save($data);
+    }
+	//删除型号查询
+    public function getHiddenData() {
+		$data = array(
+			'status' => array('neq',1),
+		);
+		$res = $this->_db->where($data)->order('et_model asc')->select();
+		return $res;
+    }
 	
 	
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
