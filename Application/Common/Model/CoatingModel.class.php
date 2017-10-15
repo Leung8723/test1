@@ -28,24 +28,21 @@ class CoatingModel extends Model {
 		$coatingdata = $this->_db->where($data)->field('ct_model,SUM(ct_num) AS ctnum')->order('ct_model asc')->group('ct_model')->distinct(true)->select();
 		$entercount = count($enterdata);
 		$coatingcount = count($coatingdata);
-		
 		$arr1 = array();
-		$arr2 = array();
-		for($i=0;$i<=$entercount;$i++){
-			for($k=0;$k<=$coatingcount;$k++){
+		for($i=0;$i<$entercount;$i++){
+			for($k=0;$k<$coatingcount;$k++){
 				if($enterdata[$i]['et_model']==$coatingdata[$k]['ct_model']){
 					$arr1[$i]['model'] = $enterdata[$i]['et_model'];
-					$arr1[$i]['etnum'] = $enterdata[$i]['etnum']- $coatingdata[$k]['ctnum'];
-				}elseif($$entercount < $coatingcount){
-					$num = $coatingcount - $entercount;
-					for($s=0;$s<$num;$s++){
-						$arr2[$i+$s]['model'] = $coatingdata[$k]['ct_model'];
-						$arr2[$i+$s]['etnum'] = 0-$coatingdata[$k]['ctnum'];
-					}
+					$arr1[$i]['num'] = $enterdata[$i]['etnum']- $coatingdata[$k]['ctnum'];
+				}else{
+					$num = abs($coatingcount - $entercount)-1;
+					$arr1[$i+$num]['model'] = $coatingdata[$k]['ct_model'];
+					$arr1[$i+$num]['num'] = 0-$coatingdata[$k]['ctnum'];
+					
 				}
 			}
 		}
-		$arr = array_filter(array_merge($arr1,$arr2));
+		$arr = array_filter(array_merge($arr1));
 		return $arr;
     }
 	//查找镀膜担当列表
