@@ -12,8 +12,10 @@
 		<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
 		<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
 		<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
-        <!-- Page Heading -->
-		</br></br></br></br>
+        <!-- Page Heading --></br>
+        </br>
+        </br>
+        </br>
         <div class="row">
           <div class="col-lg-12">
             <ol class="breadcrumb">
@@ -21,7 +23,7 @@
                 <i class="fa fa-dashboard"></i>
                 <a href="/admin.php?c=coating">镀膜管理</a></li>
               <li class="active">
-                <i class="fa fa-edit"></i>常规镀膜投入</li>
+                <i class="fa fa-edit"></i>新品镀膜投入</li>
             </ol>
           </div>
         </div>
@@ -44,8 +46,11 @@
                     <div class="layui-input-inline">
                       <input class="layui-input" name="coatingtime" id="coatingtime" type="text" placeholder="hh:mm:ss"></div>
                   </div>
+                  </br>
                 </td>
-
+                <td>
+                  <div class="layui-col-md3"></div>
+                </td>
               </div>
             </tr>
             <tr>
@@ -66,7 +71,7 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">批次</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="lotnum" id="lotnum" lay-verify="required" type="text" lay-verify="text" placeholder="输入设备代码+LOT号码!"></div>
+                      <input class="layui-input" name="lotnum" id="lotnum" required type="text" lay-verify="text" placeholder="输入设备代码+LOT号码!"></div>
                   </div>
                 </td>
                 <td>
@@ -81,7 +86,6 @@
                     </div>
                   </div>
                 </td>
-			  </div>
             </tr>
             <?php foreach ($lensnum as $key=>$value){ ?>
               <tr>
@@ -90,43 +94,30 @@
                     <div class="layui-col-md3">
                       <label for="inputId" class="layui-form-label">型号</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "model".$key?>" value="<?php echo $value[et_model]?>" lay-verify="text required" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
+                        <input name="<?php echo "model".$key?>" value="<?php echo $value[et_model]?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
                     </div>
                   </td>
                   <td>
                     <div class="layui-col-md3">
                       <label class="layui-form-label">数量</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "ctnum".$key ?>" id="<?php echo "ctnum".$key ?>" lay-verify="number required" autocomplete="off" class="layui-input" type="text" onkeyup="changeValue(this.value)"></div>
+                        <input name="<?php echo "ctnum".$key ?>" value="<?php echo $value[etnum]?>" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
                     </div>
                   </td>
                   <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">在库</label>
-                      <div class="layui-input-inline">
-                        <input name="<?php echo "count".$key ?>" id="<?php echo "count".$key ?>" value = <?php echo $value[etnum]?> lay-verify="number" autocomplete="on" class="layui-input" type="text" readonly="readonly"></div>
-                    </div>
-                  </td>
-					<script>
-						function changeValue(val){
-							var a = <?php echo $key ?>;
-							document.getElementById("count"+a).value = <?php echo $value[etnum]?> - val;
-						};
-					</script>
-				  <td>
-                    <div class="layui-col-md3">
+                    <div class="layui-col-md6">
                       <label class="layui-form-label">备注</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="on" class="layui-input" type="text"></div>
+                        <input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
                     </div>
                   </td>
                 </div>
               </tr>
               <?php }?>
-			<div class="layui-input-block">
-			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-			</div>
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+                </div>
         </form>
         </div>
       </div>
@@ -137,13 +128,14 @@
 var SCOPE = {
   'jump_url': '/admin.php?c=coating',
 }
+
 //lay-form
 layui.use(['form','layer'],function() {
   var form = layui.form;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
-	$.post("admin.php?c=coating&a=add",data.field,function(result){;
+	$.post("admin.php?c=coating&a=new",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
 			self.location.reload();
@@ -172,7 +164,6 @@ layui.use('laydate',function() {
 	  ,type: 'time'
 	  ,value: new Date()
 	  ,theme: 'molv'
-	  ,format: 'HH:mm'
 	  });
 });
 
@@ -183,9 +174,8 @@ function checkTime(i) {
   }
   return i;
 }
-<!-- + ':' + checkTime(myDate.getSeconds()) -->
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
 var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
 document.getElementById("coatingtime").value = result;
 document.getElementById("coatingdate").value = result2;

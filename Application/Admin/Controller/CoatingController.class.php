@@ -35,6 +35,21 @@ class CoatingController extends CommonController {
 			$this->display();
 		}
 	}
+	//待用功能
+	public function addnew() {
+		if($_POST){
+			$length = (count($_POST)-5)/3;
+			return $this->coatingAdd($_POST,$length);
+        }else{
+			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
+			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
+			$this->assign('lensnum',$lensNumData);
+			$this->assign('ctuser',$coatingUser);
+			$this->assign('machine',$machineList);
+			$this->display();
+		}
+	}
 	//编辑主页
     public function edit() {
 		$coatingId = $_GET['id'];

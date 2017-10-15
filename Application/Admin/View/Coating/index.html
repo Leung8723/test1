@@ -29,7 +29,7 @@
       <!-- /.row -->
 	  <div class="layui-form-item">
 	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规镀膜投入</button>
-	    <button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品镀膜投入</button>
+	    <!-- <button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品镀膜投入</button> -->
 	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
@@ -44,7 +44,8 @@
 			  <th>批次</th>
 			  <th>担当</th>
 			  <th>投入时间</th>
-			  <th>取出时间</th>
+			  <th>出库时间</th>
+			  <th>操作担当</th>
 			  <th>提交时间</th>
 			  <th>更新时间</th>
 			  <th>分光状态</th>
@@ -64,8 +65,9 @@
 						<td>{$coating.ct_user}</td>
 						<td>{$coating.start_time|date="H:i",###}</td>
 						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time|date="H:i",###}</if></td>
+						<td>{$coating.create_user}</td>
 						<td>{$coating.create_time|date="H:i",###}</td>
-						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
+						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="Y-m-d H:i",###}</if></td>
 						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
 						<td>{$coating.tips}</td>
 						<td></td>
@@ -81,7 +83,7 @@
 var SCOPE = {
 'edit_url' : '/admin.php?c=coating&a=edit',
 'add_url' : '/admin.php?c=coating&a=add',
-'new_url' : '/admin.php?c=coating&a=new',
+'new_url' : '/admin.php?c=coating&a=addnew',
 'hide_url' : '/admin.php?c=coating&a=hidden',
 }
 //初始化DataTables

@@ -29,9 +29,9 @@
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642常规镀膜</button>
-		<button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品镀膜</button>
-		<button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 删除列表</button>
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规成型入库</button>
+		<button  id="button-new" type="button" class="layui-btn layui-icon layui-btn-normal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品成型入库</button>
+		<button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-warm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button>
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
@@ -43,7 +43,7 @@
 			  <th>入库日期</th>
 			  <th>入库时间</th>
 			  <!--暂时不用--<th>成型箱号</th>-->
-			  <th>入库担当</th>
+			  <th>操作担当</th>
 			  <th>成型担当</th>
 			  <th>提交时间</th>
 			  <th>更新时间</th>
@@ -58,12 +58,12 @@
 						<td>{$enter.et_model}</td>
 						<td>{$enter.et_num}</td>
 						<td>{$enter.et_date|date="Y-m-d",###}</td>
-						<td>{$enter.et_time|date="H:i:s",###}</td>
+						<td>{$enter.et_time|date="H:i",###}</td>
 						<!--暂时不用--<td>{$enter.et_box}</td>-->
 						<td>{$enter.create_user}</td>
 						<td>{$enter.md_user}</td>
-						<td>{$enter.create_time|date="H:i:s",###}</td>
-						<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time}</if></td>
+						<td>{$enter.create_time|date="H:i",###}</td>
+						<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time|date="Y-m-d H:i",###}</if></td>
 						<td>{$enter.tips}</td>
 						<td></td>
 					  </tr>

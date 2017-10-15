@@ -47,15 +47,13 @@ class EnterController extends CommonController {
 			if(!$enterId) {
 				$this->redirect('/admin.php?c=enter');
 			}
-			$id = D("Enter")->find($enterId);
-			if(!$id) {
+			$res = D("Enter")->find($enterId);
+			if(!$res) {
 				$this->redirect('/admin.php?c=enter');
 			}
-			$coatingUser = D("Enter")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Enter")->getMachineList();//获取镀膜设备列表
-			$this->assign('coatingData',$id);
-			$this->assign('coatingUser',$coatingUser);
-			$this->assign('machineList',$machineList);
+			$mdUser = D("Enter")->getMdUser();//获取成型担当列表
+			$this->assign('enterData',$res);
+			$this->assign('mdUser',$mdUser);
 			$this->display();
 		}
     }
