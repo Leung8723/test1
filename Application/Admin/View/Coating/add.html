@@ -97,22 +97,9 @@
                     <div class="layui-col-md3">
                       <label class="layui-form-label">数量</label>
                       <div class="layui-input-inline">
-                        <input name="<?php echo "ctnum".$key ?>" id="<?php echo "ctnum".$key ?>" lay-verify="number required" autocomplete="off" class="layui-input" type="text" onkeyup="changeValue(this.value)"></div>
+                        <input name="<?php echo "ctnum".$key ?>" id="<?php echo "ctnum".$key ?>" placeholder="<?php echo "当前在库:".$value[etnum] ?>" lay-verify="number required" autocomplete="off" class="layui-input" type="text" onkeyup="changeValue(this.value)"></div>
                     </div>
                   </td>
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">在库</label>
-                      <div class="layui-input-inline">
-                        <input name="<?php echo "count".$key ?>" id="<?php echo "count".$key ?>" value = <?php echo $value[etnum]?> lay-verify="number" autocomplete="on" class="layui-input" type="text" readonly="readonly"></div>
-                    </div>
-                  </td>
-					<script>
-						function changeValue(val){
-							var a = <?php echo $key ?>;
-							document.getElementById("count"+a).value = <?php echo $value[etnum]?> - val;
-						};
-					</script>
 				  <td>
                     <div class="layui-col-md3">
                       <label class="layui-form-label">备注</label>
