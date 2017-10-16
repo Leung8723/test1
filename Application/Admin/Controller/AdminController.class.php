@@ -52,8 +52,9 @@ class AdminController extends CommonController {
     }
 
     public function personal() {
-        $res = $this->getLoginUser();
-        $user = D("Admin")->getAdminByAdminId($res['admin_id']);
+        // $res = $this->getLoginUser();
+		$res = $_GET['id'];
+        $user = D("Admin")->getAdminByAdminId($res);
         $this->assign('vo',$user);
         $this->display();
     }
@@ -61,20 +62,28 @@ class AdminController extends CommonController {
     public function save() {
         $user = $this->getLoginUser();
         if(!$user) {
-            return show(0,'用户不存在');
+            return show(1,'用户不存在');
         }
-
+        $id = $_POST['admin_id'];
+        $data['username'] = $_POST['username'];
         $data['realname'] = $_POST['realname'];
+		$data['password'] = getMd5Password($_POST['newpassword']);
+        $data['mobile'] = $_POST['mobile'];
         $data['email'] = $_POST['email'];
-
+        $data['power'] = 1;
+        $data['status'] = 1;
+        $data['create_user'] = getLoginRealname();
+        $data['update_time'] = time();
+		$passwd = $_POST['oldpassword'];
+		$old = getMd5Password($passwd);
         try {
-            $id = D("Admin")->updateByAdminId($user['admin_id'], $data);
-            if($id === false) {
-                return show(0, '配置失败');
+            $res = D("Admin")->updateByAdminId($id, $old, $data);
+            if($res === false) {
+                return show(1, '个人信息更新失败');
             }
-            return show(1, '配置成功');
+            return show(0, '个人信息更新成功');
         }catch(Exception $e) {
-            return show(0, $e->getMessage());
+            return show(1, $e->getMessage());
         }
     }
 

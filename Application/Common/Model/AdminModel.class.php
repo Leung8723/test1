@@ -22,15 +22,19 @@ class AdminModel extends Model {
         return $res;
     }
 
-    public function updateByAdminId($id, $data) {
-
+    public function updateByAdminId($id, $old, $data) {
         if(!$id || !is_numeric($id)) {
             throw_exception("ID不合法");
         }
         if(!$data || !is_array($data)) {
             throw_exception('更新的数据不合法');
         }
-        return  $this->_db->where('admin_id='.$id)->save($data); // 根据条件更新记录
+		$oldpassword = $this->_db->where('admin_id='.$id)->field('password')->select();
+		$opassword = $oldpassword[0]['password'];
+		if($old <> $opassword){
+			throw_exception('原始密码不正确!');
+		}
+        return $this->_db->where('admin_id='.$id)->save($data);
     }
 
     public function insert($data = array()) {

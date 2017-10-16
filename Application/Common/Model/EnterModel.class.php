@@ -101,8 +101,9 @@ class EnterModel extends Model {
 		$res = $this->_db->where($data)->order('et_model asc')->select();
 		return $res;
     }
-	
-	
-	
-	
+	//在库表查询
+    public function getCountData(){
+		$res = M('count')->order('model asc')->select();
+		return $res;
+    }
 }

@@ -6,12 +6,11 @@
     <div class="container-fluid" >
 	
 	<!-- DataTables CSS -->	  
-	<link rel="stylesheet" type="text/css" href="../Public/css/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
-	<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
-	<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
+
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
 	</br></br></br></br>
@@ -19,20 +18,18 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=temp">温湿度管理</a>
             </li>
             <li class="active">
-              <i class="fa fa-edit"></i>当日入库明细
+              <i class="fa fa-edit"></i>温湿度点检记录
             </li>
           </ol>
         </div>
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 常规成型入库</button>
-		<button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 新品成型入库</button>
-		<button  id="button-count" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe658 当前在库列表</button>
-		<button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button>
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 温湿度登记</button>
+	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
@@ -40,32 +37,38 @@
 			<tr>
 			  <th>ID</th>
 			  <th>型号</th>
-			  <th>入库数量</th>
-			  <th>入库日期</th>
-			  <th>入库时间</th>
-			  <!--暂时不用--<th>成型箱号</th>-->
+			  <th>镀膜数量</th>
+			  <th>镀膜日期</th>
+			  <th>镀膜设备</th>
+			  <th>批次</th>
+			  <th>担当</th>
+			  <th>投入时间</th>
+			  <th>出库时间</th>
 			  <th>操作担当</th>
-			  <th>成型担当</th>
 			  <th>提交时间</th>
 			  <th>更新时间</th>
+			  <th>分光状态</th>
 			  <th>备注</th>
-			  <th>编辑</th>
+			  <th>操作</th>
 			</tr>
 			</thead>
 				<tbody>
-					<volist name="enters" id="enter">
+					<volist name="coating" id="coating">
 					  <tr>
-						<td>{$enter.id}</td>
-						<td>{$enter.et_model}</td>
-						<td>{$enter.et_num}</td>
-						<td>{$enter.et_date|date="Y-m-d",###}</td>
-						<td>{$enter.et_time|date="H:i",###}</td>
-						<!--暂时不用--<td>{$enter.et_box}</td>-->
-						<td>{$enter.create_user}</td>
-						<td>{$enter.md_user}</td>
-						<td>{$enter.create_time|date="H:i",###}</td>
-						<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time|date="Y-m-d H:i",###}</if></td>
-						<td>{$enter.tips}</td>
+						<td>{$coating.id}</td>
+						<td>{$coating.ct_model}</td>
+						<td>{$coating.ct_num}</td>
+						<td>{$coating.ct_date|date="Y-m-d",###}</td>
+						<td>{$coating.ct_machine}号机</td>
+						<td>{$coating.ct_lot}</td>
+						<td>{$coating.ct_user}</td>
+						<td>{$coating.start_time|date="H:i",###}</td>
+						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time|date="H:i",###}</if></td>
+						<td>{$coating.create_user}</td>
+						<td>{$coating.create_time|date="H:i",###}</td>
+						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="Y-m-d H:i",###}</if></td>
+						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
+						<td>{$coating.tips}</td>
 						<td></td>
 					  </tr>
 					</volist>
@@ -77,17 +80,14 @@
 </div>
 <script>
 var SCOPE = {
-'edit_url' : '/admin.php?c=enter&a=edit',
-'add_url' : '/admin.php?c=enter&a=add',
-'new_url' : '/admin.php?c=enter&a=addnew',
-'del_url' : '/admin.php?c=enter&a=del',
-'hide_url' : '/admin.php?c=enter&a=hidden',
-'count_url' : '/admin.php?c=enter&a=lenscount',
+'edit_url' : '/admin.php?c=temp&a=edit',
+'add_url' : '/admin.php?c=temp&a=add',
+'hide_url' : '/admin.php?c=temp&a=hidden',
 }
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [ 0, "desc" ],
+		"order": [[ 0, "desc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
@@ -96,15 +96,15 @@ $(document).ready( function () {
 				"bSortable":false,
 				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
 		}],
-		buttons: [
+		"buttons": [
 			{
-				extend: 'excelHtml5',
-				text: 'Save current page',
+				extend: 'excel',
+				text: '导出',
 				exportOptions: {
 					modifier: {
 						page: 'current'
 					}
-				}
+				},
 			}
 		],
 		"columnDefs":[{
@@ -141,7 +141,7 @@ $(document).ready( function () {
 	//删除
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=enter&a=del", {id:data[0],status:0},function(result){
+		$.post("/admin.php?c=temp&a=del", {id:data[0],status:0},function(result){
 			if(result.status == 1){
 				layer.msg(result.message, {icon: 2,time: 3000});
 				window.location.href=SPOPE.jump_url;

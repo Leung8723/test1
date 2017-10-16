@@ -1,0 +1,332 @@
+<include file="Index/header" />
+<body>
+  <div id="wrapper">
+    <include file="Index/nav" />
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css" media="all">
+        <link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+		<!-- jQuery -->
+		<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+		<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
+		<script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script>
+		<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+        <!-- Page Heading -->
+		</br></br></br></br>
+        <div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li>
+                <i class="fa fa-dashboard"></i>
+                <a href="/admin.php?c=check">单品外观检查</a></li>
+              <li class="active">
+                <i class="fa fa-edit"></i>按镀膜LOT统计</li>
+            </ol>
+          </div>
+        </div>
+        <!-- /.row -->
+        <form class="layui-form" method="post" action="">
+          <!-- -->
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">日期</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="coatingdate" id="coatingdate" type="text" placeholder="yyyy-MM-dd"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">型号</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_model" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">检查数</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">不良数</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">批号</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label for="inputId" class="layui-form-label" style="width: 80px;">担当</label>
+                    <div class="layui-input-inline"  style="width: 100px;">
+                      <select name="ck_user" lay-verify="required" lay-search="">
+                        <option value="">检查担当</option>
+                        <foreach name="ctuser" item="ctuser">
+                          <option value="{$ctuser.ct_name}">{$ctuser.ct_name}</option></foreach>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row1 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">异物</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_model" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">亮点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">小异物</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="goods_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">没标签</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">痕迹</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">跑盘</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row2 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">黑点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_model" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">气泡</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">少镜片</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="goods_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">反镜片</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">F/M</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">划痕</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row3 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">压痕</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_model" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">成型</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">成型点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="goods_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">材料线</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">发白</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text" ></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">吸划</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row4 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">材异</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_model" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">GATE</label></label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="ck_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">半月</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="goods_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">镀膜</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" lay-verify="required" type="text" lay-verify="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label" style="width: 80px;">不良率</label>
+					<div class="layui-input-inline" style="width: 295px;">
+                      <input class="layui-input" name="bads_num" value="4.00%" lay-verify="required" type="text" lay-verify="text"></div>
+				  </div>
+                </td>
+			  </div>
+            </tr>
+			
+			<div class="layui-input-block">
+			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+			</div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+var SCOPE = {
+  'jump_url': '/admin.php?c=coating',
+}
+//lay-form
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+//监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=check&a=add",data.field,function(result){;
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
+
+//laydate
+layui.use('laydate',function() {
+  var laydate = layui.laydate;
+	//date
+	laydate.render({
+	  elem: '#coatingdate' //指定元素
+	  ,type: 'date'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	});
+	//time
+	laydate.render({
+	  elem: '#coatingtime'
+	  ,type: 'time'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	  ,format: 'HH:mm'
+	  });
+});
+
+  //格式化时间
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+<!-- + ':' + checkTime(myDate.getSeconds()) -->
+var myDate = new Date();
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("coatingtime").value = result;
+document.getElementById("coatingdate").value = result2;
+</script>
+<include file="Index/footer" />

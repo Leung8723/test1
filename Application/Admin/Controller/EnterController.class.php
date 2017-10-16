@@ -57,7 +57,7 @@ class EnterController extends CommonController {
 			$this->display();
 		}
     }
-	//删除列表
+	//删除列表主页
 	public function hidden() {
 		$conds = array();
 		$title = $_GET['id'];
@@ -66,6 +66,18 @@ class EnterController extends CommonController {
         }
         $hiddenLensData = D("Enter")->getHiddenData();
         $this->assign('enters',$hiddenLensData);
+        $this->display();
+    }
+	//在库列表主页
+	public function lenscount() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $countLensData = D("Enter")->getCountData();
+		// M('count')->where("1=1")->delete();
+        $this->assign('count',$countLensData);
         $this->display();
     }
 	//新型号入库

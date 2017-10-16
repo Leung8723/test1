@@ -6,7 +6,7 @@ use Think\Model;
  * 文章内容model操作
  * @author  singwa
  */
-class CoatingModel extends Model {
+class CheckModel extends Model {
     private $_db = '';
     public function __construct() {
         $this->_db = M('coating');

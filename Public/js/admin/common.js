@@ -13,7 +13,15 @@ $("#button-hide").click(function(){
     var url = SCOPE.hide_url;
     window.location.href=url;
 });
+$("#button-count").click(function(){
+    var url = SCOPE.count_url;
+    window.location.href=url;
+});
 
+$("#button-listorder").click(function(){
+    var url = SCOPE.listorder_url;
+    window.location.href=url;
+});
 /**
  * 提交form表单操作
  */

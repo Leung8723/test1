@@ -1,0 +1,102 @@
+<include file="Index/header" />
+<body>
+<div id="wrapper">
+  <include file="Index/nav"/>
+  <div id="page-wrapper">
+    <div class="container-fluid" >
+	
+	<!-- DataTables CSS -->	  
+	<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+
+	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+	<!-- Page Heading -->
+	</br></br></br></br>
+      <div class="row">
+        <div class="col-lg-12">
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=enter">入库管理</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i>当前在库明细
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+	  <form>
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+			<thead>
+			<tr>
+			  <th>ID</th>
+			  <th>型号</th>
+			  <th>在库数量</th>
+			  <th>更新担当</th>
+			  <th>更新时间</th>
+			  <th>备注</th>
+			</tr>
+			</thead>
+				<tbody>
+					<volist name="count" id="count">
+					  <tr>
+						<td>{$count.id}</td>
+						<td>{$count.model}</td>
+						<td>{$count.num}</td>
+						<td>{$count.count_user}</td>
+						<td>{$count.last_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$count.tips}</td>
+					  </tr>
+					</volist>
+				</tbody>
+		</table>
+	  </form>
+    </div>
+   </div>
+</div>
+<script>
+//初始化DataTables
+$(document).ready( function () {
+	var table = $('#lens-table').DataTable({
+		"order": [[ 0, "desc" ]],
+		"buttons": [
+			{
+				extend: 'excel',
+				text: '导出',
+				exportOptions: {
+					modifier: {
+						page: 'current'
+					}
+				},
+			}
+		],
+		"columnDefs":[{
+				"visible": false,
+				"targets": -1
+		}],
+		"text-align":"center",
+		"iDisplayLength":100,
+		"vertical-align":"middle",
+		"ordering":true,
+		"bProcessing":true,
+		"oLanguage":{
+			"sProcessing":"正在加载中......",
+			"sLengthMenu":"每页显示 _MENU_ 条记录",
+			"sZeroRecords":"对不起，查询不到相关数据！",
+			"sEmptyTable":"表中无数据存在！",
+			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
+			"sSearch":"搜索",
+			"oPaginate":{
+				"sFirst":"首页",
+				"sPrevious":"上一页",
+				"sNext":"下一页",
+				"sLast":"末页"
+			}
+		}
+	});
+});
+</script>
+<include file="Index/footer" />

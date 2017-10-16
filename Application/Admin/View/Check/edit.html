@@ -1,0 +1,186 @@
+<include file="Index/header" />
+<body>
+  <div id="wrapper">
+    <include file="Index/nav" />
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css" media="all">
+        <link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+        <!-- jQuery -->
+        <script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+        <script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
+		<!-- <script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script> -->
+        <script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+        <!-- Page Heading --></br>
+        </br>
+        </br>
+        </br>
+        <div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li>
+                <i class="fa fa-dashboard"></i>
+                <a href="/admin.php?c=check">单品外观检查</a></li>
+              <li class="active">
+                <i class="fa fa-edit"></i>单品外观检查明细编辑</li>
+            </ol>
+          </div>
+        </div>
+        <!-- /.row -->
+        <form class="layui-form" method="post" action="">
+          <!-- -->
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="id" id="id" type="text" value="{$coatingData.id}" readonly="readonly"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="ct_date" id="ct_date" type="text" value="{$coatingData.ct_date}"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">投入</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="start_time" id="start_time" type="text" value="{$coatingData.start_time}"></div>
+                  </div>
+                  </br>
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">设备</label>
+                    <div class="layui-input-inline">
+                      <select name="ct_machine" id="ct_machine" lay-verify="required" lay-search="">
+                        <option value="">==请选择镀膜设备==</option>
+                        <foreach name="machineList" item="machineList">
+                          <option value="{$machineList.name}">{$machineList.name}号机</option></foreach>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">批次</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="ct_lot" id="ct_lot" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">担当</label>
+                    <div class="layui-input-inline">
+                      <select name="ct_user" id="ct_user" lay-verify="required" lay-search="">
+                        <option value="">==请选择设备担当==</option>
+                        <foreach name="coatingUser" item="coatingUser">
+                          <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+            </tr>
+              <tr>
+                <div class="layui-row">
+                  <td>
+                    <div class="layui-col-md3">
+                      <label class="layui-form-label">型号</label>
+                      <div class="layui-input-inline">
+                        <input name="ct_model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-col-md3">
+                      <label class="layui-form-label">数量</label>
+                      <div class="layui-input-inline">
+                        <input name="ct_num" value="{$coatingData.ct_num}" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-col-md6">
+                      <label class="layui-form-label">备注</label>
+                      <div class="layui-input-inline">
+                        <input name="tips" value="{$coatingData.tips}" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
+                    </div>
+                  </td>
+                </div>
+              </tr>
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+                </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+var SCOPE = {
+  'jump_url': '/admin.php?c=check',
+}
+
+//lay-form
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+//监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=check&a=edit",data.field,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 2000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 2000});
+			<!-- window.location.href=url; -->
+		}
+	},"JSON");
+	return false;
+  });
+});
+
+
+//laydate
+layui.use('laydate',function() {
+  var laydate = layui.laydate;
+	//date
+	laydate.render({
+	  elem: '#ct_date' //指定元素
+	  ,type: 'date'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	});
+	//time
+	laydate.render({
+	  elem: '#start_time'
+	  ,type: 'time'
+	  ,value: new Date()
+	  ,theme: 'molv'
+	  });
+});
+
+  //格式化时间
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+var myDate = new Date();
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("start_time").value = result;
+document.getElementById("ct_date").value = result2;
+
+</script>
+<include file="Index/footer" />
