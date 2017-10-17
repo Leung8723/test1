@@ -32,7 +32,7 @@ class AdminModel extends Model {
         if(!$data || !is_array($data)) {
             throw_exception('更新的数据不合法');
         }
-		if($old <> $opassword){
+		if($old != $opassword){
 			throw_exception('原始密码不正确');
 		}
         return $this->_db->where('admin_id='.$id)->save($data);

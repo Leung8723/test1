@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-17 12:31:15
+-- Generation Time: 2017-10-17 17:14:11
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -58,7 +58,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', 'de243ae21107729a56d2ec893251269d', '18006303246', '193', 'jason.leung@163.com', 1, 1508116185, NULL, '梁国成', 1498696655, 1, 1508216836),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508251224, NULL, '梁国成', 1498696655, 1, 1508216836),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', '', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508218287),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `sk_count` (
   PRIMARY KEY (`id`),
   KEY `et_model` (`model`) USING BTREE,
   KEY `et_user` (`count_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=157 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_count`
@@ -938,13 +938,21 @@ CREATE TABLE IF NOT EXISTS `sk_temp` (
   KEY `model` (`place`),
   KEY `color` (`hum1`),
   KEY `create_user` (`hum2`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_temp`
 --
 
 TRUNCATE TABLE `sk_temp`;
+--
+-- 转存表中的数据 `sk_temp`
+--
+
+INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hum2`, `temp3`, `hum3`, `temp4`, `hum4`, `temp5`, `hum5`, `temp6`, `hum6`, `create_user`, `create_time`, `update_time`, `status`) VALUES
+(1, 1507987938, '车间', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, NULL, 1),
+(2, 1507987938, '分光', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, NULL, 1);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -55,7 +55,7 @@
 					<volist name="temp" id="vo">
 					  <tr>
 						<td>{$vo.id}</td>
-						<td>{$vo.temp_date}</td>
+						<td>{$vo.temp_date|date="Y-m-d",###}</td>
 						<td>{$vo.place}</td>
 						<td>{$vo.temp1}℃</td>
 						<td>{$vo.hum1}%</td>
