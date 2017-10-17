@@ -14,31 +14,33 @@ class AdminController extends CommonController {
         $this->assign('admins', $admins);
         $this->display();
     }
-
+	/*
+    public function adminslist() {
+        $admins = D('Admin')->getAdmins();
+		print_r($admins);exit;
+		return $admins;
+    }*/
     public function add() {
-
         // 保存数据
         if(IS_POST) {
-
             if(!isset($_POST['username']) || !$_POST['username']) {
-                return show(0, '用户名不能为空');
+                return show(1, '用户名不能为空');
             }
             if(!isset($_POST['password']) || !$_POST['password']) {
-                return show(0, '密码不能为空');
+                return show(1, '密码不能为空');
             }
             $_POST['password'] = getMd5Password($_POST['password']);
             // 判定用户名是否存在
             $admin = D("Admin")->getAdminByUsername($_POST['username']);
             if($admin && $admin['status']!=-1) {
-                return show(0,'该用户存在');
+                return show(1,'该用户存在');
             }
-
             // 新增
             $id = D("Admin")->insert($_POST);
             if(!$id) {
-                return show(0, '新增失败');
+                return show(1, '新增失败');
             }
-            return show(1, '新增成功');
+            return show(0, '新增成功');
         }
         $this->display();
     }
@@ -53,32 +55,42 @@ class AdminController extends CommonController {
 
     public function personal() {
         // $res = $this->getLoginUser();
-		$res = $_GET['id'];
-        $user = D("Admin")->getAdminByAdminId($res);
+		$id = $_GET['id'];
+		if($_POST){
+			return $this->save($_POST);
+		}else{
+			if(!$id){
+				$this->redirect('/admin.php?c=enter');
+			}
+		}
+        $user = D("Admin")->getAdminByAdminId($id);
         $this->assign('vo',$user);
         $this->display();
     }
 
-    public function save() {
-        $user = $this->getLoginUser();
-        if(!$user) {
-            return show(1,'用户不存在');
-        }
-        $id = $_POST['admin_id'];
-        $data['username'] = $_POST['username'];
-        $data['realname'] = $_POST['realname'];
-		$data['password'] = getMd5Password($_POST['newpassword']);
-        $data['mobile'] = $_POST['mobile'];
-        $data['email'] = $_POST['email'];
+    public function save($res) {
+        // $user = $this->getLoginUser();
+        // if(!$user) {
+            // return show(1,'用户不存在');
+        // }
+        $data['admin_id'] = $res['admin_id'];
+        $data['username'] = $res['username'];
+        $data['realname'] = $res['realname'];
+		$data['password'] = getMd5Password($res['newpassword']);
+        $data['mobile'] = $res['mobile'];
+        $data['email'] = $res['email'];
         $data['power'] = 1;
         $data['status'] = 1;
         $data['create_user'] = getLoginRealname();
         $data['update_time'] = time();
-		$passwd = $_POST['oldpassword'];
+		$passwd = $res['oldpassword'];
 		$old = getMd5Password($passwd);
+		// print_r($data);
+		// print_r($id);
+		// print_r($old);exit;
         try {
-            $res = D("Admin")->updateByAdminId($id, $old, $data);
-            if($res === false) {
+            $res1 = D("Admin")->updateByAdminId($old, $data);
+            if($res1 === false) {
                 return show(1, '个人信息更新失败');
             }
             return show(0, '个人信息更新成功');
@@ -86,5 +98,25 @@ class AdminController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
-
+	//删除模块
+    public function del() {
+        try {
+            if ($_POST) {
+                $id = $_POST['admin_id'];
+                $status = $_POST['status'];
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Admin")->updateStatusById($id, $status);
+                if ($res) {
+                    return show(0, '锁定成功');
+                } else {
+                    return show(1, '锁定失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
 }

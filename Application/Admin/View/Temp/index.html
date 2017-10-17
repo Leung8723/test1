@@ -4,13 +4,10 @@
   <include file="Index/nav"/>
   <div id="page-wrapper">
     <div class="container-fluid" >
-	
 	<!-- DataTables CSS -->	  
-	<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css">
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
-
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
 	</br></br></br></br>
@@ -18,11 +15,9 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i><a href="/admin.php?c=temp">温湿度管理</a>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=temp"> 温湿度管理</a>
             </li>
-            <li class="active">
-              <i class="fa fa-edit"></i>温湿度点检记录
-            </li>
+            <li class="active"><i class="fa fa-edit"></i> 温湿度点检记录</li>
           </ol>
         </div>
       </div>
@@ -36,38 +31,47 @@
 			<thead>
 			<tr>
 			  <th>ID</th>
-			  <th>型号</th>
-			  <th>镀膜数量</th>
-			  <th>镀膜日期</th>
-			  <th>镀膜设备</th>
-			  <th>批次</th>
-			  <th>担当</th>
-			  <th>投入时间</th>
-			  <th>出库时间</th>
-			  <th>操作担当</th>
-			  <th>提交时间</th>
+			  <th>日期</th>
+			  <th>区域</th>
+			  <th>8时</th>
+			  <th>8时</th>
+			  <th>13时</th>
+			  <th>13时</th>
+			  <th>17时</th>
+			  <th>17时</th>
+			  <th>20时</th>
+			  <th>20时</th>
+			  <th>1时</th>
+			  <th>1时</th>
+			  <th>5时</th>
+			  <th>5时</th>
+			  <th>创建者</th>
 			  <th>更新时间</th>
-			  <th>分光状态</th>
 			  <th>备注</th>
 			  <th>操作</th>
 			</tr>
 			</thead>
 				<tbody>
-					<volist name="coating" id="coating">
+					<volist name="temp" id="vo">
 					  <tr>
-						<td>{$coating.id}</td>
-						<td>{$coating.ct_model}</td>
-						<td>{$coating.ct_num}</td>
-						<td>{$coating.ct_date|date="Y-m-d",###}</td>
-						<td>{$coating.ct_machine}号机</td>
-						<td>{$coating.ct_lot}</td>
-						<td>{$coating.ct_user}</td>
-						<td>{$coating.start_time|date="H:i",###}</td>
-						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time|date="H:i",###}</if></td>
-						<td>{$coating.create_user}</td>
-						<td>{$coating.create_time|date="H:i",###}</td>
-						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="Y-m-d H:i",###}</if></td>
-						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
+						<td>{$vo.id}</td>
+						<td>{$vo.temp_date}</td>
+						<td>{$vo.place}</td>
+						<td>{$vo.temp1}℃</td>
+						<td>{$vo.hum1}%</td>
+						<td><if condition="$vo['temp2'] eq NULL">-<else/>{$vo.temp2}℃</if></td>
+						<td><if condition="$vo['hum2'] eq NULL">-<else/>{$vo.hum2}%</if></td>
+						<td><if condition="$vo['temp2'] eq NULL">-<else/>{$vo.temp3}℃</if></td>
+						<td><if condition="$vo['hum2'] eq NULL">-<else/>{$vo.hum3}%</if></td>
+						<td><if condition="$vo['temp2'] eq NULL">-<else/>{$vo.temp4}℃</if></td>
+						<td><if condition="$vo['hum2'] eq NULL">-<else/>{$vo.hum4}%</if></td>
+						<td><if condition="$vo['temp2'] eq NULL">-<else/>{$vo.temp5}℃</if></td>
+						<td><if condition="$vo['hum2'] eq NULL">-<else/>{$vo.hum5}%</if></td>
+						<td><if condition="$vo['temp2'] eq NULL">-<else/>{$vo.temp6}℃</if></td>
+						<td><if condition="$vo['hum2'] eq NULL">-<else/>{$vo.hum6}%</if></td>
+						<td><if condition="$vo['create_user'] eq NULL">-<else/>{$vo.create_user}</if></td>
+						<!-- <td><if condition="$vo['create_time'] eq NULL">-<else/>{$vo.create_time}</if></td> -->
+						<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
 						<td>{$coating.tips}</td>
 						<td></td>
 					  </tr>

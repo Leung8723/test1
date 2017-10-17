@@ -22,25 +22,30 @@ class AdminModel extends Model {
         return $res;
     }
 
-    public function updateByAdminId($id, $old, $data) {
+    public function updateByAdminId($old, $data) {
+		$id = $data['admin_id'];
+		$oldpassword = $this->_db->where('admin_id='.$id)->field('password')->select();
+		$opassword = $oldpassword[0]['password'];
         if(!$id || !is_numeric($id)) {
             throw_exception("ID不合法");
         }
         if(!$data || !is_array($data)) {
             throw_exception('更新的数据不合法');
         }
-		$oldpassword = $this->_db->where('admin_id='.$id)->field('password')->select();
-		$opassword = $oldpassword[0]['password'];
 		if($old <> $opassword){
-			throw_exception('原始密码不正确!');
+			throw_exception('原始密码不正确');
 		}
         return $this->_db->where('admin_id='.$id)->save($data);
     }
 
     public function insert($data = array()) {
         if(!$data || !is_array($data)) {
-            return 0;
+            return 1;
         }
+		$data['power'] = 1;
+        $data['status'] = 1;
+        $data['create_user'] = getLoginRealname();
+        $data['create_time'] = time();
         return $this->_db->add($data);
     }
 
@@ -49,13 +54,9 @@ class AdminModel extends Model {
             'status' => array('neq',-1),
         );
         return $this->_db->where($data)->order('admin_id desc')->select();
+		// return '{"code": 0,"msg": "","count": 1000,"data": '.json_encode($res).'}';
     }
-    /**
-     * 通过id更新的状态
-     * @param $id
-     * @param $status
-     * @return bool
-     */
+
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception("status不能为非数字");
@@ -74,7 +75,6 @@ class AdminModel extends Model {
             'status' => 1,
             'lastlogintime' => array("gt",$time),
         );
-
         $res = $this->_db->where($data)->count();
         return $res['tp_count'];
     }

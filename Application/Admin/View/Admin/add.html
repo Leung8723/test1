@@ -1,83 +1,130 @@
-
 <include file="Index/header" />
 <body>
-
 <div id="wrapper">
-
-    <include file="Index/nav"/>
-
-    <div id="page-wrapper">
-
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
+  <include file="Index/nav"/>
+  <div id="page-wrapper">
+    <div class="container-fluid" >
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" type="text/css" href="Public/css/layui/css/layui.css" media="all">
+	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
+	<script type="text/javascript" charset="utf8" src="Public/css/layui/layui.js"></script>
+	<!-- <script type="text/javascript" charset="utf8" src="Public/js/dialog/layer.js"></script> -->
+	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+	<!-- Page Heading -->
+	</br></br></br></br>
         <div class="row">
             <div class="col-lg-12">
-
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=admin">用户管理</a>
+                        <i class="fa fa-dashboard"></i><a href="/admin.php?c=admin"> 用户管理</a>
                     </li>
                     <li class="active">
-                        <i class="fa fa-edit"></i> 添加
+                        <i class="fa fa-table"></i> 添加新用户
                     </li>
                 </ol>
             </div>
         </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <div class="col-lg-6">
-
-                <form class="form-horizontal" id="singcms-form">
-                    <div class="form-group">
-                        <label for="inputname" class="col-sm-2 control-label">用户名:</label>
-                        <div class="col-sm-5">
-                            <input type="text" name="username" class="form-control" id="inputname" placeholder="请填写用户名">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">密码:</label>
-                        <div class="col-sm-5">
-                            <input type="text" name="password" class="form-control" id="inputname" placeholder="请填写密码"/> 
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">真实姓名:</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="realname" id="inputPassword3" placeholder="请填写真实姓名">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
-                        </div>
-                    </div>
-                </form>
-
-
-            </div>
-
-        </div>
-        <!-- /.row -->
-
+		<!-- /.row -->
+        <form class="layui-form" method="post" action="">
+          <!-- -->
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="username"type="text" value="{$vo.username}"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="password" type="password"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="realname" type="text" value="{$vo.realname}"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="mobile" type="text" value="{$vo.mobile}"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">内线</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="skline" type="text" value="{$vo.skline}"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">E-mail</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="email" type="text" value="{$vo.email}"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr></br>
+			<div class="layui-input-block">
+			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+			</div>
+	      </div>
+		</form>
     </div>
-    <!-- /.container-fluid -->
-
+  </div>
 </div>
-<!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
-<!-- Morris Charts JavaScript -->
 <script>
-
-    var SCOPE = {
-        'save_url' : '/admin.php?c=admin&a=add',
-        'jump_url' : '/admin.php?c=admin',
-    }
+var SCOPE = {
+	'jump_url' : '/admin.php?c=admin',
+}
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+  //监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=admin&a=add",data.field,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 2000});
+			<!-- self.location.reload(); -->
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 2000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
 </script>
 <include file="Index/footer" />

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-16 12:08:04
+-- Generation Time: 2017-10-17 12:31:15
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `sk_admin` (
   `realname` varchar(20) NOT NULL,
   `password` varchar(32) NOT NULL DEFAULT '89ca2407297cff2751bbef6eda6593f0',
   `mobile` varchar(11) DEFAULT NULL,
+  `skline` varchar(6) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `power` smallint(5) NOT NULL,
   `lastlogintime` int(10) DEFAULT NULL,
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `sk_admin` (
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`admin_id`),
   KEY `realname` (`realname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_admin`
@@ -56,10 +57,13 @@ TRUNCATE TABLE `sk_admin`;
 -- 转存表中的数据 `sk_admin`
 --
 
-INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', 'jason.leung@163.com', 1, 1508116185, NULL, '', 1498696655, 1, 0),
-(2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', NULL, 1, 1498696655, NULL, '', 1498696655, 1, 0),
-(3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', NULL, 1, NULL, NULL, '', 1498696655, -1, 0);
+INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
+(1, 'jason', '梁国成', 'de243ae21107729a56d2ec893251269d', '18006303246', '193', 'jason.leung@163.com', 1, 1508116185, NULL, '梁国成', 1498696655, 1, 1508216836),
+(2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', '', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508218287),
+(3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
+(4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
+(5, 'zhaoxiangren', '赵向仁', '89ca2407297cff2751bbef6eda6593f0', '18663159117', '191', 'fuqiang.619@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218263),
+(6, 'dongjunchao', '董君超', '89ca2407297cff2751bbef6eda6593f0', '', '193', '', 1, NULL, NULL, '梁国成', 1508218074, 1, NULL);
 
 -- --------------------------------------------------------
 

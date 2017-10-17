@@ -16,23 +16,15 @@ class TempController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $coatingData = D("Coating")->getCoatingData();
-        $this->assign('coating',$coatingData);
+        $tempData = D("Temp")->getTempData();
+        $this->assign('temp',$tempData);
         $this->display();
     }
 	//添加主页
 	public function add() {
 		if($_POST){
-			$length = (count($_POST)-5)/3;
-			return $this->coatingAdd($_POST,$length);
+			return $this->tempAdd($_POST,$length);
         }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			print_r($lensNumData);exit;
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
-			$this->assign('machine',$machineList);
 			$this->display();
 		}
 	}
@@ -84,42 +76,13 @@ class TempController extends CommonController {
         $this->display();
     }
 	//添加模块
-	public function coatingAdd($data,$length){
+	public function tempAdd($data){
         try {
-			$arr = array();
-			for($i=0;$i<$length;$i++){
-				$model='model'.$i;
-				$ctnum='ctnum'.$i;
-				$tips='tips'.$i;
-				if($data[$ctnum]){
-					$arr[] = array(
-						'id' => NULL,
-						'ct_model' => $data[$model],
-						'ct_machine' => $data['machine'],
-						'ct_date' => strtotime($data['coatingdate']),
-						'ct_lot' => $data['lotnum'],
-						'ct_user' => $data['ctuser'],
-						'start_time' => strtotime($data['coatingtime']),
-						'over_time' => NULL,
-						'ct_num' => $data[$ctnum],
-						'create_user' => getLoginRealname(),
-						'spec_t' => NULL,
-						'spec_r' => NULL,
-						'status' => '1',
-						'ck_num' => NULL,
-						'create_time' => time(),
-						'update_time' => NULL,
-						'tips' => $data[$tips]
-					);
-				}else{
-					continue;
-				}
-			}
-			$id = D("Coating")->insertCoating($arr);
+			$id = D("Temp")->insertTemp($data);
             if($id === false){
-				return show(1, '镀膜数据添加失败');
+				return show(1, '温湿度登记失败');
             }else{
-				return show(0, '镀膜数据添加成功');
+				return show(0, '温湿度登记成功');
 			}
         }catch(Exception $e){
             return $e->getMessage();
