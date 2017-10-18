@@ -1,0 +1,138 @@
+<include file="Index/header" />
+<body>
+<div id="wrapper">
+  <include file="Index/nav"/>
+  <div id="page-wrapper">
+    <div class="container-fluid" >
+	<!-- DataTables CSS -->	  
+	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
+	<!-- Page Heading -->
+	</br></br></br></br>
+      <div class="row">
+        <div class="col-lg-12">
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=enter"> 人员管理</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> 用户列表
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+	  <div class="layui-form-item">
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 添加人员信息</button>
+		<button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除人员列表</button>
+	  </div>
+	  <form>
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+			<thead>
+			<tr>
+			  <th>ID</th>
+			  <th>工号</th>
+			  <th>姓名</th>
+			  <th>性别</th>
+			  <th>身份证</th>
+			  <th>手机</th>
+			  <th>部署</th>
+			  <th>入社日</th>
+			  <th>创建者</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			  <th>备注</th>
+			  <th>编辑</th>
+			</tr>
+			</thead>
+				<tbody>
+					<volist name="users" id="vo">
+					  <tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.workid}</td>
+						<td>{$vo.name}</td>
+						<td>{$vo.sexual}</td>
+						<td>{$vo.cardid}</td>
+						<td>{$vo.mobile}</td>
+						<td>{$vo.dept}</td>
+						<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d H:i",###}</if></td>
+						<td>{$vo.create_user}</td>
+						<td>{$vo.create_time|date="Y-m-d",###}</td>
+						<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
+						<td>{$vo.tips}</td>
+						<td></td>
+					  </tr>
+					</volist>
+				</tbody>
+		</table>
+	  </form>
+    </div>
+   </div>
+</div>
+<script>
+var SCOPE = {
+'edit_url' : '/admin.php?c=users&a=edit',
+'add_url' : '/admin.php?c=users&a=add',
+'del_url' : '/admin.php?c=users&a=del',
+'hide_url' : '/admin.php?c=users&a=hidden',
+}
+//初始化DataTables
+$(document).ready( function () {
+	var table = $('#lens-table').DataTable({
+		"order": [[ 5, "desc"],[ 1, "asc"]],
+		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
+			{
+				"targets": -1,
+				"class":"but_xq",
+				"data":null,
+				"bSortable":false,
+				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
+		}],
+		"columnDefs":[{
+				"visible": false,
+				"targets": -1
+		}],
+		"text-align":"center",
+		"iDisplayLength":100,
+		"vertical-align":"middle",
+		"ordering":true,
+		"bProcessing":true,
+		"oLanguage":{
+			"sProcessing":"正在加载中......",
+			"sLengthMenu":"每页显示 _MENU_ 条记录",
+			"sZeroRecords":"对不起，查询不到相关数据！",
+			"sEmptyTable":"表中无数据存在！",
+			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
+			"sSearch":"搜索",
+			"oPaginate":{
+				"sFirst":"首页",
+				"sPrevious":"上一页",
+				"sNext":"下一页",
+				"sLast":"末页"
+			}
+		}
+	});
+	//修改
+	$('#lens-table tbody').on( 'click', 'a#edit', function () {
+		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
+		var url = SCOPE.edit_url + '&id=' + data[0];
+		window.location.href=url;
+	});
+	//删除
+	$('#lens-table tbody').on( 'click', 'a#del', function () {
+		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
+		$.post("/admin.php?c=users&a=del", {id:data[0],status:0},function(result){
+			if(result.status == 1){
+				layer.msg(result.message, {icon: 2,time: 3000});
+				window.location.href=SPOPE.jump_url;
+			}else if(result.status == 0){
+				layer.msg(result.message, {icon: 1,time: 3000});
+				self.location.reload()
+			}
+		},"JSON");
+	});
+});
+</script>
+<include file="Index/footer" />

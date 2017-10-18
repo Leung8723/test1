@@ -1,0 +1,181 @@
+<include file="Index/header" />
+<body>
+<div id="wrapper">
+  <include file="Index/nav"/>
+  <div id="page-wrapper">
+    <div class="container-fluid" >
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="/Public/js/Datatables/jquery.dataTables.min.js"></script>
+	<!-- Page Heading -->
+	</br></br></br></br>
+		<div class="row">
+		  <div class="col-lg-12">
+			<ol class="breadcrumb">
+		      <li>
+				<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter"> 人员管理</a>
+			  </li>
+			  <li class="active">
+				<i class="fa fa-edit"></i> 添加人员信息
+			  </li>
+			</ol>
+		  </div>
+		</div>
+	<!-- /.row -->
+	  <form class="layui-form" method="post" action="">
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="name"type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">工号</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="workid" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-inline">
+					  <input type="radio" name="sex" value="男" title="男" checked>
+					  <input type="radio" name="sex" value="女" title="女"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">身份证</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="cardid" lay-verify="identity" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="mobile" lay-verify="phone|number" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+				  <label for="dept" class="layui-form-label">部署</label>
+				    <div class="layui-input-inline">
+                      <select name="dept" lay-verify="required" lay-search="">
+                        <option value="">==请选择所属部门==</option>
+                        <foreach name="dept" item="vo">
+                          <option value="{$vo}">{$vo}</option></foreach>
+                      </select>
+					</div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">入社日</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="joindate" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-inline">
+					  <textarea name="tips" placeholder="请输入内容" class="layui-textarea"></textarea></div>
+                  </div>
+                </td>
+			  </div>
+			</tr></br>
+		  <div class="layui-form-item">
+			<div class="layui-input-block">
+			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		  </div>
+		</div>
+      </form>  
+    </div>
+  </div>
+</div>
+<script>
+var SCOPE = {
+'jump_url' : '/admin.php?c=enter',
+}
+//lay-form
+layui.use(['form','layer'], function(){
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+	$.post("admin.php?c=enter&a=add",data.field,function(result){;
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 2000});
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 2000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
+
+//laydate
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  //date
+  laydate.render({
+    elem: '#enterdate'
+	,type: 'date'
+	,theme: 'molv'
+  });
+  //time
+  laydate.render({
+    elem: '#entertime'
+	,type: 'time'
+	,value: new Date()
+	,theme: 'molv'
+  });
+});
+//格式化时间
+function checkTime(i){
+    if (i<10){
+        i = "0" + i;
+    }
+    return i;
+}
+var myDate = new Date();
+var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
+document.getElementById("entertime").value=result;
+</script>
+<include file="Index/footer" />
