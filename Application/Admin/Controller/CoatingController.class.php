@@ -27,7 +27,7 @@ class CoatingController extends CommonController {
 			return $this->coatingAdd($_POST,$length);
         }else{
 			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			print_r($lensNumData);exit;
+			// print_r($lensNumData);exit;
 			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);

@@ -19,6 +19,22 @@ class TempModel extends Model {
 		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
+	//温湿度区域查询
+    public function getPlaceData() {
+		$data = array(
+			'status' => array('neq',0),
+		);
+		$res = $this->_db->where($data)->field('place')->order('place asc')->distinct(true)->select();
+		return $res;
+    }
+	//插入温湿度数据
+	public function insertTemp($data){
+		if(!$data||!is_array($data)){
+			throw_exception('登记数据不完全');
+		}
+		return $this->_db->data($data)->add();
+	}	
+	
 	//修改状态,删除&恢复
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
@@ -35,13 +51,7 @@ class TempModel extends Model {
 	public function find($id) {
         return $this->_db->where('id='.$id)->find();
     }
-	//插入温湿度数据
-	public function insertTemp($data){
-		if(!data||!is_array($data)){
-			throw_exception('插入镀膜数据不合法');
-		}
-		return $this->_db->addAll($data);
-	}
+
 	//修改镀膜数据
     public function updateLensById($data) {
 		$id = $data['id'];

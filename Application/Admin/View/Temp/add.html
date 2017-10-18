@@ -1,15 +1,11 @@
 <include file="Index/header" />
 <body>
-  <div id="wrapper">
-    <include file="Index/nav" />
+<div id="wrapper">
+  <include file="Index/nav" />
     <div id="page-wrapper">
       <div class="container-fluid">
-        <!-- DataTables CSS -->
-        <link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-		<!-- jQuery -->
-		<script type="text/javascript" charset="utf8" src="Public/js/jquery.js"></script>
-        <!-- Page Heading -->
-		</br></br></br></br>
+	  <!-- Page Heading -->
+	  </br></br></br></br>
         <div class="row">
           <div class="col-lg-12">
             <ol class="breadcrumb">
@@ -31,14 +27,18 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="temp_date" id="temp_date" type="text" placeholder="yyyy-MM-dd"></div>
+                      <input class="layui-input" name="temp_date" id="temp_date" type="text" placeholder="yyyy-MM-dd" lay-verify="required"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">地点</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="place" type="text"></div>
+                      <select name="place" id="place" lay-verify="required" lay-search="">
+                        <option value="">==请选择登记区域==</option>
+                        <foreach name="place" item="place">
+                          <option value="{$place.place}">{$place.place}</option></foreach>
+                      </select>
                   </div>
                 </td>
               </div>
@@ -49,14 +49,104 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">温度</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="temp1" type="text"></div>
+                      <input class="layui-input" name="temp1" type="text" placeholder="请填写8:00温度记录" lay-verify="number required"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">湿度</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="hum1" type="text"></div>
+                      <input class="layui-input" name="hum1" type="text" placeholder="请填写8:00湿度记录" lay-verify="number required"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp2" type="text" placeholder="13:00"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum2" type="text" placeholder="13:00"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp3" type="text" placeholder="17:00"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum3" type="text" placeholder="17:00"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp4" type="text" placeholder="20:00"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum4" type="text" placeholder="20:00"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp5" type="text" placeholder="1:00"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum5" type="text" placeholder="1:00"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp6" type="text" placeholder="5:00"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum6" type="text" placeholder="5:00"></div>
                   </div>
                 </td>
 			  </div>
@@ -66,56 +156,50 @@
 			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
 			</div>
         </form>
-        </div>
       </div>
     </div>
-  </div>
+</div>
+
 
 <script>
 var SCOPE = {
   'jump_url': '/admin.php?c=temp',
 }
 //lay-form
-layui.use(['form','layer'],function() {
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
-	$.post("admin.php?c=temp&a=add",data.field,function(result){;
+	$.post("admin.php?c=temp&a=tempAdd",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
-			self.location.reload();
+			<!-- self.location.reload(); -->
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 3000});
-			window.location.href=url;
+			<!-- window.location.href=url; -->
 		}
 	},"JSON");
 	return false;
   });
+//date
+  laydate.render({
+	elem: '#temp_date'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
 });
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#temp_date' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-});
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
 }
-<!-- + ':' + checkTime(myDate.getSeconds()) -->
 var myDate = new Date();
 var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementByTagName("temp_date").value = result;
+document.getElementById("temp_date").value = result;
 </script>
 <include file="Index/footer" />

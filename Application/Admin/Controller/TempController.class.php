@@ -22,27 +22,18 @@ class TempController extends CommonController {
     }
 	//添加主页
 	public function add() {
-		if($_POST){
-			return $this->tempAdd($_POST,$length);
-        }else{
+		// if($_POST){
+
+			// return $this->tempAdd($arr);
+        // }else{
+			$place = D("Temp")->getPlaceData();
+			$this->assign('place',$place);
 			$this->display();
-		}
+		// }
 	}
-	//待用功能
-	public function addnew() {
-		if($_POST){
-			$length = (count($_POST)-5)/3;
-			return $this->coatingAdd($_POST,$length);
-        }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
-			$this->assign('machine',$machineList);
-			$this->display();
-		}
-	}
+	
+	
+	
 	//编辑主页
     public function edit() {
 		$coatingId = $_GET['id'];
@@ -50,17 +41,14 @@ class TempController extends CommonController {
 			return $this->coatingSave($_POST);
 		}else{
 			if(!$coatingId) {
-				$this->redirect('/admin.php?c=coating');
+				$this->redirect('/admin.php?c=temp');
 			}
-			$id = D("Coating")->find($coatingId);
+			$id = D("Temp")->find($coatingId);
 			if(!$id) {
-				$this->redirect('/admin.php?c=coating');
+				$this->redirect('/admin.php?c=temp');
 			}
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('coatingData',$id);
-			$this->assign('coatingUser',$coatingUser);
-			$this->assign('machineList',$machineList);
+			$place = D("Temp")->getPlaceData();
+			$this->assign('place',$place);
 			$this->display();
 		}
     }
@@ -71,14 +59,33 @@ class TempController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $hiddenLensData = D("Coating")->getHiddenData();
+        $hiddenLensData = D("Temp")->getHiddenData();
         $this->assign('coating',$hiddenLensData);
         $this->display();
     }
+	
 	//添加模块
-	public function tempAdd($data){
+	public function tempAdd(){
         try {
-			$id = D("Temp")->insertTemp($data);
+			$arr = array();
+			// $arr['temp1'] = $data['temp1'];
+			// $arr['hum1'] = $data['hum1'];
+			$arr['temp_date'] = strtotime($_GET['temp_date']);
+			for($i=1;$i<7;$i++){
+				if($_GET['temp'.$i]=NULL){
+					$arr['temp'.$i] = NULL;
+				}elseif($_GET['hum'.$i]=NULL){
+					$arr['hum'.$i] = NULL;
+				}else{
+					$arr['temp'.$i]=$_GET['temp'.$i];
+					$arr['hum'.$i]=$_GET['hum'.$i];
+				}
+			}
+			$arr['create_user'] = getLoginRealname();
+			$arr['create_time'] = time();
+			$arr['status'] = '1';
+			// print_r($arr);exit;
+			$id = D("Temp")->insertTemp($arr);
             if($id === false){
 				return show(1, '温湿度登记失败');
             }else{
@@ -89,9 +96,9 @@ class TempController extends CommonController {
 		}
 	}
 	//编辑模块
-    public function coatingSave($data) {
+    public function tempSave($data) {
         try {
-            $id = D("Coating")->updateLensById($data);
+            $id = D("Temp")->updateTempById($data);
             if($id === false) {
                 return show(1, '镀膜信息更新失败!');
             }else{
@@ -110,7 +117,7 @@ class TempController extends CommonController {
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
-                $res = D("Coating")->updateStatusById($id, $status);
+                $res = D("Temp")->updateStatusById($id, $status);
                 if($res){
                     return show(0, '删除成功');
                 }else{
@@ -131,7 +138,7 @@ class TempController extends CommonController {
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
-                $res = D("Coating")->updateStatusById($id, $status);
+                $res = D("Temp")->updateStatusById($id, $status);
                 if($res){
                     return show(0, '恢复成功');
                 }else{
