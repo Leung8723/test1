@@ -68,10 +68,10 @@
                   <div class="layui-col-md3">
                     <label for="inputId" class="layui-form-label">担当</label>
                     <div class="layui-input-inline">
-                      <select name="ctuser" lay-verify="required" lay-search="">
+                      <select name="ckuser" lay-verify="required" lay-search="">
                         <option value="">==请选择设备担当==</option>
-                        <foreach name="ctuser" item="ctuser">
-                          <option value="{$ctuser.ct_name}">{$ctuser.ct_name}</option></foreach>
+                        <foreach name="ckuser" item="vo">
+                          <option value="{$vo.name}">{$vo.name}</option></foreach>
                       </select>
                     </div>
                   </div>

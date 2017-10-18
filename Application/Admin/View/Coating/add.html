@@ -66,8 +66,8 @@
                     <div class="layui-input-inline">
                       <select name="ctuser" lay-verify="required" lay-search="">
                         <option value="">==请选择设备担当==</option>
-                        <foreach name="ctuser" item="ctuser">
-                          <option value="{$ctuser.ct_name}">{$ctuser.ct_name}</option></foreach>
+                        <foreach name="ctuser" item="vo">
+                          <option value="{$vo.name}">{$vo.name}</option></foreach>
                       </select>
                     </div>
                   </div>

@@ -46,8 +46,12 @@ class CoatingModel extends Model {
     }
 	//查找镀膜担当列表
     public function getCtUser() {
-		$data = M('ctuser')->field('ct_name')->distinct(true)->select();
-		return $data;
+		$data = array(
+			'dept' => array('eq','镀膜'),
+			'status' => array('eq',1),
+		);
+		$arr = M('user')->where($data)->field('name')->distinct(true)->select();
+		return $arr;
     }
 	//查找镀膜机列表
 	public function getMachineList() {

@@ -46,8 +46,8 @@
 				  <div class="layui-input-inline">
 				  <select name="mduser" lay-verify="required" lay-search="">
 				    <option value="">==请选择成型担当==</option>
-					  <foreach name="mduser" item="mduser">
-					    <option value="{$mduser.md_name}">{$mduser.md_name}</option>
+					  <foreach name="mduser" item="vo">
+					    <option value="{$vo.name}">{$vo.name}</option>
 					  </foreach>
 				  </select>
 					<!-- <input name="md_user" lay-verify="text" autocomplete="off" class="layui-input" type="text"> -->

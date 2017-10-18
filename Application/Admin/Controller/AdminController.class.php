@@ -7,8 +7,6 @@ use Think\Controller;
 use Think\Exception;
 
 class AdminController extends CommonController {
-
-
     public function index() {
         $admins = D('Admin')->getAdmins();
         $this->assign('admins', $admins);

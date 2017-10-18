@@ -27,11 +27,10 @@ class CheckController extends CommonController {
 			return $this->coatingAdd($_POST,$length);
         }else{
 			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			// print_r($lensNumData);exit;
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+			$checkUser = D("Check")->getCkUser();//获取检查担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
+			$this->assign('ckuser',$checkUser);
 			$this->assign('machine',$machineList);
 			$this->display();
 		}
@@ -43,10 +42,10 @@ class CheckController extends CommonController {
 			return $this->coatingAdd($_POST,$length);
         }else{
 			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+			$checkUser = D("Check")->getCkUser();//获取检查担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
+			$this->assign('ckuser',$checkUser);
 			$this->assign('machine',$machineList);
 			$this->display();
 		}

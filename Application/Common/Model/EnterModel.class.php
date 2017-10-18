@@ -47,8 +47,12 @@ class EnterModel extends Model {
     }
 	//查找成型入库担当列表
     public function getMdUser() {
-		$res = M('mduser')->field('md_name')->distinct(true)->select();
-		return $res;
+		$data = array(
+			'dept' => array('eq','成型'),
+			'status' => array('eq',1),
+		);
+		$arr = M('user')->where($data)->field('name')->distinct(true)->select();
+		return $arr;
     }
 	//查找最后一条成型入库担当
     public function getLastMdUser() {
