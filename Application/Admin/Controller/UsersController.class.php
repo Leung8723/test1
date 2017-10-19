@@ -23,7 +23,9 @@ class UsersController extends CommonController {
 	//添加人员主页
 	public function add() {
 		if($_POST){
+			print_r($_POST);exit;
 			return $this->userAdd($_POST);
+
         }else{
 			$deptData = D("Users")->getDeptList();//获取部署列表
 			// print_r($deptData);exit;
@@ -33,20 +35,20 @@ class UsersController extends CommonController {
 	}
 	//编辑信息主页
     public function edit() {
-		$enterId = $_GET['id'];
+		$userId = $_GET['id'];
 		if($_POST){
-			return $this->enterSave($_POST);
+			return $this->userSave($_POST);
 		}else{
-			if(!$enterId) {
-				$this->redirect('/admin.php?c=enter');
+			if(!$userId) {
+				$this->redirect('/admin.php?c=users');
 			}
-			$res = D("Users")->find($enterId);
+			$res = D("Users")->find($userId);
 			if(!$res) {
-				$this->redirect('/admin.php?c=enter');
+				$this->redirect('/admin.php?c=users');
 			}
-			$mdUser = D("Users")->getMdUser();//获取成型担当列表
-			$this->assign('enterData',$res);
-			$this->assign('mdUser',$mdUser);
+			$deptData = D("Users")->getDeptList();//获取成型担当列表
+			$this->assign('userData',$res);
+			$this->assign('dept',$deptData);
 			$this->display();
 		}
     }
@@ -57,44 +59,47 @@ class UsersController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $hiddenLensData = D("Users")->getHiddenData();
-        $this->assign('enters',$hiddenLensData);
+        $hiddenData = D("Users")->getHiddenData();
+        $this->assign('users',$hiddenData);
         $this->display();
     }
 	//添加人员模块
-	public function userAdd($data,$length){
+	public function userAdd($data){
         try {
 			$arr[] = array(
 				'id' => NULL,
-				'et_model' => $data[$model],
-				'et_date' => strtotime($data['enterdate']),
-				'et_time' => strtotime($data['entertime']),
-				'et_num' => $data[$etnum],
+				'workid' => $data['workid'],
+				'name' => $data['name'],
+				'sexual' => $data['sexual'],
+				'cardid' => $data['cardid'],
+				'dept' => $data['dept'],
+				'mobile' => $data['mobile'],
+				'joindate' => strtotime($data['joindate']),
 				'create_user' => getLoginRealname(),
-				'md_user' => $data['mduser'],
-				'status' => '1',
 				'create_time' => time(),
 				'update_time' => NULL,
-				'tips' => $data[$tips]
+				'status' => '1',
+				'tips' => $data['tips']
 			);
-			$id = D("Users")->insertEnter($arr);
+			$id = D("Users")->insertUser($arr);
             if($id){
-				return show(0,'入库成功');
+				return show(0,'人员信息添加成功');
             }else{
-				return show(1,'入库失败');
+				return show(1,'人员信息添加失败');
 			}
         }catch(Exception $e){
             return $e->getMessage();
 		}
 	}
+	
 	//编辑模块
     public function userSave($data) {
         try {
-            $id = D("Users")->updateLensById($data);
+            $id = D("Users")->updateUserById($data);
             if($id === false) {
                 return show(1, '镀膜信息更新失败!');
             }else{
-				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
+				return show(0, $data['name'].'的个人信息更新成功!');
 			}
         }catch(Exception $e) {
             return show(1, $e->getMessage());

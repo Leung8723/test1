@@ -26,10 +26,10 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md3">
                     <label class="layui-form-label">姓名</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="name"type="text"></div>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="name"type="text" style="width: 160px;"></div>
                   </div>
                 </td>
 			  </div>
@@ -37,10 +37,10 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md3">
                     <label class="layui-form-label">工号</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="workid" type="text"></div>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="workid" type="text" style="width: 160px;"></div>
                   </div>
                 </td>
 			  </div>
@@ -48,11 +48,11 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md3">
 					<label class="layui-form-label">性别</label>
-					<div class="layui-input-inline">
-					  <input type="radio" name="sex" value="男" title="男" checked>
-					  <input type="radio" name="sex" value="女" title="女"></div>
+					<div class="layui-input-block">
+					  <input type="radio" name="sexual" value="1" title="男" checked>
+					  <input type="radio" name="sexual" value="2" title="女"></div>
                   </div>
                 </td>
 			  </div>
@@ -60,10 +60,10 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md6">
                     <label class="layui-form-label">身份证</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="cardid" lay-verify="identity" type="text"></div>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="cardid" lay-verify="identity" type="text" style="width: 180px;"></div>
                   </div>
                 </td>
 			  </div>
@@ -71,10 +71,10 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md3">
                     <label class="layui-form-label">手机</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="mobile" lay-verify="phone|number" type="text"></div>
+                    <div class="layui-input-block"style="width: 160px;">
+                      <input class="layui-input" name="mobile" lay-verify="phone" type="text"></div>
                   </div>
                 </td>
 			  </div>
@@ -82,11 +82,11 @@
 			<tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md4">
+                  <div class="layui-col-md3">
 				  <label for="dept" class="layui-form-label">部署</label>
-				    <div class="layui-input-inline">
+				    <div class="layui-input-block"style="width: 160px;">
                       <select name="dept" lay-verify="required" lay-search="">
-                        <option value="">==请选择所属部门==</option>
+                        <option value="">-请选择所属部门-</option>
                         <foreach name="dept" item="vo">
                           <option value="{$vo}">{$vo}</option></foreach>
                       </select>
@@ -100,7 +100,7 @@
                 <td>
                   <div class="layui-col-md4">
                     <label class="layui-form-label">入社日</label>
-                    <div class="layui-input-inline">
+                    <div class="layui-input-block" style="width: 160px;"">
                       <input class="layui-input" name="joindate" type="text"></div>
                   </div>
                 </td>
@@ -111,7 +111,7 @@
                 <td>
                   <div class="layui-col-md6">
 					<label class="layui-form-label">备注</label>
-					<div class="layui-input-inline">
+					<div class="layui-input-block">
 					  <textarea name="tips" placeholder="请输入内容" class="layui-textarea"></textarea></div>
                   </div>
                 </td>
@@ -130,7 +130,7 @@
 </div>
 <script>
 var SCOPE = {
-'jump_url' : '/admin.php?c=enter',
+'jump_url' : '/admin.php?c=users',
 }
 //lay-form
 layui.use(['form','layer'], function(){
@@ -138,7 +138,7 @@ layui.use(['form','layer'], function(){
   var url = SCOPE.jump_url;
   //监听提交
   form.on('submit(formDemo)', function(data){
-	$.post("admin.php?c=enter&a=add",data.field,function(result){;
+	$.post("admin.php?c=users&a=add",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 2000});
 		}else if(result.status == 0){

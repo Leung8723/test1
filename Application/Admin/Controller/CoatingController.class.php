@@ -54,18 +54,50 @@ class CoatingController extends CommonController {
     public function edit() {
 		$coatingId = $_GET['id'];
 		if($_POST){
-			return $this->coatingSave($_POST);
+			$arr = array(
+				'id' => $_POST['id'],
+				'ct_model' => $_POST['ct_model'],
+				'ct_machine' => $_POST['ct_machine'],
+				'ct_date' => strtotime($_POST['ct_date']),
+				'ct_lot' => $_POST['ct_lot'],
+				'ct_user' => $_POST['ct_user'],
+				'start_time' => strtotime($_POST['start_time']),
+				// 'over_time' => NULL,
+				'ct_num' => $_POST['ct_num'],
+				'create_user' => getLoginRealname(),
+				// 'spec_t' => NULL,
+				// 'spec_r' => NULL,
+				// 'ck_num' => NULL,
+				'status' => 1,
+				// 'create_time' => NULL,
+				'update_time' => time(),
+				'tips' => $_POST['tips']
+			);
+			$id = $_POST['id'];
+			$editData = json_encode($arr);
+			// print_r($editData);exit;
+			try{
+				$res = D("Coating")->updateLensById($id, $arr, $editData);
+				if($res === false){
+					// return show(1, '镀膜信息更新失败!');
+					return show(1, $editData);
+				}else{
+					return show(0, '第'.$id.'条 镀膜信息更新成功!');
+				}
+			}catch(Exception $e){
+				return show(1, $e->getMessage());
+			}
 		}else{
 			if(!$coatingId) {
 				$this->redirect('/admin.php?c=coating');
 			}
-			$id = D("Coating")->find($coatingId);
-			if(!$id) {
+			$coatingData = D("Coating")->find($coatingId);
+			if(!$coatingData) {
 				$this->redirect('/admin.php?c=coating');
 			}
 			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('coatingData',$id);
+			$this->assign('coatingData',$coatingData);
 			$this->assign('coatingUser',$coatingUser);
 			$this->assign('machineList',$machineList);
 			$this->display();
@@ -82,7 +114,7 @@ class CoatingController extends CommonController {
         $this->assign('coating',$hiddenLensData);
         $this->display();
     }
-	//添加模块
+	//添加模块---------------------------------------------------------
 	public function coatingAdd($data,$length){
         try {
 			$arr = array();
@@ -124,19 +156,7 @@ class CoatingController extends CommonController {
             return $e->getMessage();
 		}
 	}
-	//编辑模块
-    public function coatingSave($data) {
-        try {
-            $id = D("Coating")->updateLensById($data);
-            if($id === false) {
-                return show(1, '镀膜信息更新失败!');
-            }else{
-				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
-			}
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
-    }
+	//-------------------------------------------------
 	//删除模块
     public function del() {
         try {

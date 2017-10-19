@@ -21,10 +21,17 @@ class UsersModel extends Model {
     }
 	//查找部署信息列表
 	public function getDeptList() {
-		$deptData = $this->_db->where($map)->field('dept')->order('dept asc')->distinct(true)->select();
+		$deptData = $this->_db->where($map)->field('dept')->order('dept desc')->distinct(true)->select();
 		$res = array_column($deptData,'dept');
 		return $res;
     }
+	//插入人员数据
+	public function insertUser($data){
+		if(!$data||!is_array($data)){
+			throw_exception('人员信息不全!');
+		}
+		return $this->_db->addAll($data);
+	}
 	//修改状态,删除&恢复
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
@@ -36,17 +43,21 @@ class UsersModel extends Model {
         $data['status'] = $status;
         return $this->_db->where('id='.$id)->save($data);
     }
+	//删除人员查询
+    public function getHiddenData() {
+		$data = array(
+			'status' => array('neq',1),
+		);
+		$res = $this->_db->where($data)->order('name asc')->select();
+		return $res;
+    }
+	
+	
 	//查找相关id数据
 	public function find($id) {
         return $this->_db->where('id='.$id)->find();
     }
-	//插入人员数据
-	public function insertUser($data){
-		if(!$data||!is_array($data)){
-			throw_exception('人员信息不合法');
-		}
-		return $this->_db->addAll($data);
-	}
+
 	//修改人员数据
     public function updateUserById($data) {
 		$id = $data['id'];
@@ -61,12 +72,5 @@ class UsersModel extends Model {
 		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
-	//删除人员查询
-    public function getHiddenData() {
-		$data = array(
-			'status' => array('neq',1),
-		);
-		$res = $this->_db->where($data)->order('name asc')->select();
-		return $res;
-    }
+
 }

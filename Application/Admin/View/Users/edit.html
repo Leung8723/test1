@@ -11,9 +11,9 @@
             <ol class="breadcrumb">
               <li>
                 <i class="fa fa-dashboard"></i>
-                <a href="/admin.php?c=enter"> 入库管理</a></li>
+                <a href="/admin.php?c=users"> 人员管理</a></li>
               <li class="active">
-                <i class="fa fa-edit"></i> 入库信息编辑</li>
+                <i class="fa fa-edit"></i> 人员信息编辑</li>
             </ol>
           </div>
         </div>
@@ -21,72 +21,111 @@
         <form class="layui-form" method="post" action="">
           <!-- -->
           <div class="layui-form-item">
-            <tr>
+		    <tr>
               <div class="layui-row">
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">ID</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="id" id="id" type="text" value="{$enterData.id}" readonly="readonly"></div>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="id" value="{$userData.id}" type="text" style="width: 160px;"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="name" value="{$userData.name}" type="text" style="width: 160px;"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">工号</label>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="workid" value="{$userData.workid}" type="text" style="width: 160px;"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+					  <input type="radio" name="sexual" value="1" title="男">
+					  <input type="radio" name="sexual" value="2" title="女"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+                    <label class="layui-form-label">身份证</label>
+                    <div class="layui-input-block">
+                      <input class="layui-input" name="cardid" value="{$userData.cardid}" lay-verify="identity" type="text" style="width: 180px;"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-block"style="width: 160px;">
+                      <input class="layui-input" name="mobile" value="{$userData.mobile}" lay-verify="phone" type="text"></div>
                   </div>
                 </td>
 			  </div>
 			</tr>
 			<tr>
-			  <div class="layui-row">
+              <div class="layui-row">
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">日期</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="et_date" id="et_date" type="text"></div>
-                  </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">时间</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="et_time" id="et_time" type="text"></div>
-                  </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">担当</label>
-                    <div class="layui-input-inline">
-                      <select name="md_user" id="md_user" lay-verify="required" lay-search="">
-                        <option value="">==请选择成型担当==</option>
-                        <foreach name="mdUser" item="mdUser">
-                          <option value="{$mdUser.md_name}">{$mdUser.md_name}</option></foreach>
+				  <label for="dept" class="layui-form-label">部署</label>
+				    <div class="layui-input-block"style="width: 160px;">
+                      <select name="dept" lay-verify="required" lay-search="">
+                        <option value="">-请选择所属部门-</option>
+                        <foreach name="dept" item="vo">
+                          <option value="{$vo}">{$vo}</option></foreach>
                       </select>
-                    </div>
+					</div>
                   </div>
                 </td>
-              </div>
-            </tr>
-              <tr>
-                <div class="layui-row">
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">型号</label>
-                      <div class="layui-input-inline">
-                        <input name="et_model" value="{$enterData.et_model}" lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">数量</label>
-                      <div class="layui-input-inline">
-                        <input name="et_num" value="{$enterData.et_num}" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md6">
-                      <label class="layui-form-label">备注</label>
-                      <div class="layui-input-inline">
-                        <input name="tips" value="{$enterData.tips}" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                </div>
-              </tr>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label">入社日</label>
+                    <div class="layui-input-block" style="width: 160px;"">
+                      <input class="layui-input" name="joindate" id="joindate" value="{$userData.joindate}" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+					  <textarea name="tips" value="{$userData.tips}" placeholder="请输入内容" class="layui-textarea"></textarea></div>
+                  </div>
+                </td>
+			  </div>
+			</tr></br>
                 <div class="layui-input-block">
                   <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
@@ -98,16 +137,16 @@
   </div>
 <script>
 var SCOPE = {
-  'jump_url': '/admin.php?c=enter',
+  'jump_url': '/admin.php?c=users',
 }
-
 //layui
-layui.use(['form','layer'],function() {
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
-	$.post("admin.php?c=enter&a=edit",data.field,function(result){
+	$.post("admin.php?c=users&a=edit",data.field,function(result){
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 2000});
 			self.location.reload();
@@ -118,29 +157,14 @@ layui.use(['form','layer'],function() {
 	},"JSON");
 	return false;
   });
+  laydate.render({
+	elem: '#joindate'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
 });
-
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#et_date' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-	//time
-	laydate.render({
-	  elem: '#et_time'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  });
-});
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
@@ -148,10 +172,7 @@ function checkTime(i) {
   return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("et_time").value = result;
-document.getElementById("et_date").value = result2;
-
+var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("joindate").value = result;
 </script>
 <include file="Index/footer" />

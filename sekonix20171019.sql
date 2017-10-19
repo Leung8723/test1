@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-18 12:22:41
+-- Generation Time: 2017-10-19 12:31:11
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -58,7 +58,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508251224, NULL, '梁国成', 1498696655, 1, 1508216836),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508337259, NULL, '梁国成', 1498696655, 1, 1508216836),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', '', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508218287),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
@@ -126,7 +126,7 @@ TRUNCATE TABLE `sk_ckdata`;
 
 DROP TABLE IF EXISTS `sk_coating`;
 CREATE TABLE IF NOT EXISTS `sk_coating` (
-  `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_model` varchar(20) NOT NULL,
   `ct_machine` tinyint(2) unsigned NOT NULL,
   `ct_date` int(10) NOT NULL,
@@ -134,21 +134,16 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
   `ct_user` varchar(20) NOT NULL,
   `start_time` int(10) NOT NULL,
   `over_time` int(10) DEFAULT NULL,
-  `ct_num` smallint(10) unsigned NOT NULL,
+  `ct_num` int(10) unsigned NOT NULL,
   `create_user` varchar(20) NOT NULL,
   `spec_t` tinyint(1) unsigned DEFAULT NULL,
   `spec_r` tinyint(1) unsigned DEFAULT NULL,
-  `ck_num` smallint(10) unsigned DEFAULT NULL,
+  `ck_num` int(10) unsigned DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `create_time` int(10) DEFAULT NULL,
   `update_time` int(10) DEFAULT NULL,
   `tips` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ct_model` (`ct_model`),
-  KEY `ct_machine` (`ct_machine`),
-  KEY `ct_user` (`ct_user`),
-  KEY `create_user` (`create_user`),
-  KEY `ct_lot` (`ct_lot`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
@@ -161,7 +156,7 @@ TRUNCATE TABLE `sk_coating`;
 --
 
 INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `ct_user`, `start_time`, `over_time`, `ct_num`, `create_user`, `spec_t`, `spec_r`, `ck_num`, `status`, `create_time`, `update_time`, `tips`) VALUES
-(1, 'MV1419L1-23', 6, 20170927, '1', '张乐乐', 180000, NULL, 1124, '梁国成', NULL, 0, 0, 1, 1450055600, 1507866410, ''),
+(1, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, NULL),
 (2, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, NULL),
 (3, 'MV1419L2-23', 5, 20170927, '1', '张乐乐', 180000, NULL, 1280, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, '1314'),
 (4, 'MV1419L1-13', 2, 20171012, 'H01', '宋晓科', 135409, NULL, 65535, '梁国成', NULL, NULL, NULL, 1, 1507787658, NULL, ''),
@@ -185,8 +180,8 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (22, 'AM1663L6-1', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2240, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
 (23, 'MV1419L1-13', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 65535, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
 (24, 'MV1419L1-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(25, 'MV1419L2-13', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(26, 'MV1419L2-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 27499, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, '');
+(25, 'MV1419L2-13', 2, 2017, 'B02', '宋晓科', 15, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, '12306'),
+(26, 'MV1419L2-20', 1, 2017, 'A01', '马士友', 13, NULL, 27499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508390358, '14111');
 
 -- --------------------------------------------------------
 
@@ -588,7 +583,7 @@ INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `li
 (8, '文章管理', 0, 'admin', 'content', 'index', '', 1, -1, 1),
 (9, '温湿度记录', 0, 'admin', 'temp', 'index', '', 6, 1, 1),
 (10, '型号管理', 0, 'admin', 'lens', 'index', '', 5, 1, 1),
-(11, '人员管理', 0, 'admin', 'person', 'index', '', 3, 1, 1);
+(11, '人员管理', 0, 'admin', 'users', 'index', '', 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -699,14 +694,20 @@ INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hu
 DROP TABLE IF EXISTS `sk_user`;
 CREATE TABLE IF NOT EXISTS `sk_user` (
   `id` smallint(10) NOT NULL AUTO_INCREMENT,
+  `workid` int(10) DEFAULT NULL,
   `name` varchar(20) NOT NULL,
+  `sexual` tinyint(1) unsigned DEFAULT NULL,
+  `cardid` varchar(18) DEFAULT NULL,
   `dept` varchar(20) NOT NULL,
+  `mobile` varchar(11) DEFAULT NULL,
+  `joindate` int(10) NOT NULL,
   `create_user` varchar(20) NOT NULL,
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_user`
@@ -717,60 +718,62 @@ TRUNCATE TABLE `sk_user`;
 -- 转存表中的数据 `sk_user`
 --
 
-INSERT INTO `sk_user` (`id`, `name`, `dept`, `create_user`, `create_time`, `update_time`, `status`) VALUES
-(1, '马士友', '镀膜', '梁国成', 2147483647, NULL, 1),
-(2, '熊世磊', '镀膜', '梁国成', 2147483647, NULL, 1),
-(3, '宋晓科', '镀膜', '梁国成', 2147483647, NULL, 1),
-(4, '史森堂', '镀膜', '梁国成', 2147483647, NULL, 1),
-(5, '范岩', '镀膜', '梁国成', 2147483647, NULL, 1),
-(6, '窦莹', '镀膜', '梁国成', 2147483647, NULL, 1),
-(7, '杨建民', '镀膜', '梁国成', 2147483647, NULL, 1),
-(8, '邓志远', '镀膜', '梁国成', 2147483647, NULL, 1),
-(9, '张乐乐', '镀膜', '梁国成', 2147483647, NULL, 1),
-(10, '董华晓', '镀膜', '梁国成', 2147483647, NULL, 1),
-(11, '单客客', '镀膜', '梁国成', 2147483647, NULL, 1),
-(12, '王宏生', '镀膜', '梁国成', 2147483647, NULL, 1),
-(13, '张琦', '镀膜', '梁国成', 2147483647, NULL, 1),
-(14, '杨伟仿', '镀膜', '梁国成', 2147483647, NULL, 1),
-(15, '王云', '成型', '梁国成', 2147483647, NULL, 0),
-(16, '刘敏', '成型', '梁国成', 2147483647, NULL, 1),
-(17, '丁苏红', '成型', '梁国成', 2147483647, NULL, 1),
-(18, '冯素兰', '成型', '梁国成', 2147483647, NULL, 1),
-(19, '陈丽艳', '单品', '梁国成', 2147483647, NULL, 1),
-(20, '陈彦平', '单品', '梁国成', 2147483647, NULL, 1),
-(21, '崔远娥', '单品', '梁国成', 2147483647, NULL, 1),
-(22, '高海凤', '单品', '梁国成', 2147483647, NULL, 1),
-(23, '高立志', '单品', '梁国成', 2147483647, NULL, 1),
-(24, '韩红', '单品', '梁国成', 2147483647, NULL, 1),
-(25, '韩会如', '单品', '梁国成', 2147483647, NULL, 1),
-(26, '黄苗苗', '单品', '梁国成', 2147483647, NULL, 1),
-(27, '李凤美', '单品', '梁国成', 2147483647, NULL, 1),
-(28, '李圆圆', '单品', '梁国成', 2147483647, NULL, 1),
-(29, '连晓璇', '单品', '梁国成', 2147483647, NULL, 1),
-(30, '梁凤各', '单品', '梁国成', 2147483647, NULL, 1),
-(31, '宁璐璐', '单品', '梁国成', 2147483647, NULL, 1),
-(32, '齐群群', '单品', '梁国成', 2147483647, NULL, 1),
-(33, '宋文龙', '单品', '梁国成', 2147483647, NULL, 1),
-(34, '孙丹', '单品', '梁国成', 2147483647, NULL, 1),
-(35, '汤克燕', '单品', '梁国成', 2147483647, NULL, 1),
-(36, '唐久玲', '单品', '梁国成', 2147483647, NULL, 1),
-(37, '王贵群', '单品', '梁国成', 2147483647, NULL, 1),
-(38, '王金莲', '单品', '梁国成', 2147483647, NULL, 1),
-(39, '王锦凤', '单品', '梁国成', 2147483647, NULL, 1),
-(40, '王倩倩', '单品', '梁国成', 2147483647, NULL, 1),
-(41, '王瑞楠', '单品', '梁国成', 2147483647, NULL, 1),
-(42, '王守侠', '单品', '梁国成', 2147483647, NULL, 1),
-(43, '王雪', '单品', '梁国成', 2147483647, NULL, 1),
-(44, '王亚西', '单品', '梁国成', 2147483647, NULL, 1),
-(45, '王圆圆', '单品', '梁国成', 2147483647, NULL, 1),
-(46, '魏献玲', '单品', '梁国成', 2147483647, NULL, 1),
-(47, '杨园芳', '单品', '梁国成', 2147483647, NULL, 1),
-(48, '殷红倩', '单品', '梁国成', 2147483647, NULL, 1),
-(49, '张静瑶', '单品', '梁国成', 2147483647, NULL, 1),
-(50, '张茜茜', '单品', '梁国成', 2147483647, NULL, 1),
-(51, '张双菊', '单品', '梁国成', 2147483647, NULL, 1),
-(52, '张艳艳', '单品', '梁国成', 2147483647, NULL, 1),
-(53, '赵志芹', '单品', '梁国成', 2147483647, NULL, 1);
+INSERT INTO `sk_user` (`id`, `workid`, `name`, `sexual`, `cardid`, `dept`, `mobile`, `joindate`, `create_user`, `create_time`, `update_time`, `status`, `tips`) VALUES
+(1, NULL, '马士友', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(2, NULL, '熊世磊', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(3, NULL, '宋晓科', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(4, NULL, '史森堂', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(5, NULL, '范岩', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(6, NULL, '窦莹', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(7, NULL, '杨建民', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(8, NULL, '邓志远', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(9, NULL, '张乐乐', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(10, NULL, '董华晓', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(11, 60000, '单客客', 1, '371011111111111111', '镀膜', '13111111111', 2017, '梁国成', 1508372173, 1508380471, 1, ''),
+(12, NULL, '王宏生', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(13, NULL, '张琦', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(14, NULL, '杨伟仿', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(15, NULL, '王云', NULL, NULL, '成型', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(16, NULL, '刘敏', NULL, NULL, '成型', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(17, NULL, '丁苏红', NULL, NULL, '成型', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(18, NULL, '冯素兰', NULL, NULL, '成型', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(19, NULL, '陈丽艳', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(20, NULL, '陈彦平', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(21, NULL, '崔远娥', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(22, NULL, '高海凤', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(23, NULL, '高立志', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(24, NULL, '韩红', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(25, NULL, '韩会如', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(26, NULL, '黄苗苗', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(27, NULL, '李凤美', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(28, NULL, '李圆圆', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(29, NULL, '连晓璇', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(30, NULL, '梁凤各', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(31, NULL, '宁璐璐', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(32, NULL, '齐群群', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(33, NULL, '宋文龙', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(34, NULL, '孙丹', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(35, NULL, '汤克燕', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(36, NULL, '唐久玲', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(37, NULL, '王贵群', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(38, NULL, '王金莲', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(39, NULL, '王锦凤', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(40, NULL, '王倩倩', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(41, NULL, '王瑞楠', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(42, NULL, '王守侠', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(43, NULL, '王雪', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(44, NULL, '王亚西', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(45, NULL, '王圆圆', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(46, NULL, '魏献玲', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(47, NULL, '杨园芳', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(48, NULL, '殷红倩', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(49, NULL, '张静瑶', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(50, NULL, '张茜茜', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(51, NULL, '张双菊', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(52, NULL, '张艳艳', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(53, NULL, '赵志芹', NULL, NULL, '单品', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(54, 69009, '王小丫', 2, '371011111111111111', '成型', '13111111111', 1508342400, '梁国成', 1508377413, NULL, 0, '新入职'),
+(55, 69010, '王小二', 1, '371011111111111111', '成型', '13122222222', 1508342400, '梁国成', 1508377781, NULL, 0, '新入职');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

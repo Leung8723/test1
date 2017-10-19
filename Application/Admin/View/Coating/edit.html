@@ -34,14 +34,14 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_date" id="ct_date" type="text" value="{$coatingData.ct_date}"></div>
+                      <input class="layui-input" name="ct_date" id="ct_date" type="text" placeholder="请选择日期"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">投入</label>
+                    <label class="layui-form-label">时间</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="start_time" id="start_time" type="text" value="{$coatingData.start_time}"></div>
+                      <input class="layui-input" name="start_time" id="start_time" type="text" placeholder="请选择时间"></div>
                   </div>
                   </br>
                 </td>
@@ -75,7 +75,7 @@
                       <select name="ct_user" id="ct_user" lay-verify="required" lay-search="">
                         <option value="">==请选择设备担当==</option>
                         <foreach name="coatingUser" item="coatingUser">
-                          <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
+                          <option value="{$coatingUser.name}">{$coatingUser.name}</option></foreach>
                       </select>
                     </div>
                   </div>
@@ -119,58 +119,51 @@
 var SCOPE = {
   'jump_url': '/admin.php?c=coating',
 }
-
-//lay-form
-layui.use(['form','layer'],function() {
+//layui
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
 	$.post("admin.php?c=coating&a=edit",data.field,function(result){
+		<!-- layer.alert(JSON.stringify(data.field)); -->
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
-			self.location.reload();
+			layer.msg(result.message, {icon: 2,time: 30000});
+			<!-- self.location.reload(); -->
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
-			<!-- window.location.href=url; -->
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
-});
-
-
-//laydate
-layui.use('laydate',function() {
   var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#ct_date' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-	//time
-	laydate.render({
-	  elem: '#start_time'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  });
+  laydate.render({
+	elem: '#ct_date'
+	,format: 'yyyy-MM-dd'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
+  laydate.render({
+	elem: '#start_time'
+	,format: 'HH:mm'
+	,type: 'time'
+	,value: new Date()
+	,theme: 'molv'
+  });
 });
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
 }
-var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("start_time").value = result;
-document.getElementById("ct_date").value = result2;
-
+<!-- var myDate = new Date(); -->
+<!-- var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds()); -->
+<!-- var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate()); -->
+<!-- document.getElementById("start_time").value = result; -->
+<!-- document.getElementById("ct_date").value = result2; -->
 </script>
 <include file="Index/footer" />

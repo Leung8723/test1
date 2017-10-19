@@ -50,17 +50,17 @@
 					<volist name="users" id="vo">
 					  <tr>
 						<td>{$vo.id}</td>
-						<td>{$vo.workid}</td>
+						<td><if condition="$vo['workid'] eq NULL">-<else/>{$vo.workid}</if></td>
 						<td>{$vo.name}</td>
-						<td>{$vo.sexual}</td>
-						<td>{$vo.cardid}</td>
-						<td>{$vo.mobile}</td>
+						<td><if condition="$vo['sexual'] eq 1">男<else/>女</if></td>
+						<td><if condition="$vo['cardid'] eq NULL">-<else/>{$vo.cardid}</if></td>
+						<td><if condition="$vo['mobile'] eq NULL">-<else/>{$vo.mobile}</if></td>
 						<td>{$vo.dept}</td>
-						<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d H:i",###}</if></td>
+						<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d",###}</if></td>
 						<td>{$vo.create_user}</td>
 						<td>{$vo.create_time|date="Y-m-d",###}</td>
 						<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
-						<td>{$vo.tips}</td>
+						<td><if condition="$vo['tips'] eq NULL">-<else/>{$vo.tips}</if></td>
 						<td></td>
 					  </tr>
 					</volist>
@@ -80,7 +80,7 @@ var SCOPE = {
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [[ 5, "desc"],[ 1, "asc"]],
+		"order": [[ 6, "desc"],[ 2, "asc"]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
