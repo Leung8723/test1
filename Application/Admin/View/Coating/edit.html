@@ -128,8 +128,8 @@ layui.use(['form','layer','laydate'],function() {
 	$.post("admin.php?c=coating&a=edit",data.field,function(result){
 		<!-- layer.alert(JSON.stringify(data.field)); -->
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 30000});
-			<!-- self.location.reload(); -->
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
@@ -160,10 +160,10 @@ function checkTime(i) {
   }
   return i;
 }
-<!-- var myDate = new Date(); -->
-<!-- var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds()); -->
-<!-- var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate()); -->
-<!-- document.getElementById("start_time").value = result; -->
-<!-- document.getElementById("ct_date").value = result2; -->
+var myDate = new Date();
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
+var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("start_time").value = result;
+document.getElementById("ct_date").value = result2;
 </script>
 <include file="Index/footer" />

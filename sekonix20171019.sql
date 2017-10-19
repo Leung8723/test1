@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-19 12:31:11
+-- Generation Time: 2017-10-19 16:53:17
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -44,8 +44,7 @@ CREATE TABLE IF NOT EXISTS `sk_admin` (
   `create_time` int(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
-  PRIMARY KEY (`admin_id`),
-  KEY `realname` (`realname`)
+  PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
@@ -105,12 +104,7 @@ CREATE TABLE IF NOT EXISTS `sk_ckdata` (
   `create_user` varchar(20) NOT NULL,
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`,`ck_model`,`ck_lot`),
-  UNIQUE KEY `id` (`id`),
-  KEY `ck_model` (`ck_model`) USING BTREE,
-  KEY `ck_lot` (`ck_lot`) USING BTREE,
-  KEY `ck_user` (`ck_user`) USING BTREE,
-  KEY `create_user` (`create_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -180,8 +174,8 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (22, 'AM1663L6-1', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2240, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
 (23, 'MV1419L1-13', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 65535, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
 (24, 'MV1419L1-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(25, 'MV1419L2-13', 2, 2017, 'B02', '宋晓科', 15, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, '12306'),
-(26, 'MV1419L2-20', 1, 2017, 'A01', '马士友', 13, NULL, 27499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508390358, '14111');
+(25, 'MV1419L2-13', 3, 1508342400, 'B02', '范岩', 1508424600, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508424602, '12306'),
+(26, 'MV1419L2-20', 1, 1508342400, 'A01', '马士友', 1508424720, NULL, 2499, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508424750, '14111');
 
 -- --------------------------------------------------------
 
@@ -195,9 +189,7 @@ CREATE TABLE IF NOT EXISTS `sk_color` (
   `color_type` varchar(20) NOT NULL,
   `create_user` varchar(20) NOT NULL,
   `create_time` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `create_user` (`create_user`),
-  KEY `color_type` (`color_type`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
@@ -239,9 +231,7 @@ CREATE TABLE IF NOT EXISTS `sk_count` (
   `count_user` varchar(20) NOT NULL,
   `last_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `et_model` (`model`) USING BTREE,
-  KEY `et_user` (`count_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -268,10 +258,7 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   `create_time` int(12) NOT NULL,
   `update_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `et_model` (`et_model`) USING BTREE,
-  KEY `md_user` (`md_user`),
-  KEY `et_user` (`create_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=156 ;
 
 --
@@ -369,11 +356,7 @@ CREATE TABLE IF NOT EXISTS `sk_lens` (
   `status` int(1) DEFAULT '1',
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `model` (`model`),
-  KEY `color` (`color`),
-  KEY `create_user` (`create_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
 
 --
@@ -510,9 +493,7 @@ CREATE TABLE IF NOT EXISTS `sk_machine` (
   `nickname` varchar(1) NOT NULL,
   `create_user` varchar(20) NOT NULL,
   `create_time` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `create_user` (`create_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
@@ -557,10 +538,7 @@ CREATE TABLE IF NOT EXISTS `sk_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`menu_id`),
-  KEY `listorder` (`listorder`),
-  KEY `parentid` (`parentid`),
-  KEY `module` (`m`,`c`,`f`)
+  PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
@@ -606,9 +584,7 @@ CREATE TABLE IF NOT EXISTS `sk_spec` (
   `rspeca` float(6,4) unsigned DEFAULT NULL,
   `rspecb` float(6,4) unsigned DEFAULT NULL,
   `update_time` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ct_lot` (`ct_lot`),
-  KEY `create_user` (`create_user`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -665,11 +641,7 @@ CREATE TABLE IF NOT EXISTS `sk_temp` (
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `model` (`place`),
-  KEY `color` (`hum1`),
-  KEY `create_user` (`hum2`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --

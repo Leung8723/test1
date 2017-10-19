@@ -82,15 +82,14 @@ class CoatingModel extends Model {
 		return $this->_db->addAll($data);
 	}
 	//修改镀膜数据
-    public function updateLensById($id, $arr, $editData) {
+    public function updateLensById($id, $arr) {
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
         }
         if(!$arr || !is_array($arr)) {
 			throw_exception('信息不完整');
         }
-        $res = $this->_db->save($editData);
-		return $res;
+        return $this->_db->where('id='.$id)->save($arr);
     }
 	//删除型号查询
     public function getHiddenData() {
