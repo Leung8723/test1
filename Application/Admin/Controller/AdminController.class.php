@@ -1,25 +1,20 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
+/**
+ * 用户信息管理
+ * @author 善子先森
+ */
 class AdminController extends CommonController {
+	//用户主页
     public function index() {
         $admins = D('Admin')->getAdmins();
         $this->assign('admins', $admins);
         $this->display();
     }
-	/*
-    public function adminslist() {
-        $admins = D('Admin')->getAdmins();
-		print_r($admins);exit;
-		return $admins;
-    }*/
+	//添加用户主页
     public function add() {
-        // 保存数据
         if(IS_POST) {
             if(!isset($_POST['username']) || !$_POST['username']) {
                 return show(1, '用户名不能为空');
@@ -28,12 +23,10 @@ class AdminController extends CommonController {
                 return show(1, '密码不能为空');
             }
             $_POST['password'] = getMd5Password($_POST['password']);
-            // 判定用户名是否存在
-            $admin = D("Admin")->getAdminByUsername($_POST['username']);
+            $admin = D("Admin")->getAdminByUsername($_POST['username']);// 判定用户名是否存在
             if($admin && $admin['status']!=-1) {
                 return show(1,'该用户存在');
             }
-            // 新增
             $id = D("Admin")->insert($_POST);
             if(!$id) {
                 return show(1, '新增失败');
@@ -42,20 +35,31 @@ class AdminController extends CommonController {
         }
         $this->display();
     }
-
-    public function setStatus() {
-        $data = array(
-            'admin_id'=>intval($_POST['id']),
-            'status' => intval($_POST['status']),
-        );
-        return parent::setStatus($_POST,'Admin');
-    }
-
+	//用户信息设置主页
     public function personal() {
-        // $res = $this->getLoginUser();
 		$id = $_GET['id'];
 		if($_POST){
-			return $this->save($_POST);
+			$data['admin_id'] = $_POST['admin_id'];
+			$data['username'] = $_POST['username'];
+			$data['realname'] = $_POST['realname'];
+			$data['password'] = getMd5Password($_POST['newpassword']);
+			$data['mobile'] = $_POST['mobile'];
+			$data['email'] = $_POST['email'];
+			$data['power'] = 1;
+			$data['status'] = 1;
+			$data['create_user'] = getLoginRealname();
+			$data['update_time'] = time();
+			$passwd = $_POST['oldpassword'];
+			$old = getMd5Password($passwd);
+			try {
+				$res1 = D("Admin")->updateByAdminId($old, $data);
+				if($res1 !== false) {
+					return show(0, '个人信息更新成功');
+				}
+				return show(1, '个人信息更新失败');
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
 		}else{
 			if(!$id){
 				$this->redirect('/admin.php?c=enter');
@@ -64,37 +68,6 @@ class AdminController extends CommonController {
         $user = D("Admin")->getAdminByAdminId($id);
         $this->assign('vo',$user);
         $this->display();
-    }
-
-    public function save($res) {
-        // $user = $this->getLoginUser();
-        // if(!$user) {
-            // return show(1,'用户不存在');
-        // }
-        $data['admin_id'] = $res['admin_id'];
-        $data['username'] = $res['username'];
-        $data['realname'] = $res['realname'];
-		$data['password'] = getMd5Password($res['newpassword']);
-        $data['mobile'] = $res['mobile'];
-        $data['email'] = $res['email'];
-        $data['power'] = 1;
-        $data['status'] = 1;
-        $data['create_user'] = getLoginRealname();
-        $data['update_time'] = time();
-		$passwd = $res['oldpassword'];
-		$old = getMd5Password($passwd);
-		// print_r($data);
-		// print_r($id);
-		// print_r($old);exit;
-        try {
-            $res1 = D("Admin")->updateByAdminId($old, $data);
-            if($res1 === false) {
-                return show(1, '个人信息更新失败');
-            }
-            return show(0, '个人信息更新成功');
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
     }
 	//删除模块
     public function del() {

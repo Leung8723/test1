@@ -5,14 +5,12 @@
   <div id="page-wrapper">
     <div class="container-fluid" >
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
     <!-- Page Heading -->
 	  </br></br></br></br>
       <div class="row">
         <div class="col-lg-12">
-
           <ol class="breadcrumb">
             <li>
               <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens"> 产品目录</a>
@@ -24,10 +22,8 @@
         </div>
       </div>
       <!-- /.row -->
-      </br>
-	   <!-- <div class="display"> -->
-		<table id="lens-table" class="cell-border display">
-			<thead>
+		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+		  <thead>
 			<tr>
 			  <th>ID</th>
 			  <th>型号</th>
@@ -39,26 +35,25 @@
 			  <th>更新时间</th>
 			  <th>数据操作</th>
 			</tr>
-			</thead>
-				<tbody>
-					<volist name="lens" id="len">
-					  <tr>
-						<td>{$len.id}</td>
-						<td>{$len.model}</td>
-						<td>{$len.specs}</td>
-						<td>{$len.color}</td>
-						<td>{$len.material}</td>
-						<td>{$len.create_user}</td>
-						<td>{$len.create_time|date="Y-m-d H:i",###}</td>
-						<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+		  </thead>
+		  <tbody>
+		  <volist name="lens" id="len">
+			<tr>
+			  <td>{$len.id}</td>
+			  <td>{$len.model}</td>
+			  <td>{$len.specs}</td>
+			  <td>{$len.color}</td>
+			  <td>{$len.material}</td>
+			  <td>{$len.create_user}</td>
+			  <td>{$len.create_time|date="Y-m-d H:i",###}</td>
+			  <td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
+			  <td></td>
+		    </tr>
+		  </volist>
+	      </tbody>
 		</table>
-      <!-- </div> -->
     </div>
-   </div>
+  </div>
 </div>
 <script>
 //初始化DataTables
@@ -70,7 +65,7 @@ $(document).ready( function () {
 				"class":"but_xq",
 				"data":null,
 				"bSortable":false,
-				"defaultContent":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id=\"del\"  href=\"#\">恢复</a>"
+				"defaultContent":"<a id=\"del\"  href=\"#\">恢复</a>"
 		}],
 		"columnDefs":[{
 				"visible": false,

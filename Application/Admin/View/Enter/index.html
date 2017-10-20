@@ -142,7 +142,7 @@ $(document).ready( function () {
 				window.location.href=SPOPE.jump_url;
 			}else if(result.status == 0){
 				layer.msg(result.message, {icon: 1,time: 3000});
-				self.location.reload()
+				self.location.reload();
 			}
 		},"JSON");
 	});

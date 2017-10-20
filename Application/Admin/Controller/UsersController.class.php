@@ -1,12 +1,10 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
- * 文章内容管理
+ * 人员信息管理
+ * @author 善子先森
  */
 class UsersController extends CommonController {
 	//人员管理主页
@@ -23,12 +21,33 @@ class UsersController extends CommonController {
 	//添加人员主页
 	public function add() {
 		if($_POST){
-			print_r($_POST);exit;
-			return $this->userAdd($_POST);
-
+			try {
+				$arr[] = array(
+					'id' => NULL,
+					'workid' => $_POST['workid'],
+					'name' => $_POST['name'],
+					'sexual' => $_POST['sexual'],
+					'cardid' => $_POST['cardid'],
+					'dept' => $_POST['dept'],
+					'mobile' => $_POST['mobile'],
+					'joindate' => strtotime($_POST['joindate']),
+					'create_user' => getLoginRealname(),
+					'create_time' => time(),
+					'update_time' => NULL,
+					'status' => '1',
+					'tips' => $_POST['tips']
+				);
+				$id = D("Users")->insertUser($arr);
+				if($id){
+					return show(0,'人员信息添加成功');
+				}else{
+					return show(1,'人员信息添加失败');
+				}
+			}catch(Exception $e){
+				return $e->getMessage();
+			}
         }else{
 			$deptData = D("Users")->getDeptList();//获取部署列表
-			// print_r($deptData);exit;
 			$this->assign('dept',$deptData);
 			$this->display();
 		}
@@ -37,7 +56,16 @@ class UsersController extends CommonController {
     public function edit() {
 		$userId = $_GET['id'];
 		if($_POST){
-			return $this->userSave($_POST);
+			try {
+				$id = D("Users")->updateUserById($_POST);
+				if($id !== false) {
+					return show(0, $_POST['name'].'的个人信息更新成功!');
+				}else{
+					return show(1, '镀膜信息更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
 		}else{
 			if(!$userId) {
 				$this->redirect('/admin.php?c=users');
@@ -62,48 +90,6 @@ class UsersController extends CommonController {
         $hiddenData = D("Users")->getHiddenData();
         $this->assign('users',$hiddenData);
         $this->display();
-    }
-	//添加人员模块
-	public function userAdd($data){
-        try {
-			$arr[] = array(
-				'id' => NULL,
-				'workid' => $data['workid'],
-				'name' => $data['name'],
-				'sexual' => $data['sexual'],
-				'cardid' => $data['cardid'],
-				'dept' => $data['dept'],
-				'mobile' => $data['mobile'],
-				'joindate' => strtotime($data['joindate']),
-				'create_user' => getLoginRealname(),
-				'create_time' => time(),
-				'update_time' => NULL,
-				'status' => '1',
-				'tips' => $data['tips']
-			);
-			$id = D("Users")->insertUser($arr);
-            if($id){
-				return show(0,'人员信息添加成功');
-            }else{
-				return show(1,'人员信息添加失败');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
-		}
-	}
-	
-	//编辑模块
-    public function userSave($data) {
-        try {
-            $id = D("Users")->updateUserById($data);
-            if($id === false) {
-                return show(1, '镀膜信息更新失败!');
-            }else{
-				return show(0, $data['name'].'的个人信息更新成功!');
-			}
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
     }
 	//删除模块
     public function del() {

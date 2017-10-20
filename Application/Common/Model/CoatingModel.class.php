@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 文章内容model操作
- * @author  singwa
+ * 镀膜信息model操作
+ * @author 善子先森
  */
 class CoatingModel extends Model {
     private $_db = '';
@@ -99,5 +98,4 @@ class CoatingModel extends Model {
 		$res = $this->_db->where($data)->order('ct_model asc')->select();
 		return $res;
     }
-
 }

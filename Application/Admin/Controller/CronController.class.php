@@ -1,15 +1,11 @@
 <?php
-
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Upload;
-
 /**
  * 后台计划任务 业务脚本
  */
 class CronController {
-
-
     public function dumpmysql() {
         $result = D("Basic")->select();
         if(!$result['dumpmysql']) {

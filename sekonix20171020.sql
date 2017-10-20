@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-19 16:53:17
+-- Generation Time: 2017-10-20 04:22:51
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `sekonix`
 --
-CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `sekonix`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +26,6 @@ USE `sekonix`;
 -- 表的结构 `sk_admin`
 --
 
-DROP TABLE IF EXISTS `sk_admin`;
 CREATE TABLE IF NOT EXISTS `sk_admin` (
   `admin_id` mediumint(6) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -48,17 +45,12 @@ CREATE TABLE IF NOT EXISTS `sk_admin` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
--- 插入之前先把表清空（truncate） `sk_admin`
---
-
-TRUNCATE TABLE `sk_admin`;
---
 -- 转存表中的数据 `sk_admin`
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508337259, NULL, '梁国成', 1498696655, 1, 1508216836),
-(2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', '', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508218287),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508458479, NULL, '梁国成', 1498696655, 1, 1508216836),
+(2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508463422),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
 (5, 'zhaoxiangren', '赵向仁', '89ca2407297cff2751bbef6eda6593f0', '18663159117', '191', 'fuqiang.619@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218263),
@@ -70,7 +62,6 @@ INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`
 -- 表的结构 `sk_ckdata`
 --
 
-DROP TABLE IF EXISTS `sk_ckdata`;
 CREATE TABLE IF NOT EXISTS `sk_ckdata` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ck_model` smallint(10) unsigned NOT NULL DEFAULT '0',
@@ -107,18 +98,12 @@ CREATE TABLE IF NOT EXISTS `sk_ckdata` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 插入之前先把表清空（truncate） `sk_ckdata`
---
-
-TRUNCATE TABLE `sk_ckdata`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_coating`
 --
 
-DROP TABLE IF EXISTS `sk_coating`;
 CREATE TABLE IF NOT EXISTS `sk_coating` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_model` varchar(20) NOT NULL,
@@ -130,8 +115,8 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
   `over_time` int(10) DEFAULT NULL,
   `ct_num` int(10) unsigned NOT NULL,
   `create_user` varchar(20) NOT NULL,
-  `spec_t` tinyint(1) unsigned DEFAULT NULL,
-  `spec_r` tinyint(1) unsigned DEFAULT NULL,
+  `spec_t` float(5,2) unsigned DEFAULT NULL,
+  `spec_r` float(5,2) unsigned DEFAULT NULL,
   `ck_num` int(10) unsigned DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `create_time` int(10) DEFAULT NULL,
@@ -141,18 +126,13 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
--- 插入之前先把表清空（truncate） `sk_coating`
---
-
-TRUNCATE TABLE `sk_coating`;
---
 -- 转存表中的数据 `sk_coating`
 --
 
 INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `ct_user`, `start_time`, `over_time`, `ct_num`, `create_user`, `spec_t`, `spec_r`, `ck_num`, `status`, `create_time`, `update_time`, `tips`) VALUES
-(1, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, NULL),
-(2, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, NULL),
-(3, 'MV1419L2-23', 5, 20170927, '1', '张乐乐', 180000, NULL, 1280, '梁国成', NULL, 0, 0, 1, 1450055600, NULL, '1314'),
+(1, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, NULL, 0, 1, 1450055600, NULL, NULL),
+(2, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, NULL, 0, 1, 1450055600, NULL, NULL),
+(3, 'MV1419L2-23', 5, 20170927, '1', '张乐乐', 180000, NULL, 1280, '梁国成', NULL, NULL, 0, 1, 1450055600, NULL, '1314'),
 (4, 'MV1419L1-13', 2, 20171012, 'H01', '宋晓科', 135409, NULL, 65535, '梁国成', NULL, NULL, NULL, 1, 1507787658, NULL, ''),
 (5, 'MV1419L1-20', 2, 20171012, 'H01', '宋晓科', 135409, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507787658, NULL, 'SDFSDF'),
 (6, 'MV1419L2-13', 2, 20171012, 'H01', '宋晓科', 135409, NULL, 1449, '梁国成', NULL, NULL, NULL, 1, 1507787658, NULL, ''),
@@ -183,7 +163,6 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 -- 表的结构 `sk_color`
 --
 
-DROP TABLE IF EXISTS `sk_color`;
 CREATE TABLE IF NOT EXISTS `sk_color` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `color_type` varchar(20) NOT NULL,
@@ -192,11 +171,6 @@ CREATE TABLE IF NOT EXISTS `sk_color` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
---
--- 插入之前先把表清空（truncate） `sk_color`
---
-
-TRUNCATE TABLE `sk_color`;
 --
 -- 转存表中的数据 `sk_color`
 --
@@ -223,7 +197,6 @@ INSERT INTO `sk_color` (`id`, `color_type`, `create_user`, `create_time`) VALUES
 -- 表的结构 `sk_count`
 --
 
-DROP TABLE IF EXISTS `sk_count`;
 CREATE TABLE IF NOT EXISTS `sk_count` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `model` varchar(20) NOT NULL,
@@ -234,18 +207,12 @@ CREATE TABLE IF NOT EXISTS `sk_count` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 插入之前先把表清空（truncate） `sk_count`
---
-
-TRUNCATE TABLE `sk_count`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_enter`
 --
 
-DROP TABLE IF EXISTS `sk_enter`;
 CREATE TABLE IF NOT EXISTS `sk_enter` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `et_model` varchar(20) NOT NULL,
@@ -261,11 +228,6 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=156 ;
 
---
--- 插入之前先把表清空（truncate） `sk_enter`
---
-
-TRUNCATE TABLE `sk_enter`;
 --
 -- 转存表中的数据 `sk_enter`
 --
@@ -337,7 +299,7 @@ INSERT INTO `sk_enter` (`id`, `et_model`, `et_date`, `et_time`, `et_num`, `creat
 (152, 'AM1663L6-1', 2017, 21, 2240, '梁国成', '王大花', 1, 1507986119, NULL, NULL),
 (153, 'AM1663L1-1', 2017, 21, 2241, '梁国成', '王大花', 1, 1507986289, NULL, NULL),
 (154, 'AM1663L1-1', 2017, 9, 221, '梁国成', '王小二', 1, 1507986452, 1508029232, ''),
-(155, 'AM1663L1-1', 2017, 17, 12, '梁国成', '王大花', 1, 1507987653, 1508147443, '');
+(155, 'AM1663L1-1', 2017, 8, 12, '梁国成', '刘敏', 1, 1507987653, 1508458620, '');
 
 -- --------------------------------------------------------
 
@@ -345,7 +307,6 @@ INSERT INTO `sk_enter` (`id`, `et_model`, `et_date`, `et_time`, `et_num`, `creat
 -- 表的结构 `sk_lens`
 --
 
-DROP TABLE IF EXISTS `sk_lens`;
 CREATE TABLE IF NOT EXISTS `sk_lens` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `model` varchar(20) NOT NULL,
@@ -359,11 +320,6 @@ CREATE TABLE IF NOT EXISTS `sk_lens` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
 
---
--- 插入之前先把表清空（truncate） `sk_lens`
---
-
-TRUNCATE TABLE `sk_lens`;
 --
 -- 转存表中的数据 `sk_lens`
 --
@@ -472,10 +428,10 @@ INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user
 (116, 'SN0847L3-2', 214, '紫色#1', 'APEL', '梁国成', 1, 1503650000, NULL),
 (117, 'SN0847L4-1', 136, '青绿#1', 'APEL', '梁国成', 1, 1503650000, NULL),
 (118, 'SN0847L4-2', 136, '青绿#1', 'APEL', '梁国成', 1, 1503650000, NULL),
-(120, 'AV1654L2-1', 44, '绿色#2', 'APEL', '梁国成', 1, 1503706856, NULL),
-(121, 'AV1654L3-1', 60, '绿色#2', 'APEL', '梁国成', 1, 1503706874, NULL),
-(122, 'AV1654L4-1', 96, '绿色#1', 'EP7000', '梁国成', 1, 1503706896, 1503706896),
-(127, 'AM1663L1-1', 111, '绿色#1', 'OKP4', '梁国成', 1, 1503813557, NULL),
+(120, 'AV1654L2-1', 44, '绿色#2', 'APEL', '梁国成', 0, 1503706856, NULL),
+(121, 'AV1654L3-1', 60, '绿色#2', 'APEL', '梁国成', 0, 1503706874, NULL),
+(122, 'AV1654L4-1', 96, '绿色#1', 'EP7000', '梁国成', 0, 1503706896, 1503706896),
+(127, 'AM1663L1-1', 111, '绿色#1', 'OKP4', '梁国成', 0, 1503813557, NULL),
 (128, 'MV1418L2-5', 2, '绿色#3', 'E48R', '梁国成', 0, 1506327818, NULL),
 (130, 'MV1419L2-13', 396, '绿色#1', 'E48R', '梁国成', 1, 1507950083, NULL),
 (131, 'MV1419L1-13', 396, '绿色#1', 'E48R', '梁国成', 1, 1507950094, NULL);
@@ -486,7 +442,6 @@ INSERT INTO `sk_lens` (`id`, `model`, `specs`, `color`, `material`, `create_user
 -- 表的结构 `sk_machine`
 --
 
-DROP TABLE IF EXISTS `sk_machine`;
 CREATE TABLE IF NOT EXISTS `sk_machine` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` tinyint(2) NOT NULL,
@@ -496,11 +451,6 @@ CREATE TABLE IF NOT EXISTS `sk_machine` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
---
--- 插入之前先把表清空（truncate） `sk_machine`
---
-
-TRUNCATE TABLE `sk_machine`;
 --
 -- 转存表中的数据 `sk_machine`
 --
@@ -526,7 +476,6 @@ INSERT INTO `sk_machine` (`id`, `name`, `nickname`, `create_user`, `create_time`
 -- 表的结构 `sk_menu`
 --
 
-DROP TABLE IF EXISTS `sk_menu`;
 CREATE TABLE IF NOT EXISTS `sk_menu` (
   `menu_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL DEFAULT '',
@@ -541,11 +490,6 @@ CREATE TABLE IF NOT EXISTS `sk_menu` (
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
---
--- 插入之前先把表清空（truncate） `sk_menu`
---
-
-TRUNCATE TABLE `sk_menu`;
 --
 -- 转存表中的数据 `sk_menu`
 --
@@ -569,7 +513,6 @@ INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `li
 -- 表的结构 `sk_spec`
 --
 
-DROP TABLE IF EXISTS `sk_spec`;
 CREATE TABLE IF NOT EXISTS `sk_spec` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `ct_lot` varchar(20) NOT NULL,
@@ -587,18 +530,12 @@ CREATE TABLE IF NOT EXISTS `sk_spec` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 插入之前先把表清空（truncate） `sk_spec`
---
-
-TRUNCATE TABLE `sk_spec`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_spec_data`
 --
 
-DROP TABLE IF EXISTS `sk_spec_data`;
 CREATE TABLE IF NOT EXISTS `sk_spec_data` (
   `id` mediumint(10) NOT NULL AUTO_INCREMENT,
   `ct_lot` varchar(20) NOT NULL,
@@ -609,18 +546,12 @@ CREATE TABLE IF NOT EXISTS `sk_spec_data` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 插入之前先把表清空（truncate） `sk_spec_data`
---
-
-TRUNCATE TABLE `sk_spec_data`;
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_temp`
 --
 
-DROP TABLE IF EXISTS `sk_temp`;
 CREATE TABLE IF NOT EXISTS `sk_temp` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `temp_date` int(10) NOT NULL,
@@ -645,11 +576,6 @@ CREATE TABLE IF NOT EXISTS `sk_temp` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 插入之前先把表清空（truncate） `sk_temp`
---
-
-TRUNCATE TABLE `sk_temp`;
---
 -- 转存表中的数据 `sk_temp`
 --
 
@@ -663,7 +589,6 @@ INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hu
 -- 表的结构 `sk_user`
 --
 
-DROP TABLE IF EXISTS `sk_user`;
 CREATE TABLE IF NOT EXISTS `sk_user` (
   `id` smallint(10) NOT NULL AUTO_INCREMENT,
   `workid` int(10) DEFAULT NULL,
@@ -681,11 +606,6 @@ CREATE TABLE IF NOT EXISTS `sk_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
 
---
--- 插入之前先把表清空（truncate） `sk_user`
---
-
-TRUNCATE TABLE `sk_user`;
 --
 -- 转存表中的数据 `sk_user`
 --

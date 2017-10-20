@@ -1,12 +1,10 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
- * 文章内容管理
+ * 入库信息管理
+ * @author 善子先森
  */
 class EnterController extends CommonController {
 	//入库主页
@@ -30,7 +28,6 @@ class EnterController extends CommonController {
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
 			$lastMdUser = D("Enter")->getLastMdUser();//获取成型入库担当列表
-			// print_r($enterLastDate);exit;
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mduser',$enterMdUser);
@@ -42,7 +39,16 @@ class EnterController extends CommonController {
     public function edit() {
 		$enterId = $_GET['id'];
 		if($_POST){
-			return $this->enterSave($_POST);
+			try {
+				$id = D("Enter")->updateLensById($data);
+				if($id === false) {
+					return show(1, '镀膜信息更新失败!');
+				}else{
+					return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
 		}else{
 			if(!$enterId) {
 				$this->redirect('/admin.php?c=enter');
@@ -76,20 +82,40 @@ class EnterController extends CommonController {
             $conds['id'] = $title;
         }
         $countLensData = D("Enter")->getCountData();
-		// M('count')->where("1=1")->delete();
         $this->assign('count',$countLensData);
         $this->display();
     }
 	//新型号入库
 	public function addnew() {
 		if($_POST){
-			return $this->enterNewAdd($_POST);
+			try {
+				$arr[] = array(
+					'id' => NULL,
+					'et_model' => $data['model'],
+					'et_date' => strtotime($data['enterdate']),
+					'et_time' => strtotime($data['entertime']),
+					'et_num' => $data['etnum'],
+					'create_user' => getLoginRealname(),
+					'md_user' => $data['mduser'],
+					'status' => '1',
+					'create_time' => time(),
+					'update_time' => NULL,
+					'tips' => $data['tip']
+				);
+				$id = D("Enter")->insertEnter($arr);
+				if($id){
+					return show(0,'入库成功');
+				}else{
+					return show(1,'入库失败');
+				}
+			}catch(Exception $e){
+				return $e->getMessage();
+			}
         }else{
 			$lensModelData = D("Enter")->getNewModel();//获取月间未入库过得全部型号列表
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
 			$lastMdUser = D("Enter")->getLastMdUser();//获取成型入库担当列表
-			
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mduser',$enterMdUser);
@@ -133,45 +159,6 @@ class EnterController extends CommonController {
             return $e->getMessage();
 		}
 	}
-	//addnew入库模块
-	public function enterNewAdd($data){
-        try {
-			$arr[] = array(
-				'id' => NULL,
-				'et_model' => $data['model'],
-				'et_date' => strtotime($data['enterdate']),
-				'et_time' => strtotime($data['entertime']),
-				'et_num' => $data['etnum'],
-				'create_user' => getLoginRealname(),
-				'md_user' => $data['mduser'],
-				'status' => '1',
-				'create_time' => time(),
-				'update_time' => NULL,
-				'tips' => $data['tip']
-			);
-			$id = D("Enter")->insertEnter($arr);
-            if($id){
-				return show(0,'入库成功');
-            }else{
-				return show(1,'入库失败');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
-		}
-	}
-	//编辑模块
-    public function enterSave($data) {
-        try {
-            $id = D("Enter")->updateLensById($data);
-            if($id === false) {
-                return show(1, '镀膜信息更新失败!');
-            }else{
-				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
-			}
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
-    }
 	//删除模块
     public function del() {
         try {

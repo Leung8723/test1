@@ -19,7 +19,6 @@
         </div>
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
-          <!-- -->
           <div class="layui-form-item">
             <tr>
               <div class="layui-row">
@@ -27,7 +26,7 @@
                   <div class="layui-col-md2">
                     <label class="layui-form-label" style="width: 80px;">日期</label>
                     <div class="layui-input-inline" style="width: 100px;">
-                      <input class="layui-input" name="coatingdate" id="coatingdate" type="text" placeholder="yyyy-MM-dd"></div>
+                      <input class="layui-input" name="checkdate" id="checkdate" type="text" placeholder="yyyy-MM-dd"></div>
                   </div>
                 </td>
                 <td>
@@ -268,9 +267,10 @@
 var SCOPE = {
   'jump_url': '/admin.php?c=coating',
 }
-//lay-form
-layui.use(['form','layer'],function() {
+//layui
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -285,40 +285,23 @@ layui.use(['form','layer'],function() {
 	},"JSON");
 	return false;
   });
+//date
+  laydate.render({
+	elem: '#checkdate' //指定元素
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
 });
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#coatingdate' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-	//time
-	laydate.render({
-	  elem: '#coatingtime'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  ,format: 'HH:mm'
-	  });
-});
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
 }
-<!-- + ':' + checkTime(myDate.getSeconds()) -->
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("coatingtime").value = result;
-document.getElementById("coatingdate").value = result2;
+var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("checkdate").value = result;
 </script>
 <include file="Index/footer" />

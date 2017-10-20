@@ -127,7 +127,7 @@ var SCOPE = {
 layui.use(['form','layer'],function() {
   var form = layui.form;
   var url = SCOPE.jump_url;
-  //监听提交
+//监听提交
   form.on('submit(formDemo)',function(data){
 	$.post("admin.php?c=admin&a=personal",data.field,function(result){
 		if(result.status == 1){

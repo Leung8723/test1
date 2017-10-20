@@ -42,26 +42,26 @@
 			  <th>操作</th>
 			</tr>
 			</thead>
-				<tbody>
-					<volist name="coating" id="coating">
-					  <tr>
-						<td>{$coating.id}</td>
-						<td>{$coating.ct_model}</td>
-						<td>{$coating.ct_num}</td>
-						<td>{$coating.ct_date}</td>
-						<td>{$coating.ct_machine}号机</td>
-						<td>{$coating.ct_lot}</td>
-						<td>{$coating.ct_user}</td>
-						<td>{$coating.start_time}</td>
-						<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
-						<td>{$coating.create_time|date="H:i",###}</td>
-						<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
-						<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
-						<td>{$coating.tips}</td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+			<tbody>
+			<volist name="coating" id="coating">
+			  <tr>
+				<td>{$coating.id}</td>
+				<td>{$coating.ct_model}</td>
+				<td>{$coating.ct_num}</td>
+				<td>{$coating.ct_date}</td>
+				<td>{$coating.ct_machine}号机</td>
+				<td>{$coating.ct_lot}</td>
+				<td>{$coating.ct_user}</td>
+				<td>{$coating.start_time}</td>
+				<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
+				<td>{$coating.create_time|date="H:i",###}</td>
+				<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
+				<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
+				<td>{$coating.tips}</td>
+				<td></td>
+			  </tr>
+			</volist>
+			</tbody>
 		</table>
 	  </form>
     </div>

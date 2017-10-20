@@ -1,12 +1,10 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
  * 型号管理
+ * @author 善子先森
  */
 class LensController extends CommonController {
     public function index() {
@@ -23,19 +21,27 @@ class LensController extends CommonController {
     public function add(){
         if($_POST) {
             if(!isset($_POST['model']) || !$_POST['model']) {
-                return show(0,'型号名不存在');
+                return show(1,'型号名不存在');
             }
             if(!isset($_POST['specs']) || !$_POST['specs']|| !is_numeric($_POST['specs'])) {
-                return show(0,'规格未填写或为非数字');
+                return show(1,'规格未填写或为非数字');
             }
             if(is_null($_POST['color']) ){
-                return show(0,'色相基准未选择');
+                return show(1,'色相基准未选择');
             }
             if(is_null(!$_POST['material'])) {
-                return show(0,'材质不能为空');
+                return show(1,'材质不能为空');
             }
             if($_POST['model']) {
-                return $this->lensAdd($_POST);//调用保存方法
+				try {
+					$id = D("Lens")->insertLens($_POST);
+					if($id !== false) {
+						return show(0, $_POST['model'].' 添加新型号成功');
+					}
+					return show(1, '添加新型号失败');
+				}catch(Exception $e) {
+					return show(1, $e->getMessage());
+				}
             }
         }else {
 			$lensMaterialType = C("LENS_MATERIAL");
@@ -45,72 +51,7 @@ class LensController extends CommonController {
             $this->display();
         }
     }
-	    
-	public function hidden() {
-		$conds = array();
-		$title = $_GET['id'];
-        if($title) {
-            $conds['id'] = $title;
-        }
-
-        $webSiteData = D("Lens")->getHiddenLensData();
-        $this->assign('lens',$webSiteData);
-        $this->display();
-    }
-	//修改型号模块
-	public function updateLens(){
-        if($_POST) {
-            if(!isset($_POST['model']) || !$_POST['model']) {
-                return show(0,'型号名不存在');
-            }
-            if(!isset($_POST['specs']) || !$_POST['specs']|| !is_numeric($_POST['specs'])) {
-                return show(0,'规格未填写或为非数字');
-            }
-            if(is_null($_POST['color']) ){
-                return show(0,'色相基准未选择');
-            }
-            if(is_null(!$_POST['material'])) {
-                return show(0,'材质不能为空');
-            }
-            if($_POST['model']) {
-                return $this->save($_POST);//调用保存方法
-            }
-        }else {
-			$lensMaterialType = C("LENS_MATERIAL");
-			$lensColorType = C("COLOR_TYPE");
-            $this->assign('lensColorType', $lensColorType);
-            $this->assign('lensMaterialType', $lensMaterialType);
-            $this->display();
-        }
-    }
-
-	//型号添加保存模块
-    public function lensAdd($data) {
-        try {
-            $id = D("Lens")->insertLens($data);
-            if($id === false) {
-                return show(0, '添加新型号失败');
-            }
-            return show(1, $_POST['model'].' 添加新型号成功');
-        }catch(Exception $e) {
-            return show(0, $e->getMessage());
-        }
-    }
-	
-	//型号修改保存模块
-    public function save($data) {
-		$newsId = $data['id'];
-        try {
-            $id = D("Lens")->updateLensById($newsId,$data);
-            if($id === false) {
-                return show(0, '更新型号失败');
-            }
-            return show(1, $_POST['model'].' 更新型号成功');
-        }catch(Exception $e) {
-            return show(0, $e->getMessage());
-        }
-    }
-	
+	//编辑主页
     public function edit() {
         $newsId = $_GET['id'];
         if(!$newsId) {
@@ -127,7 +68,54 @@ class LensController extends CommonController {
         $this->assign('lens',$news);
         $this->display();
     }
-	
+	//删除列表主页
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+
+        $webSiteData = D("Lens")->getHiddenLensData();
+        $this->assign('lens',$webSiteData);
+        $this->display();
+    }
+	//修改型号模块
+	public function updateLens(){
+        if($_POST) {
+            if(!isset($_POST['model']) || !$_POST['model']) {
+                return show(1,'型号名不存在');
+            }
+            if(!isset($_POST['specs']) || !$_POST['specs']|| !is_numeric($_POST['specs'])) {
+                return show(1,'规格未填写或为非数字');
+            }
+            if(is_null($_POST['color']) ){
+                return show(1,'色相基准未选择');
+            }
+            if(is_null(!$_POST['material'])) {
+                return show(1,'材质不能为空');
+            }
+            if($_POST['model']) {
+				$newsId = $_POST['id'];
+				try {
+					$id = D("Lens")->updateLensById($newsId,$_POST);
+					if($id !== false) {
+						return show(0, $_POST['model'].' 更新型号成功');
+					}
+					return show(1, '更新型号失败');
+				}catch(Exception $e) {
+					return show(1, $e->getMessage());
+				}
+            }
+        }else {
+			$lensMaterialType = C("LENS_MATERIAL");
+			$lensColorType = C("COLOR_TYPE");
+            $this->assign('lensColorType', $lensColorType);
+            $this->assign('lensMaterialType', $lensMaterialType);
+            $this->display();
+        }
+    }
+	//删除模块
     public function del() {
         try {
             if ($_POST) {
@@ -148,4 +136,5 @@ class LensController extends CommonController {
             return show(0, $e->getMessage());
         }
     }
+	//恢复模块
 }

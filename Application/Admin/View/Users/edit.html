@@ -19,7 +19,6 @@
         </div>
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
-          <!-- -->
           <div class="layui-form-item">
 		    <tr>
               <div class="layui-row">
@@ -140,39 +139,21 @@ var SCOPE = {
   'jump_url': '/admin.php?c=users',
 }
 //layui
-layui.use(['form','layer','laydate'],function() {
+layui.use(['form','layer'],function() {
   var form = layui.form;
-  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
 	$.post("admin.php?c=users&a=edit",data.field,function(result){
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
+			layer.msg(result.message, {icon: 2,time: 3000});
 			self.location.reload();
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
+			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
-  laydate.render({
-	elem: '#joindate'
-	,type: 'date'
-	,value: new Date()
-	,theme: 'molv'
-  });
-});
-//格式化时间
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
-var myDate = new Date();
-var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("joindate").value = result;
 </script>
 <include file="Index/footer" />

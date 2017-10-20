@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 用户组操作
- * @author  singwa
+ * 用户信息model操作
+ * @author 善子先森
  */
 class AdminModel extends Model {
 	private $_db = '';
@@ -12,16 +11,17 @@ class AdminModel extends Model {
 	public function __construct() {
 		$this->_db = M('admin');
 	}
-   
+    //根据用户名查找
     public function getAdminByUsername($username='') {
         $res = $this->_db->where('username="'.$username.'"')->find();
         return $res;
     }
+	//根据ID查找用户
     public function getAdminByAdminId($adminId=0) {
         $res = $this->_db->where('admin_id='.$adminId)->find();
         return $res;
     }
-
+	//更新用户信息
     public function updateByAdminId($old, $data) {
 		$id = $data['admin_id'];
 		$oldpassword = $this->_db->where('admin_id='.$id)->field('password')->select();
@@ -37,7 +37,7 @@ class AdminModel extends Model {
 		}
         return $this->_db->where('admin_id='.$id)->save($data);
     }
-
+	//插入用户
     public function insert($data = array()) {
         if(!$data || !is_array($data)) {
             return 1;
@@ -48,15 +48,14 @@ class AdminModel extends Model {
         $data['create_time'] = time();
         return $this->_db->add($data);
     }
-
+	//用户列表
     public function getAdmins() {
         $data = array(
-            'status' => array('neq',-1),
+            'status' => array('eq',1),
         );
         return $this->_db->where($data)->order('admin_id desc')->select();
-		// return '{"code": 0,"msg": "","count": 1000,"data": '.json_encode($res).'}';
     }
-
+	//根据ID更新状态
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception("status不能为非数字");
@@ -65,10 +64,10 @@ class AdminModel extends Model {
             throw_exception("ID不合法");
         }
         $data['status'] = $status;
-        return  $this->_db->where('admin_id='.$id)->save($data); // 根据条件更新记录
+        return  $this->_db->where('admin_id='.$id)->save($data);//根据条件更新记录
 
     }
-
+	//最后登录用户查询
     public function getLastLoginUsers() {
         $time = mktime(0,0,0,date("m"),date("d"),date("Y"));
         $data = array(
@@ -78,5 +77,4 @@ class AdminModel extends Model {
         $res = $this->_db->where($data)->count();
         return $res['tp_count'];
     }
-
 }

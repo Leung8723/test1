@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 文章内容model操作
- * @author  singwa
+ * 人员信息model操作
+ * @author 善子先森
  */
 class UsersModel extends Model {
     private $_db = '';
@@ -51,13 +50,10 @@ class UsersModel extends Model {
 		$res = $this->_db->where($data)->order('name asc')->select();
 		return $res;
     }
-	
-	
 	//查找相关id数据
 	public function find($id) {
         return $this->_db->where('id='.$id)->find();
     }
-
 	//修改人员数据
     public function updateUserById($data) {
 		$id = $data['id'];
@@ -72,5 +68,4 @@ class UsersModel extends Model {
 		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
-
 }

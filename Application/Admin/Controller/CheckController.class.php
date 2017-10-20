@@ -1,15 +1,13 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
- * 文章内容管理
+ * 单品检查信息管理
+ * @author 善子先森
  */
 class CheckController extends CommonController {
-	//镀膜主页
+	//单品检查主页
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
@@ -20,7 +18,7 @@ class CheckController extends CommonController {
         $this->assign('coating',$coatingData);
         $this->display();
     }
-	//添加主页
+	//按镀膜lot添加主页
 	public function add() {
 		if($_POST){
 			$length = (count($_POST)-5)/3;
@@ -35,7 +33,7 @@ class CheckController extends CommonController {
 			$this->display();
 		}
 	}
-	//待用功能
+	//按型号添加主页
 	public function addnew() {
 		if($_POST){
 			$length = (count($_POST)-5)/3;
@@ -54,7 +52,16 @@ class CheckController extends CommonController {
     public function edit() {
 		$coatingId = $_GET['id'];
 		if($_POST){
-			return $this->coatingSave($_POST);
+			try {
+				$id = D("Coating")->updateLensById($_POST);
+				if($id === false) {
+					return show(1, '检查信息更新失败!');
+				}else{
+					return show(0, '第'.$_POST['id'].'条 检查信息更新成功!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
 		}else{
 			if(!$coatingId) {
 				$this->redirect('/admin.php?c=coating');
@@ -124,19 +131,6 @@ class CheckController extends CommonController {
             return $e->getMessage();
 		}
 	}
-	//编辑模块
-    public function coatingSave($data) {
-        try {
-            $id = D("Coating")->updateLensById($data);
-            if($id === false) {
-                return show(1, '镀膜信息更新失败!');
-            }else{
-				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
-			}
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
-    }
 	//删除模块
     public function del() {
         try {

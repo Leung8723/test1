@@ -19,7 +19,6 @@
         </div>
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
-          <!-- -->
           <div class="layui-form-item">
             <tr>
               <div class="layui-row">
@@ -34,16 +33,8 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_date" id="ct_date" type="text" value="{$coatingData.ct_date}"></div>
+                      <input class="layui-input" name="checkdate" id="checkdate" type="text" value="{$coatingData.ct_date}"></div>
                   </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">投入</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="start_time" id="start_time" type="text" value="{$coatingData.start_time}"></div>
-                  </div>
-                  </br>
                 </td>
               </div>
             </tr>
@@ -119,10 +110,10 @@
 var SCOPE = {
   'jump_url': '/admin.php?c=check',
 }
-
-//lay-form
+//layui
 layui.use(['form','layer'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -132,34 +123,20 @@ layui.use(['form','layer'],function() {
 			self.location.reload();
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 2000});
-			<!-- window.location.href=url; -->
+			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
+//date
+  laydate.render({
+	elem: '#checkdate'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
 });
-
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#ct_date' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-	//time
-	laydate.render({
-	  elem: '#start_time'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  });
-});
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
@@ -167,10 +144,7 @@ function checkTime(i) {
   return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("start_time").value = result;
-document.getElementById("ct_date").value = result2;
-
+var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("checkdate").value = result;
 </script>
 <include file="Index/footer" />

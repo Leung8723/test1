@@ -41,25 +41,25 @@
 			  <th>操作</th>
 			</tr>
 			</thead>
-				<tbody>
-					<volist name="users" id="vo">
-					  <tr>
-						<td>{$vo.id}</td>
-						<td>{$vo.workid}</td>
-						<td>{$vo.name}</td>
-						<td>{$vo.sexual}</td>
-						<td>{$vo.cardid}</td>
-						<td>{$vo.mobile}</td>
-						<td>{$vo.dept}</td>
-						<td>{$vo.joindate|date="Y-m-d",###}</td>
-						<td>{$vo.create_user}</td>
-						<td>{$vo.create_time|date="Y-m-d",###}</td>
-						<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time}</if></td>
-						<td>{$vo.tips}</td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+			<tbody>
+			<volist name="users" id="vo">
+			  <tr>
+				<td>{$vo.id}</td>
+				<td>{$vo.workid}</td>
+				<td>{$vo.name}</td>
+				<td>{$vo.sexual}</td>
+				<td>{$vo.cardid}</td>
+				<td>{$vo.mobile}</td>
+				<td>{$vo.dept}</td>
+				<td>{$vo.joindate|date="Y-m-d",###}</td>
+				<td>{$vo.create_user}</td>
+				<td>{$vo.create_time|date="Y-m-d",###}</td>
+				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time}</if></td>
+				<td>{$vo.tips}</td>
+				<td></td>
+			  </tr>
+			</volist>
+			</tbody>
 		</table>
 	  </form>
     </div>

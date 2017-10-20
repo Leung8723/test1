@@ -1,12 +1,10 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
- * 文章内容管理
+ * 镀膜信息管理
+ * @author 善子先森
  */
 class CoatingController extends CommonController {
 	//镀膜主页
@@ -22,21 +20,6 @@ class CoatingController extends CommonController {
     }
 	//添加主页
 	public function add() {
-		if($_POST){
-			$length = (count($_POST)-5)/3;
-			return $this->coatingAdd($_POST,$length);
-        }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
-			$this->assign('machine',$machineList);
-			$this->display();
-		}
-	}
-	//待用功能
-	public function addnew() {
 		if($_POST){
 			$length = (count($_POST)-5)/3;
 			return $this->coatingAdd($_POST,$length);
@@ -105,49 +88,6 @@ class CoatingController extends CommonController {
         $this->assign('coating',$hiddenLensData);
         $this->display();
     }
-	//添加模块---------------------------------------------------------
-	public function coatingAdd($data,$length){
-        try {
-			$arr = array();
-			for($i=0;$i<$length;$i++){
-				$model='model'.$i;
-				$ctnum='ctnum'.$i;
-				$tips='tips'.$i;
-				if($data[$ctnum]){
-					$arr[] = array(
-						'id' => NULL,
-						'ct_model' => $data[$model],
-						'ct_machine' => $data['machine'],
-						'ct_date' => strtotime($data['coatingdate']),
-						'ct_lot' => $data['lotnum'],
-						'ct_user' => $data['ctuser'],
-						'start_time' => strtotime($data['coatingtime']),
-						'over_time' => NULL,
-						'ct_num' => $data[$ctnum],
-						'create_user' => getLoginRealname(),
-						'spec_t' => NULL,
-						'spec_r' => NULL,
-						'status' => '1',
-						'ck_num' => NULL,
-						'create_time' => time(),
-						'update_time' => NULL,
-						'tips' => $data[$tips]
-					);
-				}else{
-					continue;
-				}
-			}
-			$id = D("Coating")->insertCoating($arr);
-            if($id === false){
-				return show(1, '镀膜数据添加失败');
-            }else{
-				return show(0, '镀膜数据添加成功');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
-		}
-	}
-	//-------------------------------------------------
 	//删除模块
     public function del() {
         try {
@@ -190,4 +130,57 @@ class CoatingController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
+	/*新信息添加--------------待用功能----------------
+	public function addnew() {
+		if($_POST){
+			$length = (count($_POST)-5)/3;
+			try {
+				$arr = array();
+				for($i=0;$i<$length;$i++){
+					$model='model'.$i;
+					$ctnum='ctnum'.$i;
+					$tips='tips'.$i;
+					if($_POST[$ctnum]){
+						$arr[] = array(
+							'id' => NULL,
+							'ct_model' => $_POST[$model],
+							'ct_machine' => $_POST['machine'],
+							'ct_date' => strtotime($_POST['coatingdate']),
+							'ct_lot' => $_POST['lotnum'],
+							'ct_user' => $_POST['ctuser'],
+							'start_time' => strtotime($_POST['coatingtime']),
+							'over_time' => NULL,
+							'ct_num' => $_POST[$ctnum],
+							'create_user' => getLoginRealname(),
+							'spec_t' => NULL,
+							'spec_r' => NULL,
+							'status' => '1',
+							'ck_num' => NULL,
+							'create_time' => time(),
+							'update_time' => NULL,
+							'tips' => $_POST[$tips]
+						);
+					}else{
+						continue;
+					}
+				}
+				$id = D("Coating")->insertCoating($arr);
+				if($id === false){
+					return show(1, '镀膜数据添加失败');
+				}else{
+					return show(0, '镀膜数据添加成功');
+				}
+			}catch(Exception $e){
+				return $e->getMessage();
+			}
+        }else{
+			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
+			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
+			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
+			$this->assign('lensnum',$lensNumData);
+			$this->assign('ctuser',$coatingUser);
+			$this->assign('machine',$machineList);
+			$this->display();
+		}
+	}*/
 }

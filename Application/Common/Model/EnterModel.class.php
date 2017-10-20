@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 文章内容model操作
- * @author  singwa
+ * 入库管理model操作
+ * @author 善子先森
  */
 class EnterModel extends Model {
     private $_db = '';

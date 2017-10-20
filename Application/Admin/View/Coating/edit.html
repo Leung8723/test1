@@ -19,7 +19,6 @@
         </div>
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
-          <!-- -->
           <div class="layui-form-item">
             <tr>
               <div class="layui-row">
@@ -122,6 +121,7 @@ var SCOPE = {
 //layui
 layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -137,14 +137,14 @@ layui.use(['form','layer','laydate'],function() {
 	},"JSON");
 	return false;
   });
-  var laydate = layui.laydate;
+//date
   laydate.render({
 	elem: '#ct_date'
-	,format: 'yyyy-MM-dd'
 	,type: 'date'
 	,value: new Date()
 	,theme: 'molv'
   });
+//time
   laydate.render({
 	elem: '#start_time'
 	,format: 'HH:mm'

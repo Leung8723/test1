@@ -1,15 +1,13 @@
 <?php
-/**
- * 后台Index相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 /**
- * 文章内容管理
+ * 温湿度信息管理
+ * @author 善子先森
  */
 class TempController extends CommonController {
-	//镀膜主页
+	//温湿度主页
     public function index() {
 		$conds = array();
 		$title = $_GET['id'];
@@ -20,7 +18,7 @@ class TempController extends CommonController {
         $this->assign('temp',$tempData);
         $this->display();
     }
-	//添加主页
+	//登记主页
 	public function add() {
 		// if($_POST){
 
@@ -31,9 +29,6 @@ class TempController extends CommonController {
 			$this->display();
 		// }
 	}
-	
-	
-	
 	//编辑主页
     public function edit() {
 		$coatingId = $_GET['id'];
@@ -63,7 +58,6 @@ class TempController extends CommonController {
         $this->assign('coating',$hiddenLensData);
         $this->display();
     }
-	
 	//添加模块
 	public function tempAdd(){
         try {

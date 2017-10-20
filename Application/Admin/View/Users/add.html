@@ -4,22 +4,20 @@
   <include file="Index/nav"/>
   <div id="page-wrapper">
     <div class="container-fluid" >
-	<!-- DataTables -->
-	<script type="text/javascript" charset="utf8" src="/Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
 	</br></br></br></br>
-		<div class="row">
-		  <div class="col-lg-12">
-			<ol class="breadcrumb">
-		      <li>
-				<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter"> 人员管理</a>
-			  </li>
-			  <li class="active">
-				<i class="fa fa-edit"></i> 添加人员信息
-			  </li>
-			</ol>
-		  </div>
-		</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<ol class="breadcrumb">
+		  <li>
+			<i class="fa fa-dashboard"></i><a href="/admin.php?c=enter"> 人员管理</a>
+		  </li>
+		  <li class="active">
+			<i class="fa fa-edit"></i> 添加人员信息
+		  </li>
+		</ol>
+	  </div>
+	</div>
 	<!-- /.row -->
 	  <form class="layui-form" method="post" action="">
           <div class="layui-form-item">
@@ -140,42 +138,14 @@ layui.use(['form','layer'], function(){
   form.on('submit(formDemo)', function(data){
 	$.post("admin.php?c=users&a=add",data.field,function(result){;
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
+			layer.msg(result.message, {icon: 2,time: 3000});
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
+			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
 });
-
-//laydate
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
-  //date
-  laydate.render({
-    elem: '#enterdate'
-	,type: 'date'
-	,theme: 'molv'
-  });
-  //time
-  laydate.render({
-    elem: '#entertime'
-	,type: 'time'
-	,value: new Date()
-	,theme: 'molv'
-  });
-});
-//格式化时间
-function checkTime(i){
-    if (i<10){
-        i = "0" + i;
-    }
-    return i;
-}
-var myDate = new Date();
-var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
-document.getElementById("entertime").value=result;
 </script>
 <include file="Index/footer" />

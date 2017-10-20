@@ -20,7 +20,7 @@
 			</ol>
 		  </div>
 		</div>
-	<!-- /.row -->
+		<!-- /.row -->
 		<form class="layui-form" method="post" action="">
 		  <div class="layui-row">
 		   <div class="layui-form-item">
@@ -50,11 +50,9 @@
 					    <option value="{$vo.name}">{$vo.name}</option>
 					  </foreach>
 				  </select>
-					<!-- <input name="md_user" lay-verify="text" autocomplete="off" class="layui-input" type="text"> -->
 				  </div>
 			  </div>
 			</td>
-			<!-- 1 -->
 			<?php foreach ($enterlens as $key => $value){ ?>
 			</br></br></br>
 			<tr>
@@ -95,40 +93,34 @@
 		  </div>
 		</form>  
     </div>
-    <!-- /.container-fluid -->
   </div>
-  <!-- /#page-wrapper -->
 </div>
-<!-- /#wrapper -->
 <script>
 var SCOPE = {
 'jump_url' : '/admin.php?c=enter',
 }
 //lay-form
-layui.use(['form','layer'], function(){
+layui.use(['form','layer','laydate'], function(){
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
   //监听提交
   form.on('submit(formDemo)', function(data){
 	$.post("admin.php?c=enter&a=add",data.field,function(result){;
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
+			layer.msg(result.message, {icon: 2,time: 3000});
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
+			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
-});
-
-//laydate
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
   //date
   laydate.render({
     elem: '#enterdate'
 	,type: 'date'
+	,value: new Date()
 	,theme: 'molv'
   });
   //time
@@ -137,6 +129,7 @@ layui.use('laydate', function(){
 	,type: 'time'
 	,value: new Date()
 	,theme: 'molv'
+	,format: 'HH:mm'
   });
 });
 //格式化时间
@@ -147,7 +140,7 @@ function checkTime(i){
     return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
+var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes());
 document.getElementById("entertime").value=result;
 </script>
 <include file="Index/footer" />

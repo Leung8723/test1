@@ -29,7 +29,7 @@
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
-			<thead>
+		  <thead>
 			<tr>
 			  <th>ID</th>
 			  <th>工号</th>
@@ -45,26 +45,26 @@
 			  <th>备注</th>
 			  <th>编辑</th>
 			</tr>
-			</thead>
-				<tbody>
-					<volist name="users" id="vo">
-					  <tr>
-						<td>{$vo.id}</td>
-						<td><if condition="$vo['workid'] eq NULL">-<else/>{$vo.workid}</if></td>
-						<td>{$vo.name}</td>
-						<td><if condition="$vo['sexual'] eq 1">男<else/>女</if></td>
-						<td><if condition="$vo['cardid'] eq NULL">-<else/>{$vo.cardid}</if></td>
-						<td><if condition="$vo['mobile'] eq NULL">-<else/>{$vo.mobile}</if></td>
-						<td>{$vo.dept}</td>
-						<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d",###}</if></td>
-						<td>{$vo.create_user}</td>
-						<td>{$vo.create_time|date="Y-m-d",###}</td>
-						<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
-						<td><if condition="$vo['tips'] eq NULL">-<else/>{$vo.tips}</if></td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+		  </thead>
+		  <tbody>
+		    <volist name="users" id="vo">
+			  <tr>
+				<td>{$vo.id}</td>
+				<td><if condition="$vo['workid'] eq NULL">-<else/>{$vo.workid}</if></td>
+				<td>{$vo.name}</td>
+				<td><if condition="$vo['sexual'] eq 1">男<else/>女</if></td>
+				<td><if condition="$vo['cardid'] eq NULL">-<else/>{$vo.cardid}</if></td>
+				<td><if condition="$vo['mobile'] eq NULL">-<else/>{$vo.mobile}</if></td>
+				<td>{$vo.dept}</td>
+				<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d",###}</if></td>
+				<td>{$vo.create_user}</td>
+				<td>{$vo.create_time|date="Y-m-d",###}</td>
+				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
+				<td><if condition="$vo['tips'] eq NULL">-<else/>{$vo.tips}</if></td>
+				<td></td>
+			  </tr>
+		    </volist>
+		  </tbody>
 		</table>
 	  </form>
     </div>

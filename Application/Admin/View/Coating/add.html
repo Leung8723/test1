@@ -19,7 +19,6 @@
         </div>
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
-          <!-- -->
           <div class="layui-form-item">
             <tr>
               <div class="layui-row">
@@ -110,14 +109,14 @@
       </div>
     </div>
   </div>
-
 <script>
 var SCOPE = {
   'jump_url': '/admin.php?c=coating',
 }
-//lay-form
-layui.use(['form','layer'],function() {
+//layui
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -132,36 +131,29 @@ layui.use(['form','layer'],function() {
 	},"JSON");
 	return false;
   });
+//date
+  laydate.render({
+	elem: '#coatingdate'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
+//time
+  laydate.render({
+	elem: '#coatingtime'
+	,type: 'time'
+	,value: new Date()
+	,theme: 'molv'
+	,format: 'HH:mm'
+  });
 });
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#coatingdate' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	});
-	//time
-	laydate.render({
-	  elem: '#coatingtime'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  ,format: 'HH:mm'
-	  });
-});
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
 }
-<!-- + ':' + checkTime(myDate.getSeconds()) -->
 var myDate = new Date();
 var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
 var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());

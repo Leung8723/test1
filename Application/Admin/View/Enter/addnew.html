@@ -94,40 +94,33 @@
 		  </div>
 		</form>  
     </div>
-    <!-- /.container-fluid -->
   </div>
-  <!-- /#page-wrapper -->
 </div>
-<!-- /#wrapper -->
 <script>
 var SCOPE = {
 'jump_url' : '/admin.php?c=enter',
 }
-
-//lay-form
-layui.use(['form','layer'], function(){
+//layui
+layui.use(['form','layer','laydate'], function(){
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
   //监听提交
   form.on('submit(formDemo)', function(data){
 	$.post("admin.php?c=enter&a=addnew",data.field,function(result){;
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
+			layer.msg(result.message, {icon: 2,time: 3000});
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
+			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
-});
-
-//laydate
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+  
   //date
   laydate.render({
-    elem: '#enterdate' //指定元素
+    elem: '#enterdate'
 	,type: 'date'
 	,theme: 'molv'
   });
@@ -137,9 +130,9 @@ layui.use('laydate', function(){
 	,type: 'time'
 	,value: new Date()
 	,theme: 'molv'
+	,format: 'HH:mm'
   });
 });
-
 //格式化时间
 function checkTime(i){
     if (i<10){
@@ -148,10 +141,9 @@ function checkTime(i){
     return i;
 }
 var myDate = new Date();
-var result1 = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())+':'+checkTime(myDate.getSeconds());
+var result1 = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())s;
 var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
 document.getElementById("entertime").value=result1;
 document.getElementById("enterdate").value=result2;
-
 </script>
 <include file="Index/footer" />

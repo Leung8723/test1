@@ -6,7 +6,6 @@
     <div class="container-fluid" >
 	<!-- CSS -->	  
 	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="Public/css/buttons.css">
 	<!-- jQuery -->
 	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
     <!-- Page Heading -->
@@ -29,7 +28,6 @@
         <button  onClick="window.open('/admin.php?c=lens&a=hidden','_self')" type="sumbit" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">已删型号列表</button>
       </div>
       </br>
-	   <!-- <div class="display"> -->
 		<table id="lens-table" class="cell-border stripe hover compact order-column">
 			<thead>
 			<tr>
@@ -44,23 +42,22 @@
 			  <th>数据操作</th>
 			</tr>
 			</thead>
-				<tbody>
-					<volist name="lens" id="len">
-					  <tr>
-						<td>{$len.id}</td>
-						<td>{$len.model}</td>
-						<td>{$len.specs}</td>
-						<td>{$len.color}</td>
-						<td>{$len.material}</td>
-						<td>{$len.create_user}</td>
-						<td>{$len.create_time|date="Y-m-d H:i",###}</td>
-						<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+			<tbody>
+			<volist name="lens" id="len">
+			  <tr>
+				<td>{$len.id}</td>
+				<td>{$len.model}</td>
+				<td>{$len.specs}</td>
+				<td>{$len.color}</td>
+				<td>{$len.material}</td>
+				<td>{$len.create_user}</td>
+				<td>{$len.create_time|date="Y-m-d H:i",###}</td>
+				<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
+				<td></td>
+			  </tr>
+			</volist>
+			</tbody>
 		</table>
-      <!-- </div> -->
     </div>
    </div>
 </div>
@@ -114,10 +111,15 @@ $(document).ready( function () {
 	//删除
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0});
-		table
-			.order([[1,'asc']])
-			.draw(false);
+		$.post("/admin.php?c=lens&a=del", {id:data[0],status:0},function(result){
+			if(result.status == 1){
+				layer.msg(result.message, {icon: 2,time: 3000});
+				window.location.href=SPOPE.jump_url;
+			}else if(result.status == 0){
+				layer.msg(result.message, {icon: 1,time: 3000});
+				self.location.reload();
+			}
+		},"JSON");
 	});
 });
 </script>

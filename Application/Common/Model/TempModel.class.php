@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 文章内容model操作
- * @author  singwa
+ * 温湿度信息model操作
+ * @author 善子先森
  */
 class TempModel extends Model {
     private $_db = '';

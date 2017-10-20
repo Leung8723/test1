@@ -55,7 +55,7 @@
                       <select name="md_user" id="md_user" lay-verify="required" lay-search="">
                         <option value="">==请选择成型担当==</option>
                         <foreach name="mdUser" item="mdUser">
-                          <option value="{$mdUser.md_name}">{$mdUser.md_name}</option></foreach>
+                          <option value="{$mdUser.name}">{$mdUser.name}</option></foreach>
                       </select>
                     </div>
                   </div>
@@ -100,47 +100,41 @@
 var SCOPE = {
   'jump_url': '/admin.php?c=enter',
 }
-
 //layui
-layui.use(['form','layer'],function() {
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
 	$.post("admin.php?c=enter&a=edit",data.field,function(result){
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 2000});
+			layer.msg(result.message, {icon: 2,time: 3000});
 			self.location.reload();
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 2000});
+			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
 		}
 	},"JSON");
 	return false;
   });
-});
-
-
-//laydate
-layui.use('laydate',function() {
-  var laydate = layui.laydate;
-	//date
-	laydate.render({
-	  elem: '#et_date' //指定元素
-	  ,type: 'date'
-	  ,value: new Date()
-	  ,theme: 'molv'
+//date
+  laydate.render({
+	elem: '#et_date'
+	,type: 'date'
+	,value: new Date()
+	,theme: 'molv'
+  });
+//time
+  laydate.render({
+	elem: '#et_time'
+	,type: 'time'
+	,value: new Date()
+	,theme: 'molv'
+	,format: 'HH:mm'
 	});
-	//time
-	laydate.render({
-	  elem: '#et_time'
-	  ,type: 'time'
-	  ,value: new Date()
-	  ,theme: 'molv'
-	  });
 });
-
-  //格式化时间
+//格式化时间
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
@@ -148,10 +142,9 @@ function checkTime(i) {
   return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) + ':' + checkTime(myDate.getSeconds());
+var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
 var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
 document.getElementById("et_time").value = result;
 document.getElementById("et_date").value = result2;
-
 </script>
 <include file="Index/footer" />

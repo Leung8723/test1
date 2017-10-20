@@ -1,10 +1,9 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
  * 型号管理model操作
- * @author  Jason
+ * @author  善子先森
  */
 class LensModel extends Model {
     private $_db = '';
