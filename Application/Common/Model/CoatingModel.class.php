@@ -23,24 +23,34 @@ class CoatingModel extends Model {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$enterdata = M('enter')->where($data)->field('et_model,SUM(et_num) AS etnum')->order('et_model asc')->group('et_model')->distinct(true)->select();
-		$coatingdata = $this->_db->where($data)->field('ct_model,SUM(ct_num) AS ctnum')->order('ct_model asc')->group('ct_model')->distinct(true)->select();
-		$entercount = count($enterdata);
-		$coatingcount = count($coatingdata);
-		$arr1 = array();
-		for($i=0;$i<$entercount;$i++){
-			for($k=0;$k<$coatingcount;$k++){
-				if($enterdata[$i]['et_model']==$coatingdata[$k]['ct_model']){
-					$arr1[$i]['model'] = $enterdata[$i]['et_model'];
-					$arr1[$i]['num'] = $enterdata[$i]['etnum']- $coatingdata[$k]['ctnum'];
-				}else{
-					$num = abs($coatingcount - $entercount)-1;
-					$arr1[$i+$num]['model'] = $coatingdata[$k]['ct_model'];
-					$arr1[$i+$num]['num'] = 0-$coatingdata[$k]['ctnum'];
-				}
+		$enterdata = M('enter')->where($data)->field('et_model AS model,SUM(et_num) AS num')->order('model asc')->group('model')->distinct(true)->select();
+		$coatingdata = $this->_db->where($data)->field('ct_model AS model,SUM(ct_num) AS num')->order('model asc')->group('model')->distinct(true)->select();
+		$diffmodel = array_values(array_unique(array_merge(array_column($enterdata,'model'),array_column($coatingdata,'model'))));
+		$diffcount = count($diffmodel);
+		foreach($enterdata as $key => $value){
+			$arr1[] = $value['model'];
+		}
+		foreach($coatingdata as $key => $value){
+			$arr2[] = $value['model'];
+		}
+		$arr = array();
+		for($i=0;$i<$diffcount;$i++){
+			if($diffmodel[$i]== $enterdata[array_search($diffmodel[$i],$arr1)]['model']){
+				$arr[$i]['model'] = $diffmodel[$i];
+				$arr[$i]['num'] = $enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
+				$arr[$i]['count_user'] = getLoginRealname();
+				$arr[$i]['last_time'] = time();
+				$arr[$i]['tips'] = NULL;
+			}else{
+				$arr[$i]['model'] = $diffmodel[$i];
+				$arr[$i]['num'] = 0 - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
+				$arr[$i]['count_user'] = getLoginRealname();
+				$arr[$i]['last_time'] = time();
+				$arr[$i]['tips'] = NULL;
 			}
 		}
-		$arr = array_filter(array_merge($arr1));
+		M('count')->delete('1=1');
+		M('count')->addAll($arr);
 		return $arr;
     }
 	//查找镀膜担当列表

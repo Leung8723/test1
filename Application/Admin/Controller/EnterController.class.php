@@ -22,7 +22,39 @@ class EnterController extends CommonController {
 	public function add() {
 		if($_POST){
 			$length = (count($_POST)-3)/3;
-			return $this->enterAdd($_POST,$length);
+			try {
+				$arr = array();
+				for($i=0;$i<$length;$i++){
+					$model='model'.$i;
+					$etnum='etnum'.$i;
+					$tips='tips'.$i;
+					if($_POST[$etnum]>0){
+						$arr[] = array(
+							'id' => NULL,
+							'et_model' => $_POST[$model],
+							'et_date' => strtotime($_POST['enterdate']),
+							'et_time' => strtotime($_POST['entertime']),
+							'et_num' => $_POST[$etnum],
+							'create_user' => getLoginRealname(),
+							'md_user' => $_POST['mduser'],
+							'status' => '1',
+							'create_time' => time(),
+							'update_time' => NULL,
+							'tips' => $_POST[$tips]
+						);
+					}else{
+						continue;
+					}
+				}
+				$id = D("Enter")->insertEnter($arr);
+				if($id){
+					return show(0,'入库成功');
+				}else{
+					return show(1,'入库失败');
+				}
+			}catch(Exception $e){
+				return $e->getMessage();
+			}
         }else{
 			$lensModelData = D("Enter")->getNotNullModel();//获取月间入库的型号列表
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
@@ -41,10 +73,10 @@ class EnterController extends CommonController {
 		if($_POST){
 			try {
 				$id = D("Enter")->updateLensById($data);
-				if($id === false) {
-					return show(1, '镀膜信息更新失败!');
-				}else{
+				if($id !== false) {
 					return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
+				}else{
+					return show(1, '镀膜信息更新失败!');
 				}
 			}catch(Exception $e) {
 				return show(1, $e->getMessage());
@@ -76,11 +108,6 @@ class EnterController extends CommonController {
     }
 	//在库列表主页
 	public function lenscount() {
-		$conds = array();
-		$title = $_GET['id'];
-        if($title) {
-            $conds['id'] = $title;
-        }
         $countLensData = D("Enter")->getCountData();
         $this->assign('count',$countLensData);
         $this->display();
@@ -121,42 +148,6 @@ class EnterController extends CommonController {
 			$this->assign('mduser',$enterMdUser);
 			$this->assign('lastmduser',$lastMdUser);
 			$this->display();
-		}
-	}
-	//入库模块
-	public function enterAdd($data,$length){
-        try {
-			$arr = array();
-			for($i=0;$i<$length;$i++){
-				$model='model'.$i;
-				$etnum='etnum'.$i;
-				$tips='tips'.$i;
-				if($data[$etnum]>0){
-					$arr[] = array(
-						'id' => NULL,
-						'et_model' => $data[$model],
-						'et_date' => strtotime($data['enterdate']),
-						'et_time' => strtotime($data['entertime']),
-						'et_num' => $data[$etnum],
-						'create_user' => getLoginRealname(),
-						'md_user' => $data['mduser'],
-						'status' => '1',
-						'create_time' => time(),
-						'update_time' => NULL,
-						'tips' => $data[$tips]
-					);
-				}else{
-					continue;
-				}
-			}
-			$id = D("Enter")->insertEnter($arr);
-            if($id){
-				return show(0,'入库成功');
-            }else{
-				return show(1,'入库失败');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
 		}
 	}
 	//删除模块

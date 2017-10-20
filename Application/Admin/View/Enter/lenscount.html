@@ -35,18 +35,18 @@
 			  <th>备注</th>
 			</tr>
 			</thead>
-				<tbody>
-					<volist name="count" id="count">
-					  <tr>
-						<td>{$count.id}</td>
-						<td>{$count.model}</td>
-						<td>{$count.num}</td>
-						<td>{$count.count_user}</td>
-						<td>{$count.last_time|date="Y-m-d H:i:s",###}</td>
-						<td>{$count.tips}</td>
-					  </tr>
-					</volist>
-				</tbody>
+			<tbody>
+			<volist name="count" id="vo">
+			  <tr>
+				<td>{$vo.id}</td>
+				<td>{$vo.model}</td>
+				<td>{$vo.num}</td>
+				<td>{$vo.count_user}</td>
+				<td>{$vo.last_time|date="Y-m-d H:i:s",###}</td>
+				<td>{$vo.tips}</td>
+			  </tr>
+			</volist>
+			</tbody>
 		</table>
 	  </form>
     </div>
@@ -56,22 +56,7 @@
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [[ 0, "desc" ]],
-		"buttons": [
-			{
-				extend: 'excel',
-				text: '导出',
-				exportOptions: {
-					modifier: {
-						page: 'current'
-					}
-				},
-			}
-		],
-		"columnDefs":[{
-				"visible": false,
-				"targets": -1
-		}],
+		"order": [[ 1, "asc" ]],
 		"text-align":"center",
 		"iDisplayLength":100,
 		"vertical-align":"middle",
