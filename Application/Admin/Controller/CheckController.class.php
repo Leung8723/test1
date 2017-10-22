@@ -14,8 +14,8 @@ class CheckController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $coatingData = D("Coating")->getCoatingData();
-        $this->assign('coating',$coatingData);
+        $checkData = D("Check")->getCheckData();
+        $this->assign('check',$checkData);
         $this->display();
     }
 	//按镀膜lot添加主页

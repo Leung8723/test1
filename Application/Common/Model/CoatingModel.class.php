@@ -49,7 +49,8 @@ class CoatingModel extends Model {
 				$arr[$i]['tips'] = NULL;
 			}
 		}
-		M('count')->delete('1=1');
+		$sql = 'TRUNCATE `sk_count`';
+		M()->execute($sql);
 		M('count')->addAll($arr);
 		return $arr;
     }

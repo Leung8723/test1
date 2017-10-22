@@ -14,57 +14,92 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i><a href="/admin.php?c=enter"> 人员管理</a>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=check"> 单品外观检查</a>
             </li>
             <li class="active">
-              <i class="fa fa-edit"></i> 用户列表
+              <i class="fa fa-edit"></i> 单品外观检查明细
             </li>
           </ol>
         </div>
       </div>
       <!-- /.row -->
 	  <div class="layui-form-item">
-	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 添加人员信息</button>
-		<button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除人员列表</button>
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe642 按镀膜LOT统计</button>
+	    <button  id="button-new" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 按型号名统计</button>
+	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
 		<table id="lens-table" class="cell-border stripe hover compact order-column" >
-		  <thead>
+			<thead>
 			<tr>
 			  <th>ID</th>
-			  <th>工号</th>
-			  <th>姓名</th>
-			  <th>性别</th>
-			  <th>身份证</th>
-			  <th>手机</th>
-			  <th>部署</th>
-			  <th>入社日</th>
-			  <th>创建者</th>
-			  <th>创建时间</th>
-			  <th>更新时间</th>
-			  <th>备注</th>
-			  <th>编辑</th>
+			  <th>型号</th>
+			  <th>检查数</th>
+			  <th>良品数</th>
+			  <th>不良数</th>
+			  <th>批次</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
+			  <th>担当</th>
 			</tr>
-		  </thead>
-		  <tbody>
-		    <volist name="users" id="vo">
-			  <tr>
-				<td>{$vo.id}</td>
-				<td><if condition="$vo['workid'] eq NULL">-<else/>{$vo.workid}</if></td>
-				<td>{$vo.name}</td>
-				<td><if condition="$vo['sexual'] eq 1">男<else/>女</if></td>
-				<td><if condition="$vo['cardid'] eq NULL">-<else/>{$vo.cardid}</if></td>
-				<td><if condition="$vo['mobile'] eq NULL">-<else/>{$vo.mobile}</if></td>
-				<td>{$vo.dept}</td>
-				<td><if condition="$vo['joindate'] eq NULL">-<else/>{$vo.joindate|date="Y-m-d",###}</if></td>
-				<td>{$vo.create_user}</td>
-				<td>{$vo.create_time|date="Y-m-d",###}</td>
-				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
-				<td><if condition="$vo['tips'] eq NULL">-<else/>{$vo.tips}</if></td>
-				<td></td>
-			  </tr>
-		    </volist>
-		  </tbody>
+			</thead>
+				<tbody>
+					<volist name="coating" id="coating">
+					  <tr>
+						<td>{$coating.id}</td>
+						<td>{$coating.ct_model}</td>
+						<td>{$coating.ct_num}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					  </tr>
+					</volist>
+				</tbody>
 		</table>
 	  </form>
     </div>
@@ -72,15 +107,15 @@
 </div>
 <script>
 var SCOPE = {
-'edit_url' : '/admin.php?c=users&a=edit',
-'add_url' : '/admin.php?c=users&a=add',
-'del_url' : '/admin.php?c=users&a=del',
-'hide_url' : '/admin.php?c=users&a=hidden',
+'edit_url' : '/admin.php?c=check&a=edit',
+'add_url' : '/admin.php?c=check&a=add',
+'new_url' : '/admin.php?c=check&a=addnew',
+'hide_url' : '/admin.php?c=check&a=hidden',
 }
 //初始化DataTables
 $(document).ready( function () {
 	var table = $('#lens-table').DataTable({
-		"order": [[ 6, "desc"],[ 0, "asc"]],
+		"order": [[ 0, "desc" ]],
 		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
 			{
 				"targets": -1,
@@ -89,6 +124,17 @@ $(document).ready( function () {
 				"bSortable":false,
 				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
 		}],
+		"buttons": [
+			{
+				extend: 'excel',
+				text: '导出',
+				exportOptions: {
+					modifier: {
+						page: 'current'
+					}
+				},
+			}
+		],
 		"columnDefs":[{
 				"visible": false,
 				"targets": -1
@@ -123,7 +169,7 @@ $(document).ready( function () {
 	//删除
 	$('#lens-table tbody').on( 'click', 'a#del', function () {
 		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=users&a=del", {id:data[0],status:0},function(result){
+		$.post("/admin.php?c=coating&a=del", {id:data[0],status:0},function(result){
 			if(result.status == 1){
 				layer.msg(result.message, {icon: 2,time: 3000});
 				window.location.href=SPOPE.jump_url;

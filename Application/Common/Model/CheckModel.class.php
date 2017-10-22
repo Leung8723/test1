@@ -8,14 +8,14 @@ use Think\Model;
 class CheckModel extends Model {
     private $_db = '';
     public function __construct() {
-        $this->_db = M('coating');
+        $this->_db = M('check');
     }
 	//镀膜记录信息查询
-    public function getCoatingData() {
+    public function getCheckData() {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('ct_date desc,start_time desc,ct_model asc')->select();
+		$res = $this->_db->where($data)->order('model asc')->select();
 		return $res;
     }
 	//筛选入库数非空型号列表
