@@ -21,12 +21,20 @@ class CheckController extends CommonController {
 	//按镀膜lot添加主页
 	public function add() {
 		if($_POST){
-			$length = (count($_POST)-5)/3;
-			return $this->coatingAdd($_POST,$length);
+			try {
+				$res = D("Check")->insertCheck($_POST);
+				if($res === false){
+					return show(1, '检查数据添加失败');
+				}else{
+					return show(0, '检查数据添加成功');
+				}
+			}catch(Exception $e){
+				return $e->getMessage();
+			}
         }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
+			$lensNumData = D("Check")->getNotCheckModel();//获取在库非0的全部型号
+			print_r($lensNumData);exit;
 			$checkUser = D("Check")->getCkUser();//获取检查担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);
 			$this->assign('ckuser',$checkUser);
 			$this->assign('machine',$machineList);
@@ -39,7 +47,7 @@ class CheckController extends CommonController {
 			$length = (count($_POST)-5)/3;
 			return $this->coatingAdd($_POST,$length);
         }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
+			$lensNumData = D("Coating")->getNotCheckModel();//获取在库非0的全部型号
 			$checkUser = D("Check")->getCkUser();//获取检查担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
 			$this->assign('lensnum',$lensNumData);
@@ -50,10 +58,10 @@ class CheckController extends CommonController {
 	}
 	//编辑主页
     public function edit() {
-		$coatingId = $_GET['id'];
+		$checkId = $_GET['id'];
 		if($_POST){
 			try {
-				$id = D("Coating")->updateLensById($_POST);
+				$id = D("Check")->updateLensById($_POST);
 				if($id === false) {
 					return show(1, '检查信息更新失败!');
 				}else{
@@ -63,18 +71,16 @@ class CheckController extends CommonController {
 				return show(1, $e->getMessage());
 			}
 		}else{
-			if(!$coatingId) {
-				$this->redirect('/admin.php?c=coating');
+			if(!$checkId) {
+				$this->redirect('/admin.php?c=check');
 			}
-			$id = D("Coating")->find($coatingId);
-			if(!$id) {
-				$this->redirect('/admin.php?c=coating');
+			$res = D("Check")->find($checkId);
+			if(!$res) {
+				$this->redirect('/admin.php?c=check');
 			}
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('coatingData',$id);
-			$this->assign('coatingUser',$coatingUser);
-			$this->assign('machineList',$machineList);
+			$checkUser = D("Check")->getCkUser();//获取镀膜担当列表
+			$this->assign('checkData',$res);
+			$this->assign('checkUser',$checkUser);
 			$this->display();
 		}
     }
@@ -85,62 +91,24 @@ class CheckController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $hiddenLensData = D("Coating")->getHiddenData();
-        $this->assign('coating',$hiddenLensData);
+        $hiddenLensData = D("Check")->getHiddenData();
+        $this->assign('check',$hiddenLensData);
         $this->display();
     }
 	//添加模块
 	public function coatingAdd($data,$length){
-        try {
-			$arr = array();
-			for($i=0;$i<$length;$i++){
-				$model='model'.$i;
-				$ctnum='ctnum'.$i;
-				$tips='tips'.$i;
-				if($data[$ctnum]){
-					$arr[] = array(
-						'id' => NULL,
-						'ct_model' => $data[$model],
-						'ct_machine' => $data['machine'],
-						'ct_date' => strtotime($data['coatingdate']),
-						'ct_lot' => $data['lotnum'],
-						'ct_user' => $data['ctuser'],
-						'start_time' => strtotime($data['coatingtime']),
-						'over_time' => NULL,
-						'ct_num' => $data[$ctnum],
-						'create_user' => getLoginRealname(),
-						'spec_t' => NULL,
-						'spec_r' => NULL,
-						'status' => '1',
-						'ck_num' => NULL,
-						'create_time' => time(),
-						'update_time' => NULL,
-						'tips' => $data[$tips]
-					);
-				}else{
-					continue;
-				}
-			}
-			$id = D("Coating")->insertCoating($arr);
-            if($id === false){
-				return show(1, '镀膜数据添加失败');
-            }else{
-				return show(0, '镀膜数据添加成功');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
-		}
+
 	}
 	//删除模块
     public function del() {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
-                $res = D("Coating")->updateStatusById($id, $status);
+                $res = D("Check")->updateStatusById($id, $status);
                 if($res){
                     return show(0, '删除成功');
                 }else{
@@ -157,11 +125,11 @@ class CheckController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '1';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
-                $res = D("Coating")->updateStatusById($id, $status);
+                $res = D("Check")->updateStatusById($id, $status);
                 if($res){
                     return show(0, '恢复成功');
                 }else{

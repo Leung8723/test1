@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-22 10:49:11
+-- Generation Time: 2017-10-23 12:02:26
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -120,7 +120,7 @@ TRUNCATE TABLE `sk_check`;
 --
 
 INSERT INTO `sk_check` (`id`, `model`, `lot`, `user`, `num`, `goods`, `bads`, `liangdian`, `yiwu`, `henji`, `qipao`, `fm`, `paopan`, `loss`, `wuqian`, `zhuangfan`, `banyue`, `xiaoyi`, `caixian`, `gate`, `huahen`, `heidian`, `chengxing`, `yahen`, `dumo`, `fabai`, `xihua`, `caiyi`, `chengdian`, `others`, `create_user`, `create_time`, `update_time`, `status`) VALUES
-(1, 'MV1419L1-13', '171014A01', '黄苗苗', 1120, 1100, 20, 1, 1, 1, 1, 1, 1, NULL, 1, 1, NULL, 1, 1, 1, 1, 1, 1, 1, NULL, 1, 1, 1, 1, NULL, '梁国成', 1543211111, NULL, 1);
+(1, 'MV1419L1-13', '171014A01', '黄苗苗', 1120, 1100, 20, 1, 1, 1, 1, 1, 1, NULL, 1, 1, NULL, 1, 1, 1, 1, 1, 1, 1, NULL, 1, 1, 1, 1, NULL, '梁国成', 1543211111, 1543211111, 1);
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ TRUNCATE TABLE `sk_coating`;
 --
 
 INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `ct_user`, `start_time`, `over_time`, `ct_num`, `create_user`, `spec_t`, `spec_r`, `ck_num`, `status`, `create_time`, `update_time`, `tips`) VALUES
-(1, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, NULL, 0, 0, 1450055600, NULL, NULL),
+(1, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, NULL, 0, 1, 1450055600, NULL, NULL),
 (2, 'MV1419L1-23', 5, 20170927, '2', '张乐乐', 180000, NULL, 2240, '梁国成', NULL, NULL, 0, 0, 1450055600, NULL, NULL),
 (3, 'MV1419L2-23', 5, 20170927, '1', '张乐乐', 180000, NULL, 1280, '梁国成', NULL, NULL, 0, 0, 1450055600, NULL, '1314'),
 (4, 'MV1419L1-13', 2, 20171012, 'H01', '宋晓科', 135409, NULL, 65535, '梁国成', NULL, NULL, NULL, 1, 1507787658, NULL, ''),
@@ -182,9 +182,9 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (20, 'MV1419L2-20', 5, 20171012, 'E02', '马士友', 17, NULL, 27499, '梁国成', NULL, NULL, NULL, 1, 1507801416, NULL, ''),
 (21, 'AM1663L1-1', 1, 1507910400, 'A01', '张乐乐', 1508638800, NULL, 2474, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508638856, ''),
 (22, 'AM1663L6-1', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2240, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(23, 'MV1419L1-13', 1, 1508601600, 'A01', '张乐乐', 1508638860, NULL, 10302, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508638917, ''),
+(23, 'MV1419L1-13', 1, 1508688000, '171014A01', '马士友', 1508747040, NULL, 10302, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508747059, ''),
 (24, 'MV1419L1-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(25, 'MV1419L2-13', 3, 1508342400, 'B02', '范岩', 1508424600, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508424602, '12306'),
+(25, 'MV1419L2-13', 3, 1508342400, 'B02', '范岩', 1508424600, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508424602, '速度快撒极度分裂会计师代理费时代峰峻奥斯陆会计发'),
 (26, 'MV1419L2-20', 1, 1508342400, 'A01', '马士友', 1508424720, NULL, 2499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508424750, '14111');
 
 -- --------------------------------------------------------
@@ -242,25 +242,13 @@ CREATE TABLE IF NOT EXISTS `sk_count` (
   `last_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_count`
 --
 
 TRUNCATE TABLE `sk_count`;
---
--- 转存表中的数据 `sk_count`
---
-
-INSERT INTO `sk_count` (`id`, `model`, `num`, `count_user`, `last_time`, `tips`) VALUES
-(1, 'AM1663L1-1', 0, '梁国成', 1508657909, NULL),
-(2, 'AM1663L6-1', 0, '梁国成', 1508657909, NULL),
-(3, 'MV1419L1-13', 0, '梁国成', 1508657909, NULL),
-(4, 'MV1419L1-20', 0, '梁国成', 1508657909, NULL),
-(5, 'MV1419L2-13', 0, '梁国成', 1508657909, NULL),
-(6, 'MV1419L2-20', 0, '梁国成', 1508657909, NULL);
-
 -- --------------------------------------------------------
 
 --

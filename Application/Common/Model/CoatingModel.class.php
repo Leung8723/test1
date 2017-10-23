@@ -15,7 +15,7 @@ class CoatingModel extends Model {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('ct_date desc,start_time desc,ct_model asc')->select();
+		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
 	//筛选入库数非空型号列表
@@ -36,11 +36,13 @@ class CoatingModel extends Model {
 		$arr = array();
 		for($i=0;$i<$diffcount;$i++){
 			if($diffmodel[$i]== $enterdata[array_search($diffmodel[$i],$arr1)]['model']){
-				$arr[$i]['model'] = $diffmodel[$i];
-				$arr[$i]['num'] = $enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
-				$arr[$i]['count_user'] = getLoginRealname();
-				$arr[$i]['last_time'] = time();
-				$arr[$i]['tips'] = NULL;
+				if($enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num']!=0){
+					$arr[$i]['model'] = $diffmodel[$i];
+					$arr[$i]['num'] = $enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
+					$arr[$i]['count_user'] = getLoginRealname();
+					$arr[$i]['last_time'] = time();
+					$arr[$i]['tips'] = NULL;
+				}
 			}else{
 				$arr[$i]['model'] = $diffmodel[$i];
 				$arr[$i]['num'] = 0 - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
@@ -108,5 +110,17 @@ class CoatingModel extends Model {
 		);
 		$res = $this->_db->where($data)->order('ct_model asc')->select();
 		return $res;
+    }
+	//表中更改镀膜数量
+	public function updateNumById($id, $num) {
+        if(!is_numeric($num)) {
+            throw_exception('数量不能为非数字');
+        }
+        if(!$id || !is_numeric($id)) {
+            throw_exception('id不合法');
+        }
+        $data['id'] = $id;
+        $data['ct_num'] = $num;
+        return $this->_db->where('id='.$id)->save($data);
     }
 }

@@ -93,7 +93,7 @@ class CoatingController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
@@ -114,7 +114,7 @@ class CoatingController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '1';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
@@ -130,57 +130,25 @@ class CoatingController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
-	/*新信息添加--------------待用功能----------------
-	public function addnew() {
-		if($_POST){
-			$length = (count($_POST)-5)/3;
-			try {
-				$arr = array();
-				for($i=0;$i<$length;$i++){
-					$model='model'.$i;
-					$ctnum='ctnum'.$i;
-					$tips='tips'.$i;
-					if($_POST[$ctnum]){
-						$arr[] = array(
-							'id' => NULL,
-							'ct_model' => $_POST[$model],
-							'ct_machine' => $_POST['machine'],
-							'ct_date' => strtotime($_POST['coatingdate']),
-							'ct_lot' => $_POST['lotnum'],
-							'ct_user' => $_POST['ctuser'],
-							'start_time' => strtotime($_POST['coatingtime']),
-							'over_time' => NULL,
-							'ct_num' => $_POST[$ctnum],
-							'create_user' => getLoginRealname(),
-							'spec_t' => NULL,
-							'spec_r' => NULL,
-							'status' => '1',
-							'ck_num' => NULL,
-							'create_time' => time(),
-							'update_time' => NULL,
-							'tips' => $_POST[$tips]
-						);
-					}else{
-						continue;
-					}
-				}
-				$id = D("Coating")->insertCoating($arr);
-				if($id === false){
-					return show(1, '镀膜数据添加失败');
-				}else{
-					return show(0, '镀膜数据添加成功');
-				}
-			}catch(Exception $e){
-				return $e->getMessage();
-			}
-        }else{
-			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
-			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
-			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
-			$this->assign('lensnum',$lensNumData);
-			$this->assign('ctuser',$coatingUser);
-			$this->assign('machine',$machineList);
-			$this->display();
-		}
-	}*/
+	//表中更改镀膜数量
+    public function editnum() {
+        try {
+            if ($_POST) {
+                $id = $_POST['id'];
+                $num = $_POST['ct_num'];
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Coating")->updateNumById($id, $num);
+                if($res){
+                    return show(0,  '第'.$_POST['id'].'条镀膜数更改为:'.$_POST['ct_num'].'成功!');
+                }else{
+                    return show(1, '镀膜数量更改失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
 }

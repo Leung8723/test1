@@ -23,84 +23,274 @@
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">ID</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="id" id="id" type="text" value="{$coatingData.id}" readonly="readonly"></div>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label" style="width: 80px;">型号</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                      <input class="layui-input" name="ck_lot" value="{$checkData.model}" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
                   </div>
                 </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">日期</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="checkdate" id="checkdate" type="text" value="{$coatingData.ct_date}"></div>
-                  </div>
-                </td>
-              </div>
-            </tr>
+			  </div>
+			</tr>
             <tr>
               <div class="layui-row">
                 <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">设备</label>
-                    <div class="layui-input-inline">
-                      <select name="ct_machine" id="ct_machine" lay-verify="required" lay-search="">
-                        <option value="">==请选择镀膜设备==</option>
-                        <foreach name="machineList" item="machineList">
-                          <option value="{$machineList.name}">{$machineList.name}号机</option></foreach>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label" style="width: 80px;">批号</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                      <input class="layui-input" name="ck_lot" value="{$checkData.lot}" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
+                    <label class="layui-form-label" style="width: 80px;">检查者</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                      <select name="ck_user" lay-verify="required" lay-search="">
+                        <option value="">==请选择检查者==</option>
+                        <foreach name="checkUser" item="vo">
+                          <option value="{$vo.name}">{$vo.name}</option></foreach>
                       </select>
                     </div>
                   </div>
                 </td>
+			  </div>
+			</tr>
+			<tr>
+              <div class="layui-row">
                 <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">批次</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_lot" id="ct_lot" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
+                  <div class="layui-col-md6">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-inline" style="width: 160px;">
+					  <input class="layui-input" name="tips" placeholder="请输入内容" value="{$checkData.tips}" type="text"></textarea></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+			    <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">检查数</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="num" lay-verify="required|number" value="{$checkData.num}" type="text"></div>
+                  </div>
+                </td>
+			    <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">良品数</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="goods" value="{$checkData.goods}" type="text"></div>
+                  </div>
+                </td>
+			    <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">不良数</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads" value="{$checkData.bads}" type="text"></div>
                   </div>
                 </td>
                 <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">担当</label>
-                    <div class="layui-input-inline">
-                      <select name="ct_user" id="ct_user" lay-verify="required" lay-search="">
-                        <option value="">==请选择设备担当==</option>
-                        <foreach name="coatingUser" item="coatingUser">
-                          <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
-                      </select>
-                    </div>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">不良率</label>
+					<div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="bads_num" value="4.00%" type="text"></div>
+				  </div>
+                </td>
+			<!-- row1 -->
+            <tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">亮点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="liangdian" value="{$checkData.liangdian}" type="text"></div>
                   </div>
                 </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">异物</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="yiwu" value="{$checkData.yiwu}" type="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">错位</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="cuowei" value="{$checkData.cuowei}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">痕迹</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="henji" value="{$checkData.henji}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">气泡</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="qipao" value="{$checkData.qipao}" type="text"></div>
+                  </div>
+                </td>                
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">F/M</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="fm" value="{$checkData.fm}" type="text"></div>
+                  </div>
+                </td>
+			 </div>
             </tr>
-              <tr>
-                <div class="layui-row">
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">型号</label>
-                      <div class="layui-input-inline">
-                        <input name="ct_model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">数量</label>
-                      <div class="layui-input-inline">
-                        <input name="ct_num" value="{$coatingData.ct_num}" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md6">
-                      <label class="layui-form-label">备注</label>
-                      <div class="layui-input-inline">
-                        <input name="tips" value="{$coatingData.tips}" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                </div>
-              </tr>
-                <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
-                  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-                </div>
+			<!-- row2 -->
+            <tr>
+              <div class="layui-row">
+			    <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">跑盘</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="paopan" value="{$checkData.paopan}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">LOSS</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="loss" value="{$checkData.loss}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">无签</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="wuqian" value="{$checkData.wuqian}" type="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">装反</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="zhuangfan" value="{$checkData.zhaungfan}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">半月</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="banyue" value="{$checkData.banyue}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">小异</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="xiaoyi" value="{$checkData.xiaoyi}" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row3 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">材线</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="caixian" value="{$checkData.caixian}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">GATE</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="gate" value="{$checkData.gate}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">划痕</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="huahen" value="{$checkData.huahen}" type="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">黑点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="heidian" value="{$checkData.heidian}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">成型</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="chengxing" value="{$checkData.chengxing}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">压痕</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="yahen" value="{$checkData.yahen}" ype="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<!-- row4 -->
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">镀膜</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="dumo" value="{$checkData.dumo}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">发白</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="fabai" value="{$checkData.fabai}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">吸划</label></label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="xihua" value="{$checkData.xihua}" type="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">材异</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="caiyi" value="{$checkData.caiyi}" type="text"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">成点</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="chengdian" value="{$checkData.cehgndian}" type="text"></div>
+                  </div>
+                </td>
+				<td>
+                  <div class="layui-col-md2">
+                    <label class="layui-form-label" style="width: 80px;">其他</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="others" value="{$checkData.others}" type="text"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr></br>
+			<div class="layui-input-block">
+			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+			</div>
         </form>
         </div>
       </div>
