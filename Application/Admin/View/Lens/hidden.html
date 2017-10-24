@@ -22,80 +22,68 @@
         </div>
       </div>
       <!-- /.row -->
-		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+	  <form>
+		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 		  <thead>
 			<tr>
-			  <th>ID</th>
-			  <th>型号</th>
-			  <th>规格</th>
-			  <th>色相</th>
-			  <th>材质</th>
-			  <th>创建人</th>
-			  <th>提交时间</th>
-			  <th>更新时间</th>
-			  <th>数据操作</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
+			  <th lay-data="{field:'model', width:120, align:'center', sort:true, fixed: 'left'}">型号</th>
+			  <th lay-data="{field:'specs', width:70, align:'center'}">规格</th>
+			  <th lay-data="{field:'color', width:70, align:'center'}">色相</th>
+			  <th lay-data="{field:'material', width:80, align:'center'}">材质</th>
+			  <th lay-data="{field:'create_user', width:80, align:'center'}">操作者</th>
+			  <th lay-data="{field:'create_time', width:160, align:'center'}">创建时间</th>
+			  <th lay-data="{field:'update_time', width:160, align:'center'}">更新时间</th>
+			  <th lay-data="{field:'tips', width:160, align:'center'}">备注</th>
+			  <th lay-data="{width:80, align:'center', toolbar: '#barDemo1', fixed: 'right'}">操作</th>
 			</tr>
 		  </thead>
 		  <tbody>
-		  <volist name="lens" id="len">
-			<tr>
-			  <td>{$len.id}</td>
-			  <td>{$len.model}</td>
-			  <td>{$len.specs}</td>
-			  <td>{$len.color}</td>
-			  <td>{$len.material}</td>
-			  <td>{$len.create_user}</td>
-			  <td>{$len.create_time|date="Y-m-d H:i",###}</td>
-			  <td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
-			  <td></td>
-		    </tr>
-		  </volist>
-	      </tbody>
+			<volist name="lens" id="len">
+			  <tr>
+				<td>{$len.id}</td>
+				<td>{$len.model}</td>
+				<td>{$len.specs}</td>
+				<td>{$len.color}</td>
+				<td>{$len.material}</td>
+				<td>{$len.create_user}</td>
+				<td>{$len.create_time|date="Y-m-d H:i",###}</td>
+				<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
+				<td>{$len.tips}</td>
+				<td></td>
+			  </tr>
+			</volist>
+		  </tbody>
 		</table>
+	  </form>
     </div>
   </div>
 </div>
+<script type="text/html" id="barDemo1">
+<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="reset">恢复</a>
+</script>
 <script>
-//初始化DataTables
-$(document).ready( function () {
-	var table = $('#lens-table').DataTable({
-		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
-			{
-				"targets": -1,
-				"class":"but_xq",
-				"data":null,
-				"bSortable":false,
-				"defaultContent":"<a id=\"del\"  href=\"#\">恢复</a>"
-		}],
-		"columnDefs":[{
-				"visible": false,
-				"targets": -1
-		}],
-		"iDisplayLength":100,
-		"vertical-align":"middle",
-		"ordering":true,
-		"oLanguage":{
-			"sProcessing":"正在加载中......",
-			"sLengthMenu":"每页显示 _MENU_ 条记录",
-			"sZeroRecords":"对不起，查询不到相关数据！",
-			"sEmptyTable":"表中无数据存在！",
-			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
-			"sSearch":"搜索",
-			"oPaginate":{
-				"sFirst":"首页",
-				"sPrevious":"上一页",
-				"sNext":"下一页",
-				"sLast":"末页"
-			}
+layui.use('table', function(){
+  var table = layui.table;
+  table.init('demo', {
+	height: 700
+	,limits: [30,60,90,150,300]
+	,limit: 30
+	,page: true
+  });
+//操作动作监听
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+	$.post("/admin.php?c=lens&a=restatus", data,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			self.location.reload();
 		}
-	});
-	//删除
-	$('#lens-table tbody').on( 'click', 'a#del', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=lens&a=del", {id:data[0],status:1});
-		self.location.reload();
-	});
+	},"JSON");
+  });
 });
 </script>
 <include file="Index/footer" />

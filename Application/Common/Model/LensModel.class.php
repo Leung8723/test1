@@ -15,7 +15,7 @@ class LensModel extends Model {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('model asc')->select();
+		$res = $this->_db->where($data)->order('id asc')->select();
 		return $res;
     }
 	//删除型号查询
@@ -23,8 +23,7 @@ class LensModel extends Model {
 		$data = array(
 			'status' => array('neq',1),
 		);
-		$res = $this->_db->where($data)->order('model asc')->select();
-		return $res;
+		return $this->_db->where($data)->order('id asc')->select();
     }
 	//插入型号模块
     public function insertLens($data) {

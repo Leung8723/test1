@@ -75,7 +75,6 @@ class LensController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-
         $webSiteData = D("Lens")->getHiddenLensData();
         $this->assign('lens',$webSiteData);
         $this->display();
@@ -120,21 +119,41 @@ class LensController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
-                    return show(0, 'ID不存在');
+                    return show(1, 'ID不存在');
                 }
                 $res = D("Lens")->updateStatusById($id, $status);
                 if($res){
-                    return show(1, '操作成功');
+                    return show(0, '操作成功');
                 }else{
-                    return show(0, '操作失败');
+                    return show(1, '操作失败');
                 }
             }
-            return show(0, '没有提交的内容');
+            return show(1, '没有提交的内容');
         }catch(Exception $e) {
-            return show(0, $e->getMessage());
+            return show(1, $e->getMessage());
         }
     }
-	//恢复模块
+	//删除项目恢复模块
+    public function restatus() {
+        try {
+            if ($_POST) {
+                $id = $_POST['id'];
+                $status = '1';
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Lens")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '恢复成功');
+                }else{
+                    return show(1, '恢复失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
 }
