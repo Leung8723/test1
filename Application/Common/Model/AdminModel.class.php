@@ -53,7 +53,7 @@ class AdminModel extends Model {
         $data = array(
             'status' => array('eq',1),
         );
-        return $this->_db->where($data)->order('admin_id desc')->select();
+        return $this->_db->where($data)->order('admin_id asc')->select();
     }
 	//根据ID更新状态
     public function updateStatusById($id, $status) {
@@ -76,5 +76,13 @@ class AdminModel extends Model {
         );
         $res = $this->_db->where($data)->count();
         return $res['tp_count'];
+    }
+	//删除数据查询
+    public function getHiddenData() {
+		$data = array(
+			'status' => array('neq',1),
+		);
+		$res = $this->_db->where($data)->order('admin_id asc')->select();
+		return $res;
     }
 }

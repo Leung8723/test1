@@ -20,7 +20,10 @@ class UsersModel extends Model {
     }
 	//查找部署信息列表
 	public function getDeptList() {
-		$deptData = $this->_db->where($map)->field('dept')->order('dept desc')->distinct(true)->select();
+		$data = array(
+			'status' => array('eq',1),
+		);
+		$deptData = $this->_db->where($data)->field('dept')->order('dept desc')->distinct(true)->select();
 		$res = array_column($deptData,'dept');
 		return $res;
     }

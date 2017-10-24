@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-23 12:02:26
+-- Generation Time: 2017-10-24 12:14:02
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -57,7 +57,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508638340, NULL, '梁国成', 1498696655, 1, 1508216836),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508805144, NULL, '梁国成', 1498696655, 1, 1508216836),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508463422),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
@@ -182,9 +182,9 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (20, 'MV1419L2-20', 5, 20171012, 'E02', '马士友', 17, NULL, 27499, '梁国成', NULL, NULL, NULL, 1, 1507801416, NULL, ''),
 (21, 'AM1663L1-1', 1, 1507910400, 'A01', '张乐乐', 1508638800, NULL, 2474, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508638856, ''),
 (22, 'AM1663L6-1', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2240, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(23, 'MV1419L1-13', 1, 1508688000, '171014A01', '马士友', 1508747040, NULL, 10302, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508747059, ''),
+(23, 'MV1419L1-13', 1, 1508774400, '171024A01', '马士友', 1508805180, NULL, 10302, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508805203, ''),
 (24, 'MV1419L1-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(25, 'MV1419L2-13', 3, 1508342400, 'B02', '范岩', 1508424600, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508424602, '速度快撒极度分裂会计师代理费时代峰峻奥斯陆会计发'),
+(25, 'MV1419L2-13', 2, 1508688000, 'B02', '史森堂', 1508827980, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508828038, '速度快撒极度分裂会计师代理费时代峰峻奥斯陆会计发'),
 (26, 'MV1419L2-20', 1, 1508342400, 'A01', '马士友', 1508424720, NULL, 2499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508424750, '14111');
 
 -- --------------------------------------------------------
@@ -651,6 +651,7 @@ CREATE TABLE IF NOT EXISTS `sk_temp` (
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
+  `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
@@ -663,9 +664,9 @@ TRUNCATE TABLE `sk_temp`;
 -- 转存表中的数据 `sk_temp`
 --
 
-INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hum2`, `temp3`, `hum3`, `temp4`, `hum4`, `temp5`, `hum5`, `temp6`, `hum6`, `create_user`, `create_time`, `update_time`, `status`) VALUES
-(1, 1507987938, '镀膜区', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, 1507987938, 1),
-(2, 1507987938, '分光区', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, 1507987938, 1);
+INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hum2`, `temp3`, `hum3`, `temp4`, `hum4`, `temp5`, `hum5`, `temp6`, `hum6`, `create_user`, `create_time`, `update_time`, `status`, `tips`) VALUES
+(1, 1507987938, '镀膜区', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, 1507987938, 1, ''),
+(2, 1508774400, '分光区', 21.6, 45.8, 21.5, 48.5, 21.6, 49.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, '梁国成', 1507987938, 1508828996, 1, '');
 
 -- --------------------------------------------------------
 
@@ -701,8 +702,8 @@ TRUNCATE TABLE `sk_user`;
 --
 
 INSERT INTO `sk_user` (`id`, `workid`, `name`, `sexual`, `cardid`, `dept`, `mobile`, `joindate`, `create_user`, `create_time`, `update_time`, `status`, `tips`) VALUES
-(1, NULL, '马士友', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
-(2, NULL, '熊世磊', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
+(1, 0, '马士友', NULL, '', '', '', 1508372202, '梁国成', 1508372173, 1508839407, 1, ''),
+(2, NULL, '熊世磊', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 0, NULL),
 (3, NULL, '宋晓科', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
 (4, NULL, '史森堂', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),
 (5, NULL, '范岩', NULL, NULL, '镀膜', NULL, 1508372202, '梁国成', 1508372173, NULL, 1, NULL),

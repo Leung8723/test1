@@ -62,11 +62,22 @@ class AdminController extends CommonController {
 			}
 		}else{
 			if(!$id){
-				$this->redirect('/admin.php?c=enter');
+				$this->redirect('/admin.php?c=admin');
 			}
 		}
         $user = D("Admin")->getAdminByAdminId($id);
         $this->assign('vo',$user);
+        $this->display();
+    }
+	//删除列表主页
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $hiddenData = D("Admin")->getHiddenData();
+        $this->assign('hiddens',$hiddenData);
         $this->display();
     }
 	//删除模块
@@ -74,7 +85,7 @@ class AdminController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['admin_id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
@@ -83,6 +94,27 @@ class AdminController extends CommonController {
                     return show(0, '锁定成功');
                 } else {
                     return show(1, '锁定失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
+	//删除项目恢复模块
+    public function restatus() {
+        try {
+            if ($_POST) {
+                $id = $_POST['admin_id'];
+                $status = '1';
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Admin")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '恢复成功');
+                }else{
+                    return show(1, '恢复失败');
                 }
             }
             return show(1, '没有提交的内容');

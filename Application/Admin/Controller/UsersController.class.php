@@ -96,7 +96,7 @@ class UsersController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
@@ -117,7 +117,7 @@ class UsersController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '1';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
