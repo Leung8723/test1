@@ -15,7 +15,7 @@ class EnterModel extends Model {
 		$data = array(
 			'status' => array('eq',1),
 		);
-		$res = $this->_db->where($data)->order('et_date desc,et_time desc,et_model asc')->select();
+		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
 	//筛选入库数非空型号列表

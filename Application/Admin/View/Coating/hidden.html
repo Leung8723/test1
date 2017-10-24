@@ -23,24 +23,24 @@
         </div>
       </div>
 	  <form>
-		<table lay-filter="demo">
+		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 			<thead>
 			<tr>
-			  <th lay-data="{field:'id', width:80, align:'center', sort:true}">ID</th>
-			  <th lay-data="{field:'ct_model', width:120, sort:true}">型号</th>
-			  <th lay-data="{field:'ct_num', width:90, align:'center', sort:true, edit: 'text'}">数量</th>
-			  <th lay-data="{field:'ct_date', width:120, align:'center', sort:true}">日期</th>
-			  <th lay-data="{field:'ct_machine', width:100, align:'center', sort:true}">镀膜机</th>
-			  <th lay-data="{field:'ct_lot', width:120, align:'center', sort:true}">批次</th>
-			  <th lay-data="{field:'ct_user', width:90, align:'center', sort:true}">担当</th>
-			  <th lay-data="{field:'start_time', align:'center', width:80}">投入</th>
-			  <th lay-data="{field:'over_time', align:'center', width:80}">出库</th>
-			  <th lay-data="{field:'create_user', align:'center', width:80}">操作者</th>
-			  <th lay-data="{field:'create_time', align:'center', width:80}">提交</th>
-			  <th lay-data="{field:'update_time', align:'center', width:160}">更新</th>
-			  <th lay-data="{field:'spec_t', align:'center', width:80}">分光</th>
-			  <th lay-data="{field:'tips', align:'center', width:120}">备注</th>
-			  <th lay-data="{width:60, align:'center', toolbar: '#barDemo1'}">操作</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true}">ID</th>
+			  <th lay-data="{field:'ct_model', width:120, align:'center', sort:true}">型号</th>
+			  <th lay-data="{field:'ct_num', width:80, align:'center', sort:true, edit: 'text'}">数量</th>
+			  <th lay-data="{field:'ct_date', width:100,  align:'center',sort:true}">日期</th>
+			  <th lay-data="{field:'ct_machine', width:80, align:'center'}">镀膜机</th>
+			  <th lay-data="{field:'ct_lot', width:100, align:'center', sort:true}">批次</th>
+			  <th lay-data="{field:'ct_user', width:80, align:'center', sort:true}">担当</th>
+			  <th lay-data="{field:'start_time', width:70, align:'center'}">投入</th>
+			  <th lay-data="{field:'over_time', width:70, align:'center'}">出库</th>
+			  <th lay-data="{width:80, align:'center', toolbar: '#barDemo1'}">操作</th>
+			  <th lay-data="{field:'spec_t', width:70, align:'center'}">分光</th>
+			  <th lay-data="{field:'tips', width:100, align:'center'}">备注</th>
+			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
+			  <th lay-data="{field:'create_time', width:70, align:'center'}">提交</th>
+			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -55,12 +55,12 @@
 				<td>{$vo.ct_user}</td>
 				<td>{$vo.start_time|date="H:i",###}</td>
 				<td><if condition="$vo['over_time'] eq NULL">-<else/>{$vo.over_time|date="H:i",###}</if></td>
+				<td></td>
+				<td><if condition="$vo['spec_t'] eq NULL">-<else/>{$vo.spec_t}</if></td>
+				<td>{$vo.tips}</td>
 				<td>{$vo.create_user}</td>
 				<td>{$vo.create_time|date="H:i",###}</td>
 				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
-				<td><if condition="$vo['spec_t'] eq NULL">-<else/>{$vo.spec_t}</if></td>
-				<td>{$vo.tips}</td>
-				<td></td>
 			  </tr>
 			</volist>
 			</tbody>

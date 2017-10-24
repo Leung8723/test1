@@ -23,95 +23,67 @@
         </div>
       </div>
 	  <form>
-		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 			<thead>
 			<tr>
-			  <th>ID</th>
-			  <th>型号</th>
-			  <th>入库数量</th>
-			  <th>入库日期</th>
-			  <th>入库时间</th>
-			  <!--暂时不用--<th>成型箱号</th>-->
-			  <th>入库担当</th>
-			  <th>成型担当</th>
-			  <th>提交时间</th>
-			  <th>更新时间</th>
-			  <th>备注</th>
-			  <th>编辑</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true}">ID</th>
+			  <th lay-data="{field:'et_model', width:120, align:'center', sort:true}">型号</th>
+			  <th lay-data="{field:'et_num', width:80, align:'center', sort:true, edit: 'text'}">数量</th>
+			  <th lay-data="{field:'et_date', width:130,  align:'center',sort:true}">时间</th>
+			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
+			  <th lay-data="{field:'md_user', width:80, align:'center', sort:true}">入库</th>
+			  <th lay-data="{field:'create_time', width:70, align:'center'}">提交</th>
+			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
+			  <th lay-data="{field:'tips', width:100, align:'center'}">备注</th>
+			  <th lay-data="{width:80, align:'center', toolbar: '#barDemo1'}">操作</th>
 			</tr>
 			</thead>
-				<tbody>
-					<volist name="enters" id="enter">
-					  <tr>
-						<td>{$enter.id}</td>
-						<td>{$enter.et_model}</td>
-						<td>{$enter.et_num}</td>
-						<td>{$enter.et_date|date="Y-m-d",###}</td>
-						<td>{$enter.et_time|date="H:i:s",###}</td>
-						<!--暂时不用--<td>{$enter.et_box}</td>-->
-						<td>{$enter.create_user}</td>
-						<td>{$enter.md_user}</td>
-						<td>{$enter.create_time|date="H:i:s",###}</td>
-						<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time}</if></td>
-						<td>{$enter.tips}</td>
-						<td></td>
-					  </tr>
-					</volist>
-				</tbody>
+			<tbody>
+			<volist name="enters" id="enter">
+			  <tr>
+				<td>{$enter.id}</td>
+				<td>{$enter.et_model}</td>
+				<td>{$enter.et_num}</td>
+				<td>{$enter.et_date|date="Y-m-d H:i",###}</td>
+				<td>{$enter.create_user}</td>
+				<td>{$enter.md_user}</td>
+				<td>{$enter.create_time|date="H:i",###}</td>
+				<td><if condition="$enter['update_time'] eq NULL">-<else/>{$enter.update_time|date="Y-m-d H:i",###}</if></td>
+				<td>{$enter.tips}</td>
+				<td></td>
+			  </tr>
+			</volist>
+			</tbody>
 		</table>
 	  </form>
     </div>
    </div>
 </div>
+<script type="text/html" id="barDemo1">
+<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="reset">恢复</a>
+</script>
 <script>
-//初始化DataTables
-$(document).ready( function () {
-	var table = $('#lens-table').DataTable({
-		"order": [ 0, "desc" ],
-		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
-			{
-				"targets": -1,
-				"class":"but_xq",
-				"data":null,
-				"bSortable":false,
-				"defaultContent":"<a id=\"del\"  href=\"#\">恢复</a>"
-		}],
-		"columnDefs":[{
-				"visible": false,
-				"targets": -1
-		}],
-		"iDisplayLength":100,
-		"vertical-align":"middle",
-		"ordering":true,
-		"oLanguage":{
-			"sProcessing":"正在加载中......",
-			"sLengthMenu":"每页显示 _MENU_ 条记录",
-			"sZeroRecords":"对不起，查询不到相关数据！",
-			"sEmptyTable":"表中无数据存在！",
-			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
-			"sSearch":"搜索",
-			"oPaginate":{
-				"sFirst":"首页",
-				"sPrevious":"上一页",
-				"sNext":"下一页",
-				"sLast":"末页"
-			}
+layui.use('table', function(){
+  var table = layui.table;
+  table.init('demo', {
+	height: 'full-20'//高度-20
+	,limits: [60,90,150,300]
+	,limit: 60
+	,page: true
+  });
+//操作动作监听
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+	$.post("/admin.php?c=enter&a=restatus", data,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			self.location.reload();
 		}
-	});
-	//恢复
-	$('#lens-table tbody').on( 'click', 'a#del', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=enter&a=restatus", {id:data[0],status:1},function(result){
-			if(result.status == 1){
-				layer.msg(result.message, {icon: 2,time: 3000});
-				window.location.href=SPOPE.jump_url;
-			}else if(result.status == 0){
-				layer.msg(result.message, {icon: 1,time: 3000});
-				self.location.reload()
-			}
-		},"JSON");
-	});
+	},"JSON");
+  });
 });
 </script>
 <include file="Index/footer" />

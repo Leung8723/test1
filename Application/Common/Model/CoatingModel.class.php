@@ -108,7 +108,7 @@ class CoatingModel extends Model {
 		$data = array(
 			'status' => array('neq',1),
 		);
-		$res = $this->_db->where($data)->order('ct_model asc')->select();
+		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
 	//表中更改镀膜数量
