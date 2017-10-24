@@ -24,42 +24,42 @@
 	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
-		<table lay-filter="demo">
+		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 		  <thead>
 			<tr>
-			  <th lay-data="{field:'id', width:70, sort:true, fixed:'left'}">ID</th>
-			  <th lay-data="{field:'model', width:120, sort:true, fixed:'left'}">型号</th>
-			  <th lay-data="{field:'lot', width:120, sort:true, fixed:'left'}">批次</th>
-			  <th lay-data="{field:'user', width:80}">检查者</th>
-			  <th lay-data="{field:'num', width:80}">检查数</th>
-			  <th lay-data="{field:'goods', width:80}">良品数</th>
-			  <th lay-data="{field:'bads', width:80}">不良数</th>
-			  <th lay-data="{field:'liangdian', width:80, edit: 'text'}">亮点</th>
-			  <th lay-data="{field:'yiwu', width:80}">异物</th>
-			  <th lay-data="{field:'cuowei', width:80}">错位</th>
-			  <th lay-data="{field:'henji', width:80}">痕迹</th>
-			  <th lay-data="{field:'qipao', width:80}">气泡</th>
-			  <th lay-data="{field:'fm', width:80}">F/M</th>
-			  <th lay-data="{field:'paopan', width:80}">跑盘</th>
-			  <th lay-data="{field:'loss', width:80}">LOSS</th>
-			  <th lay-data="{field:'wuqian', width:80}">无签</th>
-			  <th lay-data="{field:'zhuangfan', width:80}">装反</th>
-			  <th lay-data="{field:'banyue', width:80}">半月</th>
-			  <th lay-data="{field:'xiaoyi', width:80}">小异</th>
-			  <th lay-data="{field:'caixian', width:80}">材线</th>
-			  <th lay-data="{field:'gate', width:80}">GATE</th>
-			  <th lay-data="{field:'huahen', width:80}">划痕</th>
-			  <th lay-data="{field:'heidian', width:80}">黑点</th>
-			  <th lay-data="{field:'chengxing', width:80}">成型</th>
-			  <th lay-data="{field:'yahen', width:80}">压痕</th>
-			  <th lay-data="{field:'dumo', width:80}">镀膜</th>
-			  <th lay-data="{field:'fabai', width:80}">发白</th>
-			  <th lay-data="{field:'xihua', width:80}">吸划</th>
-			  <th lay-data="{field:'caiyi', width:80}">材异</th>
-			  <th lay-data="{field:'chengdian', width:80}">成点</th>
-			  <th lay-data="{field:'others', width:80}">其他</th>
-			  <th lay-data="{field:'create_user', width:80}">操作者</th>
-			  <th lay-data="{field:'update_time', width:150}">更新时间</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed:'left'}">ID</th>
+			  <th lay-data="{field:'model', width:120, align:'center', sort:true, fixed:'left'}">型号</th>
+			  <th lay-data="{field:'lot', width:120, align:'center', sort:true, fixed:'left'}">批次</th>
+			  <th lay-data="{field:'user', width:80, align:'center'}">检查者</th>
+			  <th lay-data="{field:'num', width:80, align:'center'}">检查数</th>
+			  <th lay-data="{field:'goods', width:80, align:'center'}">良品数</th>
+			  <th lay-data="{field:'bads', width:80, align:'center'}">不良数</th>
+			  <th lay-data="{field:'liangdian', width:70, align:'center', edit: 'text'}">亮点</th>
+			  <th lay-data="{field:'yiwu', width:70, align:'center'}">异物</th>
+			  <th lay-data="{field:'cuowei', width:70, align:'center'}">错位</th>
+			  <th lay-data="{field:'henji', width:70, align:'center'}">痕迹</th>
+			  <th lay-data="{field:'qipao', width:70, align:'center'}">气泡</th>
+			  <th lay-data="{field:'fm', width:70, align:'center'}">F/M</th>
+			  <th lay-data="{field:'paopan', width:70, align:'center'}">跑盘</th>
+			  <th lay-data="{field:'loss', width:70, align:'center'}">LOSS</th>
+			  <th lay-data="{field:'wuqian', width:70, align:'center'}">无签</th>
+			  <th lay-data="{field:'zhuangfan', width:70, align:'center'}">装反</th>
+			  <th lay-data="{field:'banyue', width:70, align:'center'}">半月</th>
+			  <th lay-data="{field:'xiaoyi', width:70, align:'center'}">小异</th>
+			  <th lay-data="{field:'caixian', width:70, align:'center'}">材线</th>
+			  <th lay-data="{field:'gate', width:70, align:'center'}">GATE</th>
+			  <th lay-data="{field:'huahen', width:70, align:'center'}">划痕</th>
+			  <th lay-data="{field:'heidian', width:70, align:'center'}">黑点</th>
+			  <th lay-data="{field:'chengxing', width:70, align:'center'}">成型</th>
+			  <th lay-data="{field:'yahen', width:70, align:'center'}">压痕</th>
+			  <th lay-data="{field:'dumo', width:70, align:'center'}">镀膜</th>
+			  <th lay-data="{field:'fabai', width:70, align:'center'}">发白</th>
+			  <th lay-data="{field:'xihua', width:70, align:'center'}">吸划</th>
+			  <th lay-data="{field:'caiyi', width:70, align:'center'}">材异</th>
+			  <th lay-data="{field:'chengdian', width:70, align:'center'}">成点</th>
+			  <th lay-data="{field:'others', width:70, align:'center'}">其他</th>
+			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
+			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1'}">操作</th>
 			</tr>
 		  </thead>

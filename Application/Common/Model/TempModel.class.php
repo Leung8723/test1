@@ -50,27 +50,22 @@ class TempModel extends Model {
 	public function find($id) {
         return $this->_db->where('id='.$id)->find();
     }
-
-	//修改镀膜数据
-    public function updateLensById($data) {
-		$id = $data['id'];
+	//修改温湿度数据
+    public function updateTempById($id, $data) {
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
         }
         if(!$data || !is_array($data)) {
 			throw_exception('信息不完整');
         }
-        $data['status'] =  '1';
-        $data['create_user'] =  getLoginRealname();
-		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
-	//删除型号查询
+	//删除数据查询
     public function getHiddenData() {
 		$data = array(
 			'status' => array('neq',1),
 		);
-		$res = $this->_db->where($data)->order('ct_model asc')->select();
+		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
 

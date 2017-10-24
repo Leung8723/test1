@@ -21,7 +21,6 @@ class TempController extends CommonController {
 	//登记主页
 	public function add() {
 		// if($_POST){
-
 			// return $this->tempAdd($arr);
         // }else{
 			$place = D("Temp")->getPlaceData();
@@ -31,19 +30,49 @@ class TempController extends CommonController {
 	}
 	//编辑主页
     public function edit() {
-		$coatingId = $_GET['id'];
+		$tempId = $_GET['id'];
 		if($_POST){
-			return $this->coatingSave($_POST);
+			$arr = array(
+				'temp_date' => strtotime($_POST['temp_date']),
+				'place' => $_POST['place'],
+				'temp1' => $_POST['temp1'],
+				'hum1' => $_POST['hum1'],
+				'temp2' => $_POST['temp2'],
+				'hum2' => $_POST['hum2'],
+				'temp3' => $_POST['temp3'],
+				'hum3' => $_POST['hum3'],
+				'temp4' => $_POST['temp4'],
+				'hum4' => $_POST['hum4'],
+				'temp5' => $_POST['temp5'],
+				'hum5' => $_POST['hum5'],
+				'temp6' => $_POST['temp6'],
+				'hum6' => $_POST['hum6'],
+				'create_user' => getLoginRealname(),
+				'status' => 1,
+				'update_time' => time(),
+			);
+			$id = $_POST['id'];
+			try {
+				$res = D("Temp")->updateTempById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$_POST['id'].'条 信息更新成功!');
+				}else{
+					return show(1, '信息更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
 		}else{
-			if(!$coatingId) {
+			if(!$tempId) {
 				$this->redirect('/admin.php?c=temp');
 			}
-			$id = D("Temp")->find($coatingId);
-			if(!$id) {
+			$res = D("Temp")->find($tempId);
+			if(!$res) {
 				$this->redirect('/admin.php?c=temp');
 			}
 			$place = D("Temp")->getPlaceData();
 			$this->assign('place',$place);
+			$this->assign('tempData',$res);
 			$this->display();
 		}
     }
@@ -54,60 +83,16 @@ class TempController extends CommonController {
         if($title) {
             $conds['id'] = $title;
         }
-        $hiddenLensData = D("Temp")->getHiddenData();
-        $this->assign('coating',$hiddenLensData);
+        $hiddenData = D("Temp")->getHiddenData();
+        $this->assign('temp',$hiddenData);
         $this->display();
-    }
-	//添加模块
-	public function tempAdd(){
-        try {
-			$arr = array();
-			// $arr['temp1'] = $data['temp1'];
-			// $arr['hum1'] = $data['hum1'];
-			$arr['temp_date'] = strtotime($_GET['temp_date']);
-			for($i=1;$i<7;$i++){
-				if($_GET['temp'.$i]=NULL){
-					$arr['temp'.$i] = NULL;
-				}elseif($_GET['hum'.$i]=NULL){
-					$arr['hum'.$i] = NULL;
-				}else{
-					$arr['temp'.$i]=$_GET['temp'.$i];
-					$arr['hum'.$i]=$_GET['hum'.$i];
-				}
-			}
-			$arr['create_user'] = getLoginRealname();
-			$arr['create_time'] = time();
-			$arr['status'] = '1';
-			// print_r($arr);exit;
-			$id = D("Temp")->insertTemp($arr);
-            if($id === false){
-				return show(1, '温湿度登记失败');
-            }else{
-				return show(0, '温湿度登记成功');
-			}
-        }catch(Exception $e){
-            return $e->getMessage();
-		}
-	}
-	//编辑模块
-    public function tempSave($data) {
-        try {
-            $id = D("Temp")->updateTempById($data);
-            if($id === false) {
-                return show(1, '镀膜信息更新失败!');
-            }else{
-				return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
-			}
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
-        }
     }
 	//删除模块
     public function del() {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '0';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }
@@ -128,7 +113,7 @@ class TempController extends CommonController {
         try {
             if ($_POST) {
                 $id = $_POST['id'];
-                $status = $_POST['status'];
+                $status = '1';
                 if (!$id) {
                     return show(1, 'ID不存在');
                 }

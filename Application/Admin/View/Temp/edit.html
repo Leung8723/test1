@@ -20,29 +20,14 @@
         <!-- /.row -->
         <form class="layui-form" method="post" action="">
           <div class="layui-form-item">
-            <tr>
+		    <tr>
               <div class="layui-row">
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">ID</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="id" id="id" type="text" value="{$coatingData.id}" readonly="readonly"></div>
+                      <input class="layui-input" name="id" type="text" lay-verify="required" value="{$tempData.id}" readonly="readonly"></div>
                   </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">日期</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_date" id="ct_date" type="text" value="{$coatingData.ct_date}"></div>
-                  </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">投入</label>
-                    <div class="layui-input-inline">
-                      <input class="layui-input" name="start_time" id="start_time" type="text" value="{$coatingData.start_time}"></div>
-                  </div>
-                  </br>
                 </td>
               </div>
             </tr>
@@ -50,65 +35,136 @@
               <div class="layui-row">
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">设备</label>
+                    <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <select name="ct_machine" id="ct_machine" lay-verify="required" lay-search="">
-                        <option value="">==请选择镀膜设备==</option>
-                        <foreach name="machineList" item="machineList">
-                          <option value="{$machineList.name}">{$machineList.name}号机</option></foreach>
-                      </select>
-                    </div>
+                      <input class="layui-input" name="temp_date" id="temp_date" type="text" placeholder="yyyy-MM-dd" lay-verify="required" value="{$tempData.temp_date|date="Y-m-d",###}"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
-                    <label class="layui-form-label">批次</label>
+                    <label class="layui-form-label">地点</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_lot" id="ct_lot" required type="text" lay-verify="text" value="{$coatingData.ct_lot}"></div>
-                  </div>
-                </td>
-                <td>
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">担当</label>
-                    <div class="layui-input-inline">
-                      <select name="ct_user" id="ct_user" lay-verify="required" lay-search="">
-                        <option value="">==请选择设备担当==</option>
-                        <foreach name="coatingUser" item="coatingUser">
-                          <option value="{$coatingUser.ct_name}">{$coatingUser.ct_name}</option></foreach>
+                      <select name="place" id="place" lay-verify="required" lay-search="">
+                        <option value="">==请选择登记区域==</option>
+                        <foreach name="place" item="place">
+                          <option value="{$place.place}">{$place.place}</option></foreach>
                       </select>
-                    </div>
                   </div>
                 </td>
+              </div>
             </tr>
-              <tr>
-                <div class="layui-row">
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">型号</label>
-                      <div class="layui-input-inline">
-                        <input name="ct_model" value="{$coatingData.ct_model}" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md3">
-                      <label class="layui-form-label">数量</label>
-                      <div class="layui-input-inline">
-                        <input name="ct_num" value="{$coatingData.ct_num}" lay-verify="number" autocomplete="on" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="layui-col-md6">
-                      <label class="layui-form-label">备注</label>
-                      <div class="layui-input-inline">
-                        <input name="tips" value="{$coatingData.tips}" lay-verify="text" autocomplete="off" class="layui-input" type="text"></div>
-                    </div>
-                  </td>
-                </div>
-              </tr>
-                <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
-                  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-                </div>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp1" type="text" placeholder="请填写8:00温度记录" lay-verify="number required" value="{$tempData.temp1}"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum1" type="text" placeholder="请填写8:00湿度记录" lay-verify="number required" value="{$tempData.hum1}"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp2" type="text" placeholder="13:00" value="<if condition="$tempData['temp2'] eq 0.0"><else/>{$tempData.temp2}℃</if>"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum2" type="text" placeholder="13:00" value="<if condition="$tempData['hum2'] eq 0.0"><else/>{$tempData.hum2}%</if>"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp3" type="text" placeholder="17:00" value="<if condition="$tempData['temp3'] eq 0.0"><else/>{$tempData.temp3}℃</if>"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum3" type="text" placeholder="17:00" value="<if condition="$tempData['hum3'] eq 0.0"><else/>{$tempData.hum3}%</if>"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp4" type="text" placeholder="20:00" value="<if condition="$tempData['temp4'] eq 0.0"><else/>{$tempData.temp4}℃</if>"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum4" type="text" placeholder="20:00" value="<if condition="$tempData['hum4'] eq 0.0"><else/>{$tempData.hum4}%</if>"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp5" type="text" placeholder="1:00" value="<if condition="$tempData['temp5'] eq 0.0"><else/>{$tempData.temp5}℃</if>"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum5" type="text" placeholder="1:00" value="<if condition="$tempData['hum5'] eq 0.0"><else/>{$tempData.hum5}%</if>"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">温度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="temp6" type="text" placeholder="5:00" value="<if condition="$tempData['temp6'] eq 0.0"><else/>{$tempData.temp6}℃</if>"></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">湿度</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="hum6" type="text" placeholder="5:00" value="<if condition="$tempData['hum6'] eq 0.0"><else/>{$tempData.hum6}%</if>"></div>
+                  </div>
+                </td>
+			  </div>
+            </tr>
+			<div class="layui-input-block">
+			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+			</div>
         </form>
         </div>
       </div>
@@ -138,18 +194,10 @@ layui.use(['form','layer','laydate'],function() {
   });
 //date
   laydate.render({
-	elem: '#ct_date' //指定元素
+	elem: '#temp_date' //指定元素
 	,type: 'date'
 	,value: new Date()
 	,theme: 'molv'
-  });
-//time
-  laydate.render({
-	elem: '#start_time'
-	,type: 'time'
-	,value: new Date()
-	,theme: 'molv'
-	,format: 'HH:mm'
   });
 });
 //格式化时间
@@ -160,9 +208,7 @@ function checkTime(i) {
   return i;
 }
 var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes());
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("start_time").value = result;
-document.getElementById("ct_date").value = result2;
+var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
+document.getElementById("temp_date").value = result;
 </script>
 <include file="Index/footer" />

@@ -4,10 +4,6 @@
   <include file="Index/nav"/>
   <div id="page-wrapper">
     <div class="container-fluid" >
-	<!-- DataTables CSS -->	  
-	<link rel="stylesheet" type="text/css" href="Public/js/Datatables/jquery.dataTables.min.css">
-	<!-- jQuery -->
-	<script type="text/javascript" charset="utf8" src="Public/js/Datatables/jquery.dataTables.min.js"></script>
 	<!-- Page Heading -->
 	</br></br></br></br>
       <div class="row">
@@ -26,28 +22,28 @@
 	    <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删除列表</button> 
 	  </div>
 	  <form>
-		<table id="lens-table" class="cell-border stripe hover compact order-column" >
+		<table class="layui-table" lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 		   <thead>
 			<tr>
-			  <th>ID</th>
-			  <th>日期</th>
-			  <th>区域</th>
-			  <th>8时</th>
-			  <th>8时</th>
-			  <th>13时</th>
-			  <th>13时</th>
-			  <th>17时</th>
-			  <th>17时</th>
-			  <th>20时</th>
-			  <th>20时</th>
-			  <th>1时</th>
-			  <th>1时</th>
-			  <th>5时</th>
-			  <th>5时</th>
-			  <th>创建者</th>
-			  <th>更新时间</th>
-			  <th>备注</th>
-			  <th>操作</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
+			  <th lay-data="{field:'temp_date', width:100,  align:'center',sort:true, fixed: 'left'}">日期</th>
+			  <th lay-data="{field:'place', width:70, align:'center', fixed: 'left'}">区域</th>
+			  <th lay-data="{field:'temp1', width:70, align:'center'}">8-温</th>
+			  <th lay-data="{field:'hum1', width:70, align:'center'}">8-湿</th>
+			  <th lay-data="{field:'temp2', width:70, align:'center'}">13-温</th>
+			  <th lay-data="{field:'hum2', width:70, align:'center'}">13-湿</th>
+			  <th lay-data="{field:'temp3', width:70, align:'center'}">17-温</th>
+			  <th lay-data="{field:'hum3', width:70, align:'center'}">17-湿</th>
+			  <th lay-data="{field:'temp4', width:70, align:'center'}">20-温</th>
+			  <th lay-data="{field:'hum4', width:70, align:'center'}">20-湿</th>
+			  <th lay-data="{field:'temp5', width:70, align:'center'}">1-温</th>
+			  <th lay-data="{field:'hum5', width:70, align:'center'}">1-湿</th>
+			  <th lay-data="{field:'temp6', width:70, align:'center'}">5-温</th>
+			  <th lay-data="{field:'hum6', width:70, align:'center'}">5-湿</th>
+			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
+			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
+			  <th lay-data="{field:'tips', width:70, align:'center'}">备注</th>
+			  <th lay-data="{fixed: 'right', width:120, align:'center', toolbar: '#barDemo1'}">操作</th>
 			</tr>
 		  </thead>
 		  <tbody>
@@ -58,20 +54,19 @@
 				<td>{$vo.place}</td>
 				<td>{$vo.temp1}℃</td>
 				<td>{$vo.hum1}%</td>
-				<td><if condition="$vo['temp2'] neq NULL">{$vo.temp2}℃<else/>-</if></td>
-				<td><if condition="$vo['hum2'] neq NULL">{$vo.hum2}%<else/>-</if></td>
-				<td><if condition="$vo['temp3'] neq NULL">{$vo.temp3}℃<else/>-</if></td>
-				<td><if condition="$vo['hum3'] neq NULL">{$vo.hum3}%<else/>-</if></td>
-				<td><if condition="$vo['temp4'] neq NULL">{$vo.temp4}℃<else/>-</if></td>
-				<td><if condition="$vo['hum4'] neq NULL">{$vo.hum4}%<else/>-</if></td>
-				<td><if condition="$vo['temp5'] neq NULL">{$vo.temp5}℃<else/>-</if></td>
-				<td><if condition="$vo['hum5'] neq NULL">{$vo.hum5}%<else/>-</if></td>
-				<td><if condition="$vo['temp6'] neq NULL">{$vo.temp6}℃<else/>-</if></td>
-				<td><if condition="$vo['hum6'] neq NULL">{$vo.hum6}%<else/>-</if></td>
+				<td><if condition="$vo['temp2'] eq 0">-<else/>{$vo.temp2}℃</if></td>
+				<td><if condition="$vo['hum2'] eq 0">-<else/>{$vo.hum2}%</if></td>
+				<td><if condition="$vo['temp3'] eq 0">-<else/>{$vo.temp3}℃</if></td>
+				<td><if condition="$vo['hum3'] eq 0">-<else/>{$vo.hum3}%</if></td>
+				<td><if condition="$vo['temp4'] eq 0">-<else/>{$vo.temp4}℃</if></td>
+				<td><if condition="$vo['hum4'] eq 0">-<else/>{$vo.hum4}%</if></td>
+				<td><if condition="$vo['temp5'] eq 0">-<else/>{$vo.temp5}℃</if></td>
+				<td><if condition="$vo['hum5'] eq 0">-<else/>{$vo.hum5}%</if></td>
+				<td><if condition="$vo['temp6'] eq 0">-<else/>{$vo.temp6}℃</if></td>
+				<td><if condition="$vo['hum6'] eq 0">-<else/>{$vo.hum6}%</if></td>
 				<td><if condition="$vo['create_user'] eq NULL">-<else/>{$vo.create_user}</if></td>
-				<!-- <td><if condition="$vo['create_time'] eq NULL">-<else/>{$vo.create_time}</if></td> -->
 				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
-				<td>{$coating.tips}</td>
+				<td>{$vo.tips}</td>
 				<td></td>
 			  </tr>
 			</volist>
@@ -81,79 +76,50 @@
     </div>
    </div>
 </div>
+<script type="text/html" id="barDemo1">
+<a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
 <script>
 var SCOPE = {
 'edit_url' : '/admin.php?c=temp&a=edit',
 'add_url' : '/admin.php?c=temp&a=add',
 'hide_url' : '/admin.php?c=temp&a=hidden',
 }
-//初始化DataTables
-$(document).ready( function () {
-	var table = $('#lens-table').DataTable({
-		"order": [[ 0, "desc" ]],
-		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
-			{
-				"targets": -1,
-				"class":"but_xq",
-				"data":null,
-				"bSortable":false,
-				"defaultContent":"<a id=\"edit\" href=\"#\" class=\"layui-btn layui-btn-mini\"><i class=\"layui-icon\">&#xe642;</i></a><a id=\"del\"  href=\"#\" class=\"layui-btn layui-btn-danger layui-btn-mini\"><i class=\"layui-icon\">&#xe640;</i></a>"
-		}],
-		"buttons": [
-			{
-				extend: 'excel',
-				text: '导出',
-				exportOptions: {
-					modifier: {
-						page: 'current'
-					}
-				},
-			}
-		],
-		"columnDefs":[{
-				"visible": false,
-				"targets": -1
-		}],
-		"text-align":"center",
-		"iDisplayLength":100,
-		"vertical-align":"middle",
-		"ordering":true,
-		"bProcessing":true,
-		"oLanguage":{
-			"sProcessing":"正在加载中......",
-			"sLengthMenu":"每页显示 _MENU_ 条记录",
-			"sZeroRecords":"对不起，查询不到相关数据！",
-			"sEmptyTable":"表中无数据存在！",
-			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
-			"sSearch":"搜索",
-			"oPaginate":{
-				"sFirst":"首页",
-				"sPrevious":"上一页",
-				"sNext":"下一页",
-				"sLast":"末页"
-			}
-		}
-	});
-	//修改
-	$('#lens-table tbody').on( 'click', 'a#edit', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		var url = SCOPE.edit_url + '&id=' + data[0];
-		window.location.href=url;
-	});
-	//删除
-	$('#lens-table tbody').on( 'click', 'a#del', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=temp&a=del", {id:data[0],status:0},function(result){
+//layer-table
+layui.use('table', function(){
+  var table = layui.table;
+  table.init('demo', {
+	height: 'full-20'//高度-20
+	,limits: [60,90,150,300]
+	,limit: 30
+	,page: true
+  });
+  table.render({ //其它参数在此省略
+    height: 'full-700' //高度最大化减去差值
+  }); 
+//操作动作监听
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+	var url = SCOPE.edit_url + '&id=' + data.id;
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        obj.del();
+        layer.close(index);
+		$.post("/admin.php?c=temp&a=del", data,function(result){
 			if(result.status == 1){
 				layer.msg(result.message, {icon: 2,time: 3000});
-				window.location.href=SPOPE.jump_url;
+				self.location.reload();
 			}else if(result.status == 0){
 				layer.msg(result.message, {icon: 1,time: 3000});
-				self.location.reload()
+				self.location.reload();
 			}
 		},"JSON");
-	});
+	  });
+    } else if(obj.event === 'edit'){
+      window.location.href=url;
+    }
+  });
 });
 </script>
 <include file="Index/footer" />

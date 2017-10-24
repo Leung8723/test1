@@ -23,98 +23,85 @@
         </div>
       </div>
 	  <form>
-		<table id="lens-table" class="cell-border stripe hover compact order-column" >
-			<thead>
+		<table class="layui-table" lay-filter="demo" lay-data="{ even:true, size:'sm'}">
+		   <thead>
 			<tr>
-			  <th>ID</th>
-			  <th>型号</th>
-			  <th>镀膜数量</th>
-			  <th>镀膜日期</th>
-			  <th>镀膜设备</th>
-			  <th>批次</th>
-			  <th>担当</th>
-			  <th>投入时间</th>
-			  <th>取出时间</th>
-			  <th>提交时间</th>
-			  <th>更新时间</th>
-			  <th>分光状态</th>
-			  <th>备注</th>
-			  <th>操作</th>
+			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
+			  <th lay-data="{field:'temp_date', width:100,  align:'center',sort:true, fixed: 'left'}">日期</th>
+			  <th lay-data="{field:'place', width:70, align:'center', fixed: 'left'}">区域</th>
+			  <th lay-data="{field:'temp1', width:70, align:'center'}">8-温</th>
+			  <th lay-data="{field:'hum1', width:70, align:'center'}">8-湿</th>
+			  <th lay-data="{field:'temp2', width:70, align:'center'}">13-温</th>
+			  <th lay-data="{field:'hum2', width:70, align:'center'}">13-湿</th>
+			  <th lay-data="{field:'temp3', width:70, align:'center'}">17-温</th>
+			  <th lay-data="{field:'hum3', width:70, align:'center'}">17-湿</th>
+			  <th lay-data="{field:'temp4', width:70, align:'center'}">20-温</th>
+			  <th lay-data="{field:'hum4', width:70, align:'center'}">20-湿</th>
+			  <th lay-data="{field:'temp5', width:70, align:'center'}">1-温</th>
+			  <th lay-data="{field:'hum5', width:70, align:'center'}">1-湿</th>
+			  <th lay-data="{field:'temp6', width:70, align:'center'}">5-温</th>
+			  <th lay-data="{field:'hum6', width:70, align:'center'}">5-湿</th>
+			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
+			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
+			  <th lay-data="{field:'tips', width:70, align:'center'}">备注</th>
+			  <th lay-data="{fixed: 'right', width:80, align:'center', toolbar: '#barDemo1'}">操作</th>
 			</tr>
-			</thead>
-			<tbody>
-			<volist name="coating" id="coating">
+		  </thead>
+		  <tbody>
+		    <volist name="temp" id="vo">
 			  <tr>
-				<td>{$coating.id}</td>
-				<td>{$coating.ct_model}</td>
-				<td>{$coating.ct_num}</td>
-				<td>{$coating.ct_date}</td>
-				<td>{$coating.ct_machine}号机</td>
-				<td>{$coating.ct_lot}</td>
-				<td>{$coating.ct_user}</td>
-				<td>{$coating.start_time}</td>
-				<td><if condition="$coating['over_time'] eq NULL">-<else/>{$coating.over_time}</if></td>
-				<td>{$coating.create_time|date="H:i",###}</td>
-				<td><if condition="$coating['update_time'] eq NULL">-<else/>{$coating.update_time|date="H:i",###}</if></td>
-				<td><if condition="$coating['spec_t'] eq NULL">-<else/>{$coating.spec_t}</if></td>
-				<td>{$coating.tips}</td>
+				<td>{$vo.id}</td>
+				<td>{$vo.temp_date|date="Y-m-d",###}</td>
+				<td>{$vo.place}</td>
+				<td>{$vo.temp1}℃</td>
+				<td>{$vo.hum1}%</td>
+				<td><if condition="$vo['temp2'] eq 0">-<else/>{$vo.temp2}℃</if></td>
+				<td><if condition="$vo['hum2'] eq 0">-<else/>{$vo.hum2}%</if></td>
+				<td><if condition="$vo['temp3'] eq 0">-<else/>{$vo.temp3}℃</if></td>
+				<td><if condition="$vo['hum3'] eq 0">-<else/>{$vo.hum3}%</if></td>
+				<td><if condition="$vo['temp4'] eq 0">-<else/>{$vo.temp4}℃</if></td>
+				<td><if condition="$vo['hum4'] eq 0">-<else/>{$vo.hum4}%</if></td>
+				<td><if condition="$vo['temp5'] eq 0">-<else/>{$vo.temp5}℃</if></td>
+				<td><if condition="$vo['hum5'] eq 0">-<else/>{$vo.hum5}%</if></td>
+				<td><if condition="$vo['temp6'] eq 0">-<else/>{$vo.temp6}℃</if></td>
+				<td><if condition="$vo['hum6'] eq 0">-<else/>{$vo.hum6}%</if></td>
+				<td><if condition="$vo['create_user'] eq NULL">-<else/>{$vo.create_user}</if></td>
+				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
+				<td>{$vo.tips}</td>
 				<td></td>
 			  </tr>
 			</volist>
-			</tbody>
+		  </tbody>
 		</table>
 	  </form>
     </div>
    </div>
 </div>
+<script type="text/html" id="barDemo1">
+<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="reset">恢复</a>
+</script>
 <script>
-//初始化DataTables
-$(document).ready( function () {
-	var table = $('#lens-table').DataTable({
-		"aoColumnDefs":[//设置列的属性，此处设置第一列不排序
-			{
-				"targets": -1,
-				"class":"but_xq",
-				"data":null,
-				"bSortable":false,
-				"defaultContent":"<a id=\"del\"  href=\"#\">恢复</a>"
-		}],
-		"columnDefs":[{
-				"visible": false,
-				"targets": -1
-		}],
-		"iDisplayLength":100,
-		"vertical-align":"middle",
-		"ordering":true,
-		"oLanguage":{
-			"sProcessing":"正在加载中......",
-			"sLengthMenu":"每页显示 _MENU_ 条记录",
-			"sZeroRecords":"对不起，查询不到相关数据！",
-			"sEmptyTable":"表中无数据存在！",
-			"sInfo":"当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-			"sInfoFiltered":"数据表中共为 _MAX_ 条记录",
-			"sSearch":"搜索",
-			"oPaginate":{
-				"sFirst":"首页",
-				"sPrevious":"上一页",
-				"sNext":"下一页",
-				"sLast":"末页"
-			}
+layui.use('table', function(){
+  var table = layui.table;
+  table.init('demo', {
+	height: 'full-20'//高度-20
+	,limits: [60,90,150,300]
+	,limit: 60
+	,page: true
+  });
+//操作动作监听
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+	$.post("/admin.php?c=temp&a=restatus", data,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			self.location.reload();
 		}
-	});
-	//恢复
-	$('#lens-table tbody').on( 'click', 'a#del', function () {
-		var data = $('#lens-table').DataTable().row($(this).parents('tr')).data();
-		$.post("/admin.php?c=check&a=restatus", {id:data[0],status:1},function(result){
-			if(result.status == 1){
-				layer.msg(result.message, {icon: 2,time: 3000});
-				window.location.href=SPOPE.jump_url;
-			}else if(result.status == 0){
-				layer.msg(result.message, {icon: 1,time: 3000});
-				self.location.reload()
-			}
-		},"JSON");
-	});
+	},"JSON");
+  });
 });
 </script>
 <include file="Index/footer" />
