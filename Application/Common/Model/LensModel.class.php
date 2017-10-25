@@ -51,7 +51,7 @@ class LensModel extends Model {
 		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
-	//删除型号
+	//更新状态
     public function updateStatusById($id, $status) {
         if(!is_numeric($status)) {
             throw_exception('status不能为非数字');

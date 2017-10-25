@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-24 17:23:15
+-- Generation Time: 2017-10-25 04:27:32
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -59,11 +59,11 @@ TRUNCATE TABLE `sk_admin`;
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
 (1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508805144, NULL, '梁国成', 1498696655, 1, 1508216836),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508463422),
-(3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 1, 1508218276),
-(4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218153),
-(5, 'zhaoxiangren', '赵向仁', '89ca2407297cff2751bbef6eda6593f0', '18663159117', '191', 'fuqiang.619@163.com', 1, NULL, NULL, '梁国成', 0, 1, 1508218263),
-(6, 'dongjunchao', '董君超', '89ca2407297cff2751bbef6eda6593f0', '', '193', '', 1, NULL, NULL, '梁国成', 1508218074, 1, NULL),
-(7, 'liangshuangjun', '梁双俊', 'd4c04e5eb37a01f8c13f5aac0720ef56', '13563181918', '191', '', 1, 1508491014, NULL, '梁国成', 1508490709, 1, NULL);
+(3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 0, 1508218276),
+(4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218153),
+(5, 'zhaoxiangren', '赵向仁', '89ca2407297cff2751bbef6eda6593f0', '18663159117', '191', 'fuqiang.619@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218263),
+(6, 'dongjunchao', '董君超', '89ca2407297cff2751bbef6eda6593f0', '', '193', '', 1, NULL, NULL, '梁国成', 1508218074, 0, NULL),
+(7, 'liangshuangjun', '梁双俊', 'd4c04e5eb37a01f8c13f5aac0720ef56', '13563181918', '191', '', 1, 1508491014, NULL, '梁国成', 1508490709, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -547,10 +547,14 @@ CREATE TABLE IF NOT EXISTS `sk_menu` (
   `f` varchar(20) NOT NULL DEFAULT '',
   `data` varchar(100) NOT NULL DEFAULT '',
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `create_user` varchar(20) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_menu`
@@ -561,18 +565,17 @@ TRUNCATE TABLE `sk_menu`;
 -- 转存表中的数据 `sk_menu`
 --
 
-INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `listorder`, `status`, `type`) VALUES
-(1, '菜单管理', 0, 'admin', 'menu', 'index', '', 2, 1, 1),
-(2, '入库管理', 0, 'admin', 'enter', 'index', '', 10, 1, 1),
-(3, '镀膜管理', 0, 'admin', 'coating', 'index', '', 9, 1, 1),
-(4, '分光性能管理', 0, 'admin', 'spec', 'index', '', 7, 1, 1),
-(5, '单品检查', 0, 'admin', 'check', 'index', '', 8, 1, 1),
-(6, '基本管理', 0, 'admin', 'basic', 'index', '', 2, 1, 1),
-(7, '用户管理', 0, 'admin', 'admin', 'index', '', 4, 1, 1),
-(8, '文章管理', 0, 'admin', 'content', 'index', '', 1, -1, 1),
-(9, '温湿度记录', 0, 'admin', 'temp', 'index', '', 6, 1, 1),
-(10, '型号管理', 0, 'admin', 'lens', 'index', '', 5, 1, 1),
-(11, '人员管理', 0, 'admin', 'users', 'index', '', 3, 1, 1);
+INSERT INTO `sk_menu` (`menu_id`, `name`, `parentid`, `m`, `c`, `f`, `data`, `listorder`, `create_user`, `create_time`, `update_time`, `status`, `type`, `tips`) VALUES
+(1, '菜单管理', 0, 'admin', 'menu', 'index', '', 2, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(2, '入库管理', 0, 'admin', 'enter', 'index', '', 10, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(3, '镀膜管理', 0, 'admin', 'coating', 'index', '', 9, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(4, '分光性能管理', 0, 'admin', 'spec', 'index', '', 7, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(5, '单品检查', 0, 'admin', 'check', 'index', '', 8, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(6, '基本管理', 0, 'admin', 'basic', 'index', '', 2, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(7, '用户管理', 0, 'admin', 'admin', 'index', '', 4, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(8, '温湿度记录', 0, 'admin', 'temp', 'index', '', 6, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(9, '型号管理', 0, 'admin', 'lens', 'index', '', 5, '梁国成', 1508372173, NULL, 1, 1, NULL),
+(10, '人员管理', 0, 'admin', 'users', 'index', '', 3, '梁国成', 1508372173, NULL, 1, 1, NULL);
 
 -- --------------------------------------------------------
 

@@ -27,7 +27,6 @@
         <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe654 添加新型号</button>
         <button  id="button-hide" type="button" class="layui-btn layui-icon layui-btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#xe640 已删型号列表</button>
       </div>
-      </br>
 	  <form>
 		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 		  <thead>
@@ -79,7 +78,7 @@ var SCOPE = {
 layui.use('table', function(){
   var table = layui.table;
   table.init('demo', {
-	height: 700
+	height: 'full-240'
 	,limits: [30,60,90,150,300]
 	,limit: 30
 	,page: true

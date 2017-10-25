@@ -1,12 +1,24 @@
 <?php
-/**
- * 后台菜单相关
- */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
+/**
+ * 菜单管理相关
+ * @auth 善子先森
+ */
 class MenuController extends CommonController {
+	
+	public function index() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $menus = D("Menu")->getMenusData();
+        $this->assign('menu',$menus);
+    	$this->display();
+    }
+	
     public function add(){
         if($_POST) {
             if(!isset($_POST['name']) || !$_POST['name']) {
@@ -34,33 +46,30 @@ class MenuController extends CommonController {
         }
         //echo "welcome to singcms";
     }
-    public function index() {
-        $data = array();
-        if(isset($_REQUEST['type']) && in_array($_REQUEST['type'], array(0,1))) {
-            $data['type'] = intval($_REQUEST['type']);
-            $this->assign('type',$data['type']);
-        }else{
-            $this->assign('type',-100);
-        }
-        /**
-         * 分页操作逻辑
-         */
-        $page = $_REQUEST['p'] ? $_REQUEST['p'] : 1;
-        $pageSize = $_REQUEST['pageSize'] ? $_REQUEST['pageSize'] : 20;
-        $menus = D("Menu")->getMenus($data,$page,$pageSize);
-        $menusCount = D("Menu")->getMenusCount($data);
-        $res = new \Think\Page($menusCount, $pageSize);
-        $pageRes = $res->show();
-        $this->assign('pageRes', $pageRes);
-        $this->assign('menus',$menus);
-    	$this->display();
-    }
+	
     public function edit() {
         $menuId = $_GET['id'];
         $menu = D("Menu")->find($menuId);
         $this->assign('menu', $menu);
         $this->display();
     }
+	//删除列表主页
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $hiddenData = D("Menu")->getHiddenMenuData();
+        $this->assign('hidden',$hiddenData);
+        $this->display();
+    }
+	
+	
+	
+	
+	
+	
     public function save($data) {
         $menuId = $data['menu_id'];
         unset($data['menu_id']);
@@ -74,6 +83,55 @@ class MenuController extends CommonController {
             return show(0,$e->getMessage());
         }
     }
+	//删除模块
+    public function del() {
+        try {
+            if ($_POST) {
+                $id = $_POST['menu_id'];
+                $status = 0;
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Menu")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '操作成功');
+                }else{
+                    return show(1, '操作失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
+	//删除项目恢复模块
+    public function restatus() {
+        try {
+            if ($_POST) {
+                $id = $_POST['menu_id'];
+                $status = 1;
+                if (!$id) {
+                    return show(1, 'ID不存在');
+                }
+                $res = D("Menu")->updateStatusById($id, $status);
+                if($res){
+                    return show(0, '恢复成功');
+                }else{
+                    return show(1, '恢复失败');
+                }
+            }
+            return show(1, '没有提交的内容');
+        }catch(Exception $e) {
+            return show(1, $e->getMessage());
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
     public function setStatus() {
         try {
             if ($_POST) {
@@ -92,6 +150,7 @@ class MenuController extends CommonController {
         }
         return show(0,'没有提交的数据');
     }
+	
     public function listorder() {
         $listorder = $_POST['listorder'];
         $jumpUrl = $_SERVER['HTTP_REFERER'];

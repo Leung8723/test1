@@ -10,10 +10,10 @@
         <div class="col-lg-12">
           <ol class="breadcrumb">
             <li>
-              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=lens"> 产品目录</a>
+              <i class="fa fa-dashboard"></i>  <a href="/admin.php?c=menu"> 菜单管理</a>
             </li>
             <li class="active">
-              <i class="fa fa-table"></i> 已删除型号列表
+              <i class="fa fa-table"></i> 已删除菜单列表
             </li>
           </ol>
         </div>
@@ -23,11 +23,14 @@
 		<table lay-filter="demo" lay-data="{ even:true, size:'sm'}">
 		  <thead>
 			<tr>
-			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
-			  <th lay-data="{field:'model', width:120, align:'center', sort:true, fixed: 'left'}">型号</th>
-			  <th lay-data="{field:'specs', width:70, align:'center'}">规格</th>
-			  <th lay-data="{field:'color', width:70, align:'center'}">色相</th>
-			  <th lay-data="{field:'material', width:80, align:'center'}">材质</th>
+			  <th lay-data="{field:'menu_id', width:60, align:'center', fixed: 'left'}">ID</th>
+			  <th lay-data="{field:'name', width:120, align:'center', fixed: 'left'}">菜单名</th>
+			  <th lay-data="{field:'m', width:80, align:'center'}">模块名</th>
+			  <th lay-data="{field:'c', width:80, align:'center'}">控制器</th>
+			  <th lay-data="{field:'f', width:80, align:'center'}">方法名</th>
+			  <th lay-data="{field:'type', width:100, align:'center'}">类型</th>
+			  <th lay-data="{field:'status', width:80, align:'center'}">状态</th>
+			  <th lay-data="{field:'listorder', width:80, align:'center', sort:true, edit:'text'}">排序</th>
 			  <th lay-data="{field:'create_user', width:80, align:'center'}">操作者</th>
 			  <th lay-data="{field:'create_time', width:160, align:'center'}">创建时间</th>
 			  <th lay-data="{field:'update_time', width:160, align:'center'}">更新时间</th>
@@ -36,17 +39,20 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<volist name="lens" id="len">
+			<volist name="hidden" id="vo">
 			  <tr>
-				<td>{$len.id}</td>
-				<td>{$len.model}</td>
-				<td>{$len.specs}</td>
-				<td>{$len.color}</td>
-				<td>{$len.material}</td>
-				<td>{$len.create_user}</td>
-				<td>{$len.create_time|date="Y-m-d H:i",###}</td>
-				<td><if condition="$len['update_time'] eq NULL">-<else/>{$len.update_time|date="Y-m-d H:i",###}</if></td>
-				<td>{$len.tips}</td>
+				<td>{$vo.menu_id}</td>
+				<td>{$vo.name}</td>
+				<td>{$vo.m}</td>
+				<td>{$vo.c}</td>
+				<td>{$vo.f}</td>
+				<td>{$vo.type|getMenuType}</td>
+				<td>{$vo.status|status}</td>
+				<td>{$vo.listorder}</td>
+				<td>{$vo.create_user}</td>
+				<td>{$vo.create_time|date="Y-m-d H:i",###}</td>
+				<td><if condition="$vo['update_time'] eq NULL">-<else/>{$vo.update_time|date="Y-m-d H:i",###}</if></td>
+				<td>{$vo.tips}</td>
 				<td></td>
 			  </tr>
 			</volist>
@@ -71,7 +77,7 @@ layui.use('table', function(){
 //操作动作监听
   table.on('tool(demo)', function(obj){
     var data = obj.data;
-	$.post("/admin.php?c=lens&a=restatus", data,function(result){
+	$.post("/admin.php?c=menu&a=restatus", data,function(result){
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
 			self.location.reload();
