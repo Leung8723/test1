@@ -90,7 +90,7 @@ layui.use('table', function(){
 //操作动作监听
   table.on('tool(demo)', function(obj){
     var data = obj.data;
-	var url = SCOPE.edit_url + '&id=' + data.id;
+	var url = SCOPE.edit_url + '&id=' + data.admin_id;
     if(obj.event === 'del'){
       layer.confirm('真的删除行么', function(index){
         obj.del();
