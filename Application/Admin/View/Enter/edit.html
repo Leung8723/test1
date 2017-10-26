@@ -38,14 +38,14 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="et_date" id="et_date" type="text"></div>
+                      <input class="layui-input" name="et_date" id="et_date" type="text" value="{$enterData.et_date|date="Y-m-d",###}"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">时间</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="et_time" id="et_time" type="text"></div>
+                      <input class="layui-input" name="et_time" id="et_time" type="text"  value="{$enterData.et_time|date="H:i",###}"></div>
                   </div>
                 </td>
                 <td>
@@ -87,15 +87,17 @@
                   </td>
                 </div>
               </tr>
+              <tr>
                 <div class="layui-input-block">
                   <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
                 </div>
+              </tr>
+          </div>
         </form>
-        </div>
-      </div>
     </div>
   </div>
+</div>
 <script>
 var SCOPE = {
   'jump_url': '/admin.php?c=enter',
@@ -122,29 +124,15 @@ layui.use(['form','layer','laydate'],function() {
   laydate.render({
 	elem: '#et_date'
 	,type: 'date'
-	,value: new Date()
 	,theme: 'molv'
   });
 //time
   laydate.render({
 	elem: '#et_time'
 	,type: 'time'
-	,value: new Date()
 	,theme: 'molv'
 	,format: 'HH:mm'
 	});
 });
-//格式化时间
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
-var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("et_time").value = result;
-document.getElementById("et_date").value = result2;
 </script>
 <include file="Index/footer" />

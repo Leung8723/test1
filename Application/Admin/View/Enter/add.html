@@ -20,68 +20,70 @@
 		</div>
 		<!-- /.row -->
 		<form class="layui-form" method="post" action="">
-		  <div class="layui-row">
-		   <div class="layui-form-item">
-		   <td>
-			<div class="layui-col-md3">
-			  <label class="layui-form-label">日期</label>
-				<div class="layui-input-inline">
-				  <input class="layui-input" name="enterdate" id="enterdate" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
-				</div>
-			</div>
-			</td>
-		   <td>
-			<div class="layui-col-md3">
-			  <label class="layui-form-label">时间</label>
-				<div class="layui-input-inline">
-				  <input class="layui-input" name="entertime" id="entertime" type="text" placeholder="hh:mm:ss">
-				</div>
-			</div>
-			</td>
-			<td>
-			  <div class="layui-col-md3">
-				<label for="inputId" class="layui-form-label">担当</label>
-				  <div class="layui-input-inline">
-				  <select name="mduser" lay-verify="required" lay-search="">
-				    <option value="">==请选择成型担当==</option>
-					  <foreach name="mduser" item="vo">
-					    <option value="{$vo.name}">{$vo.name}</option>
-					  </foreach>
-				  </select>
-				  </div>
-			  </div>
-			</td>
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">日期</label>
+                     <div class="layui-input-inline">
+                       <input class="layui-input" name="enterdate" id="enterdate" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+                     </div>
+                  </div>
+                </td>
+              <td>
+			    <div class="layui-col-md3">
+			      <label class="layui-form-label">时间</label>
+				    <div class="layui-input-inline">
+				      <input class="layui-input" name="entertime" id="entertime" type="text" placeholder="hh:mm:ss">
+				    </div>
+			    </div>
+			  </td>
+			  <td>
+			    <div class="layui-col-md3">
+				  <label for="inputId" class="layui-form-label">担当</label>
+				    <div class="layui-input-inline">
+				    <select name="mduser" lay-verify="required" lay-search="">
+				      <option value="">==请选择成型担当==</option>
+					    <foreach name="mduser" item="vo">
+					      <option value="{$vo.name}">{$vo.name}</option>
+					    </foreach>
+				    </select>
+				    </div>
+			    </div>
+			  </td>
+              </div>
+            </tr>
 			<?php foreach ($enterlens as $key => $value){ ?>
-			</br></br></br>
 			<tr>
-			  <td>
-				<div class="layui-col-md3">
-				  <label for="inputId" class="layui-form-label">型号</label>
-				  <div class="layui-input-inline">
-					<input name="<?php echo "model".$key?>" value="<?php echo $value?>" required lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly">
+              <div class="layui-row">
+			    <td>
+				  <div class="layui-col-md3">
+				    <label for="inputId" class="layui-form-label">型号</label>
+				    <div class="layui-input-inline">
+					  <input name="<?php echo "model".$key?>" value="<?php echo $value?>" lay-verify="text" autocomplete="off" class="layui-input" type="text" readonly="readonly">
+				    </div>
 				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md3">
-				<label class="layui-form-label">数量</label>
-				  <div class="layui-input-inline">
-					<input name="<?php echo "etnum".$key ?>" value=0 lay-verify="number" autocomplete="on" class="layui-input" type="text">
+			    </td>
+			    <td>
+				  <div class="layui-col-md3">
+				  <label class="layui-form-label">数量</label>
+				    <div class="layui-input-inline">
+					  <input name="<?php echo "etnum".$key ?>" value=0 lay-verify="number" autocomplete="on" class="layui-input" type="text">
+				    </div>
 				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md6">
-				<label class="layui-form-label">备注</label>
-				  <div class="layui-input-inline">
-					<input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+			    </td>
+			    <td>
+				  <div class="layui-col-md6">
+				    <label class="layui-form-label">备注</label>
+				      <div class="layui-input-inline">
+					    <input name="<?php echo "tips".$key ?>" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+				      </div>
 				  </div>
-				</div>
-			  </td>
+			    </td>
+              </div>
 			</tr>
 			<?php }?>
-		  </div>
-
 		    <div class="layui-form-item">
 			  <div class="layui-input-block">
 			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>

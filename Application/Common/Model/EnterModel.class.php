@@ -31,8 +31,10 @@ class EnterModel extends Model {
     }
 	//获取所有型号列表
 	public function getNewModel() {
-		$res = M('lens')->where()->field('model')->order('model asc')->distinct(true)->select();
-		return $res;
+        $data = array(
+			'status' => array('eq',1),
+		);
+		return M('lens')->where($data)->field('model')->order('model asc')->distinct(true)->select();
     }
 	//查找最后一条入库记录
     public function getLastDate() {
@@ -50,8 +52,7 @@ class EnterModel extends Model {
 			'dept' => array('eq','成型'),
 			'status' => array('eq',1),
 		);
-		$arr = M('user')->where($data)->field('name')->distinct(true)->select();
-		return $arr;
+		return M('user')->where($data)->field('name')->distinct(true)->select();
     }
 	//查找最后一条成型入库担当
     public function getLastMdUser() {
@@ -83,17 +84,13 @@ class EnterModel extends Model {
 		return $this->_db->addAll($data);
 	}
 	//修改入库数据
-    public function updateLensById($data) {
-		$id = $data['id'];
+    public function updateLensById($id, $data) {
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
         }
         if(!$data || !is_array($data)) {
 			throw_exception('信息不完整');
         }
-        $data['status'] =  '1';
-        $data['create_user'] =  getLoginRealname();
-		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
 	//删除型号查询

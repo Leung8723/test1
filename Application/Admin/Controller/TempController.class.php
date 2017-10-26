@@ -20,13 +20,44 @@ class TempController extends CommonController {
     }
 	//登记主页
 	public function add() {
-		// if($_POST){
-			// return $this->tempAdd($arr);
-        // }else{
+		if($_POST){
+			$arr = array(
+				'id' => NULL,
+				'temp_date' => strtotime($_POST['temp_date']),
+				'place' => $_POST['place'],
+				'temp1' => $_POST['temp1'],
+				'hum1' => $_POST['hum1'],
+				'temp2' => $_POST['temp2'],
+				'hum2' => $_POST['hum2'],
+				'temp3' => $_POST['temp3'],
+				'hum3' => $_POST['hum3'],
+				'temp4' => $_POST['temp4'],
+				'hum4' => $_POST['hum4'],
+				'temp5' => $_POST['temp5'],
+				'hum5' => $_POST['hum5'],
+				'temp6' => $_POST['temp6'],
+				'hum6' => $_POST['hum6'],
+				'create_user' => getLoginRealname(),
+                'create_time' => time(),
+				'status' => 1,
+				'tips' => $_POST['tips']
+			);
+			try {
+				$res = D("Temp")->insertTemp($arr);
+				if($res) {
+                    return show(0, '温湿度登记成功!');
+					
+				}else{
+                    return show(1, '温湿度登记失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }else{
 			$place = D("Temp")->getPlaceData();
 			$this->assign('place',$place);
 			$this->display();
-		// }
+	    }
 	}
 	//编辑主页
     public function edit() {

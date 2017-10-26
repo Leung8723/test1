@@ -33,14 +33,14 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="ct_date" id="ct_date" type="text" placeholder="请选择日期"></div>
+                      <input class="layui-input" name="ct_date" id="ct_date" type="text" placeholder="请选择日期" value="{$coatingData.ct_date|date="Y-m-d",###}"></div>
                   </div>
                 </td>
                 <td>
                   <div class="layui-col-md3">
                     <label class="layui-form-label">时间</label>
                     <div class="layui-input-inline">
-                      <input class="layui-input" name="start_time" id="start_time" type="text" placeholder="请选择时间"></div>
+                      <input class="layui-input" name="start_time" id="start_time" type="text" placeholder="请选择时间" value="{$coatingData.start_time|date="H:i",###}"></div>
                   </div>
                   </br>
                 </td>
@@ -126,7 +126,6 @@ layui.use(['form','layer','laydate'],function() {
 //监听提交
   form.on('submit(formDemo)',function(data){
 	$.post("admin.php?c=coating&a=edit",data.field,function(result){
-		<!-- layer.alert(JSON.stringify(data.field)); -->
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
 			self.location.reload();
@@ -141,7 +140,6 @@ layui.use(['form','layer','laydate'],function() {
   laydate.render({
 	elem: '#ct_date'
 	,type: 'date'
-	,value: new Date()
 	,theme: 'molv'
   });
 //time
@@ -149,21 +147,8 @@ layui.use(['form','layer','laydate'],function() {
 	elem: '#start_time'
 	,format: 'HH:mm'
 	,type: 'time'
-	,value: new Date()
 	,theme: 'molv'
   });
 });
-//格式化时间
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
-var myDate = new Date();
-var result = checkTime(myDate.getHours()) + ':' + checkTime(myDate.getMinutes()) ;
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("start_time").value = result;
-document.getElementById("ct_date").value = result2;
 </script>
 <include file="Index/footer" />

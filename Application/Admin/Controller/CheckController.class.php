@@ -21,8 +21,44 @@ class CheckController extends CommonController {
 	//按镀膜lot添加主页
 	public function add() {
 		if($_POST){
+			$arr = array(
+                'id' => NULL,
+				'model' => $_POST['model'],
+				'lot' => $_POST['lot'],
+				'user' => $_POST['user'],
+				'num' => $_POST['num'],
+				'goods' => $_POST['goods'],
+				'bads' => $_POST['bads'],
+				'liangdian' => $_POST['liangdian'],
+				'yiwu' => $_POST['yiwu'],
+				'henji' => $_POST['henji'],
+				'qipao' => $_POST['qipao'],
+				'fm' => $_POST['fm'],
+				'paopan' => $_POST['paopan'],
+				'loss' => $_POST['loss'],
+				'wuqian' => $_POST['wuqian'],
+				'zhuangfan' => $_POST['zhuangfan'],
+				'banyue' => $_POST['banyue'],
+				'xiaoyi' => $_POST['xiaoyi'],
+				'caixian' => $_POST['caixian'],
+				'gate' => $_POST['gate'],
+				'huahen' => $_POST['huahen'],
+				'heidian' => $_POST['heidian'],
+				'chengxing' => $_POST['chengxing'],
+				'yahen' => $_POST['yahen'],
+				'dumo' => $_POST['dumo'],
+				'fabai' => $_POST['fabai'],
+				'xihua' => $_POST['xihua'],
+				'caiyi' => $_POST['caiyi'],
+				'chengdian' => $_POST['chengdian'],
+				'others' => $_POST['others'],
+				'create_user' => getLoginRealname(),
+				'cteate_time' => time(),
+                'status' => 1,
+				'tips' => $_POST['tips']
+			);
 			try {
-				$res = D("Check")->insertCheck($_POST);
+				$res = D("Check")->insertCheck($arr);
 				if($res === false){
 					return show(1, '检查数据添加失败');
 				}else{
@@ -33,11 +69,10 @@ class CheckController extends CommonController {
 			}
         }else{
 			$lensNumData = D("Check")->getNotCheckModel();//获取在库非0的全部型号
-			print_r($lensNumData);exit;
+			// print_r($lensNumData);exit;
 			$checkUser = D("Check")->getCkUser();//获取检查担当列表
 			$this->assign('lensnum',$lensNumData);
 			$this->assign('ckuser',$checkUser);
-			$this->assign('machine',$machineList);
 			$this->display();
 		}
 	}
@@ -60,12 +95,48 @@ class CheckController extends CommonController {
     public function edit() {
 		$checkId = $_GET['id'];
 		if($_POST){
+			$arr = array(
+				'model' => $_POST['model'],
+				'lot' => $_POST['lot'],
+				'user' => $_POST['user'],
+				'num' => $_POST['num'],
+				'goods' => $_POST['goods'],
+				'bads' => $_POST['bads'],
+				'liangdian' => $_POST['liangdian'],
+				'yiwu' => $_POST['yiwu'],
+				'henji' => $_POST['henji'],
+				'qipao' => $_POST['qipao'],
+				'fm' => $_POST['fm'],
+				'paopan' => $_POST['paopan'],
+				'loss' => $_POST['loss'],
+				'wuqian' => $_POST['wuqian'],
+				'zhuangfan' => $_POST['zhuangfan'],
+				'banyue' => $_POST['banyue'],
+				'xiaoyi' => $_POST['xiaoyi'],
+				'caixian' => $_POST['caixian'],
+				'gate' => $_POST['gate'],
+				'huahen' => $_POST['huahen'],
+				'heidian' => $_POST['heidian'],
+				'chengxing' => $_POST['chengxing'],
+				'yahen' => $_POST['yahen'],
+				'dumo' => $_POST['dumo'],
+				'fabai' => $_POST['fabai'],
+				'xihua' => $_POST['xihua'],
+				'caiyi' => $_POST['caiyi'],
+				'chengdian' => $_POST['chengdian'],
+				'others' => $_POST['others'],
+				'create_user' => getLoginRealname(),
+				'update_time' => time(),
+                'status' => 1,
+				'tips' => $_POST['tips']
+			);
+			$id = $_POST['id'];
 			try {
-				$id = D("Check")->updateLensById($_POST);
-				if($id === false) {
-					return show(1, '检查信息更新失败!');
+				$id = D("Check")->updateLensById($id, $arr);
+				if($id !== false) {
+                    return show(0, '第'.$_POST['id'].'条 检查信息更新成功!');
 				}else{
-					return show(0, '第'.$_POST['id'].'条 检查信息更新成功!');
+					return show(1, '检查信息更新失败!');
 				}
 			}catch(Exception $e) {
 				return show(1, $e->getMessage());

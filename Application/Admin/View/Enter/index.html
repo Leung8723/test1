@@ -32,12 +32,13 @@
 			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
 			  <th lay-data="{field:'et_model', width:120, align:'center', sort:true, fixed: 'left'}">型号</th>
 			  <th lay-data="{field:'et_num', width:80, align:'center', sort:true, fixed: 'left', edit: 'text'}">数量</th>
-			  <th lay-data="{field:'et_date', width:130,  align:'center',sort:true}">时间</th>
+			  <th lay-data="{field:'et_date', width:130,  align:'center',sort:true}">日期</th>
+			  <th lay-data="{field:'et_time', width:80,  align:'center',sort:true}">时间</th>
 			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
 			  <th lay-data="{field:'md_user', width:80, align:'center', sort:true}">入库</th>
 			  <th lay-data="{field:'create_time', width:70, align:'center'}">提交</th>
 			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
-			  <th lay-data="{field:'tips', width:100, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:180, align:'center'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed: 'right'}">操作</th>
 			</tr>
 			</thead>
@@ -47,7 +48,8 @@
 				<td>{$enter.id}</td>
 				<td>{$enter.et_model}</td>
 				<td>{$enter.et_num}</td>
-				<td>{$enter.et_date|date="Y-m-d H:i",###}</td>
+				<td>{$enter.et_date|date="Y-m-d",###}</td>
+				<td>{$enter.et_time|date="H:i",###}</td>
 				<td>{$enter.create_user}</td>
 				<td>{$enter.md_user}</td>
 				<td>{$enter.create_time|date="H:i",###}</td>

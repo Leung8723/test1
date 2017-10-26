@@ -22,7 +22,7 @@ class CheckModel extends Model {
 	public function getNotCheckModel() {
 		$data = array(
 			'status' => array('eq',1),
-			'_string' => '`ct_num` - `ck_num` > 0',
+			'ct_num' => array('neq','ck_num'),
 		);
 		$coatingdata = M('coating')->where($data)->select();
 		$arr = array_filter(array_merge($coatingdata));
@@ -58,17 +58,13 @@ class CheckModel extends Model {
 		return $res;
     }	
 	//修改检查数据
-    public function updateLensById($data) {
-		$id = $data['id'];
+    public function updateLensById($id, $data) {
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
         }
         if(!$data || !is_array($data)) {
 			throw_exception('信息不完整');
         }
-        $data['status'] =  '1';
-        $data['create_user'] =  getLoginRealname();
-		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
 	//查找相关id数据

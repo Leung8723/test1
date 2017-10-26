@@ -24,9 +24,20 @@
               <div class="layui-row">
                 <td>
                   <div class="layui-col-md4">
+                    <label class="layui-form-label" style="width: 80px;">ID</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input class="layui-input" name="id" value="{$checkData.id}" lay-verify="required" type="text" lay-verify="text" readonly="readonly"></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md4">
                     <label class="layui-form-label" style="width: 80px;">型号</label>
                     <div class="layui-input-inline" style="width: 160px;">
-                      <input class="layui-input" name="ck_lot" value="{$checkData.model}" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
+                      <input class="layui-input" name="model" value="{$checkData.model}" lay-verify="required" type="text" lay-verify="text" readonly="readonly"></div>
                   </div>
                 </td>
 			  </div>
@@ -37,7 +48,7 @@
                   <div class="layui-col-md4">
                     <label class="layui-form-label" style="width: 80px;">批号</label>
                     <div class="layui-input-inline" style="width: 160px;">
-                      <input class="layui-input" name="ck_lot" value="{$checkData.lot}" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
+                      <input class="layui-input" name="lot" value="{$checkData.lot}" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
                   </div>
                 </td>
 			  </div>
@@ -48,7 +59,7 @@
                   <div class="layui-col-md4">
                     <label class="layui-form-label" style="width: 80px;">检查者</label>
                     <div class="layui-input-inline" style="width: 160px;">
-                      <select name="ck_user" lay-verify="required" lay-search="">
+                      <select name="user" lay-verify="required" lay-search="">
                         <option value="">==请选择检查者==</option>
                         <foreach name="checkUser" item="vo">
                           <option value="{$vo.name}">{$vo.name}</option></foreach>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-25 04:27:32
+-- Generation Time: 2017-10-26 11:59:18
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -57,7 +57,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508805144, NULL, '梁国成', 1498696655, 1, 1508216836),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1508987024, NULL, '梁国成', 1498696655, 1, 1508216836),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1498696655, NULL, '梁国成', 1498696655, 1, 1508463422),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 0, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218153),
@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `sk_check` (
   `create_time` int(10) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
+  `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -119,8 +120,8 @@ TRUNCATE TABLE `sk_check`;
 -- 转存表中的数据 `sk_check`
 --
 
-INSERT INTO `sk_check` (`id`, `model`, `lot`, `user`, `num`, `goods`, `bads`, `liangdian`, `yiwu`, `henji`, `qipao`, `fm`, `paopan`, `loss`, `wuqian`, `zhuangfan`, `banyue`, `xiaoyi`, `caixian`, `gate`, `huahen`, `heidian`, `chengxing`, `yahen`, `dumo`, `fabai`, `xihua`, `caiyi`, `chengdian`, `others`, `create_user`, `create_time`, `update_time`, `status`) VALUES
-(1, 'MV1419L1-13', '171014A01', '黄苗苗', 1120, 1100, 20, 1, 1, 1, 1, 1, 1, NULL, 1, 1, NULL, 1, 1, 1, 1, 1, 1, 1, NULL, 1, 1, 1, 1, NULL, '梁国成', 1543211111, 1543211111, 1);
+INSERT INTO `sk_check` (`id`, `model`, `lot`, `user`, `num`, `goods`, `bads`, `liangdian`, `yiwu`, `henji`, `qipao`, `fm`, `paopan`, `loss`, `wuqian`, `zhuangfan`, `banyue`, `xiaoyi`, `caixian`, `gate`, `huahen`, `heidian`, `chengxing`, `yahen`, `dumo`, `fabai`, `xihua`, `caiyi`, `chengdian`, `others`, `create_user`, `create_time`, `update_time`, `status`, `tips`) VALUES
+(1, 'MV1419L1-13', '171014A01', '陈丽艳', 1120, 1100, 20, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, '梁国成', 1543211111, 1509002883, 1, '1710261527');
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,7 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (22, 'AM1663L6-1', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2240, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
 (23, 'MV1419L1-13', 1, 1508774400, '171024A01', '马士友', 1508805180, NULL, 10302, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508805203, ''),
 (24, 'MV1419L1-20', 1, 1507910400, 'A01', '张乐乐', 1507987938, NULL, 2291, '梁国成', NULL, NULL, NULL, 1, 1507987953, NULL, ''),
-(25, 'MV1419L2-13', 2, 1508688000, 'B02', '史森堂', 1508827980, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508828038, '速度快撒极度分裂会计师代理费时代峰峻奥斯陆会计发'),
+(25, 'MV1419L2-13', 2, 1507478400, 'B02', '宋晓科', 1508999100, NULL, 1428, '梁国成', NULL, NULL, NULL, 1, 1507987953, 1508999117, '1'),
 (26, 'MV1419L2-20', 1, 1508342400, 'A01', '马士友', 1508424720, NULL, 2499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508424750, '14111');
 
 -- --------------------------------------------------------
@@ -242,13 +243,23 @@ CREATE TABLE IF NOT EXISTS `sk_count` (
   `last_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_count`
 --
 
 TRUNCATE TABLE `sk_count`;
+--
+-- 转存表中的数据 `sk_count`
+--
+
+INSERT INTO `sk_count` (`id`, `model`, `num`, `count_user`, `last_time`, `tips`) VALUES
+(1, 'AM1663L1-1', 1, '梁国成', 1509011929, NULL),
+(2, 'MV1419L2-13', 1, '梁国成', 1509011929, NULL),
+(3, 'MV1419L2-20', 1, '梁国成', 1509011929, NULL),
+(4, 'MV1419L1-23', -2240, '梁国成', 1509011929, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -269,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   `update_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=156 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=161 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_enter`
@@ -347,7 +358,12 @@ INSERT INTO `sk_enter` (`id`, `et_model`, `et_date`, `et_time`, `et_num`, `creat
 (152, 'AM1663L6-1', 2017, 21, 2240, '梁国成', '王大花', 1, 1507986119, NULL, NULL),
 (153, 'AM1663L1-1', 2017, 21, 2241, '梁国成', '王大花', 1, 1507986289, NULL, NULL),
 (154, 'AM1663L1-1', 2017, 9, 221, '梁国成', '王小二', 1, 1507986452, 1508029232, ''),
-(155, 'AM1663L1-1', 2017, 8, 12, '梁国成', '刘敏', 1, 1507987653, 1508458620, '');
+(155, 'AM1663L1-1', 1508947200, 1509001500, 12, '梁国成', '王云', 1, 1507987653, 1509001608, '新更改'),
+(156, 'MV1419L2-13', 1508947200, 1508994360, 1, '梁国成', '刘敏', 0, 1508994372, NULL, ''),
+(157, 'MV1419L2-20', 1508947200, 1508994360, 1, '梁国成', '刘敏', 0, 1508994372, NULL, ''),
+(158, 'AM1663L1-1', 1508947200, 1509009360, 1, '梁国成', '王云', 1, 1509009418, NULL, ''),
+(159, 'MV1419L2-13', 1508947200, 1509009360, 1, '梁国成', '王云', 1, 1509009418, NULL, ''),
+(160, 'MV1419L2-20', 1508947200, 1509009360, 1, '梁国成', '王云', 1, 1509009418, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -670,7 +686,7 @@ TRUNCATE TABLE `sk_temp`;
 
 INSERT INTO `sk_temp` (`id`, `temp_date`, `place`, `temp1`, `hum1`, `temp2`, `hum2`, `temp3`, `hum3`, `temp4`, `hum4`, `temp5`, `hum5`, `temp6`, `hum6`, `create_user`, `create_time`, `update_time`, `status`, `tips`) VALUES
 (1, 1507987938, '镀膜区', 22.5, 49.0, 21.5, 48.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '梁国成', 1507987938, 1507987938, 1, ''),
-(2, 1508774400, '分光区', 21.6, 45.8, 21.5, 48.5, 21.6, 49.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, '梁国成', 1507987938, 1508828996, 1, '');
+(2, 1508947200, '分光区', 21.6, 45.8, 21.5, 48.5, 21.6, 49.5, 21.4, 0.0, 0.0, 0.0, 0.0, 0.0, '梁国成', 1507987938, 1509009095, 1, '');
 
 -- --------------------------------------------------------
 

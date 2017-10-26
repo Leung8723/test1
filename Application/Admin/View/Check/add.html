@@ -26,10 +26,10 @@
                   <div class="layui-col-md4">
                     <label class="layui-form-label" style="width: 80px;">型号</label>
                     <div class="layui-input-inline" style="width: 160px;">
-                    <select name="ck_model" lay-verify="required" lay-search="">
+                    <select name="model" lay-verify="required" lay-search="">
                         <option value="">==请选择型号==</option>
                         <foreach name="lensnum" item="vo">
-                          <option value="{$vo.model}">{$vo.model}</option></foreach>
+                          <option value="{$vo.ct_model}">{$vo.ct_model}</option></foreach>
                       </select>
 					</div>
                   </div>
@@ -42,7 +42,7 @@
                   <div class="layui-col-md4">
                     <label class="layui-form-label" style="width: 80px;">批号</label>
                     <div class="layui-input-inline" style="width: 160px;">
-                      <input class="layui-input" name="ck_lot" lay-verify="required" type="text" lay-verify="text" placeholder="镀膜Lot No."></div>
+                      <input class="layui-input" name="lot" lay-verify="required" type="text" lay-verify="text"></div>
                   </div>
                 </td>
 			  </div>
@@ -303,12 +303,11 @@
   </div>
 <script>
 var SCOPE = {
-  'jump_url': '/admin.php?c=coating',
+  'jump_url': '/admin.php?c=check',
 }
 //layui
-layui.use(['form','layer','laydate'],function() {
+layui.use(['form','layer'],function() {
   var form = layui.form;
-  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -321,25 +320,8 @@ layui.use(['form','layer','laydate'],function() {
 			window.location.href=url;
 		}
 	},"JSON");
-	return false;
-  });
-//date
-  laydate.render({
-	elem: '#checkdate' //指定元素
-	,type: 'date'
-	,value: new Date()
-	,theme: 'molv'
+	<!-- return false; -->
   });
 });
-//格式化时间
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
-var myDate = new Date();
-var result = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("checkdate").value = result;
 </script>
 <include file="Index/footer" />

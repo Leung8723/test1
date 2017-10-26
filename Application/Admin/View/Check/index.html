@@ -30,10 +30,10 @@
 			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed:'left'}">ID</th>
 			  <th lay-data="{field:'model', width:120, align:'center', sort:true, fixed:'left'}">型号</th>
 			  <th lay-data="{field:'lot', width:120, align:'center', sort:true, fixed:'left'}">批次</th>
-			  <th lay-data="{field:'user', width:80, align:'center'}">检查者</th>
 			  <th lay-data="{field:'num', width:80, align:'center'}">检查数</th>
 			  <th lay-data="{field:'goods', width:80, align:'center'}">良品数</th>
 			  <th lay-data="{field:'bads', width:80, align:'center'}">不良数</th>
+			  <th lay-data="{field:'badscount', width:80, align:'center'}">不良率</th>
 			  <th lay-data="{field:'liangdian', width:70, align:'center', edit: 'text'}">亮点</th>
 			  <th lay-data="{field:'yiwu', width:70, align:'center'}">异物</th>
 			  <th lay-data="{field:'cuowei', width:70, align:'center'}">错位</th>
@@ -58,8 +58,10 @@
 			  <th lay-data="{field:'caiyi', width:70, align:'center'}">材异</th>
 			  <th lay-data="{field:'chengdian', width:70, align:'center'}">成点</th>
 			  <th lay-data="{field:'others', width:70, align:'center'}">其他</th>
+              <th lay-data="{field:'user', width:80, align:'center'}">检查者</th>
 			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
 			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
+			  <th lay-data="{field:'tips', width:130, align:'center'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed:'right'}">操作</th>
 			</tr>
 		  </thead>
@@ -69,10 +71,10 @@
 				<td>{$vo.id}</td>
 				<td>{$vo.model}</td>
 				<td>{$vo.lot}</td>
-				<td>{$vo.user}</td>
 				<td>{$vo.num}</td>
 				<td>{$vo.goods}</td>
 				<td>{$vo.bads}</td>
+				<td>{$vo['bads']/$vo['num']*100|round=###,2}%</td>
 				<td>{$vo.liangdian}</td>
 				<td>{$vo.yiwu}</td>
 				<td>{$vo.cuowei}</td>
@@ -97,8 +99,10 @@
 				<td>{$vo.caiyi}</td>
 				<td>{$vo.chengdian}</td>
 				<td>{$vo.others}</td>
+                <td>{$vo.user}</td>
 				<td>{$vo.create_user}</td>
 				<td>{$vo.update_time|date="Y-m-d H:i",###}</td>
+				<td>{$vo.tips}</td>
 				<td></td>
 			  </tr>
 			</volist>

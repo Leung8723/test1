@@ -22,11 +22,50 @@ class CoatingController extends CommonController {
 	public function add() {
 		if($_POST){
 			$length = (count($_POST)-5)/3;
-			return $this->coatingAdd($_POST,$length);
+            try{
+                $arr = array();
+                for($i=0;$i<$length;$i++){
+                    $model = 'ct_model'.$i;
+                    $ctnum = 'ct_num'.$i;
+                    $tips = 'tips'.$i;
+                    if($_POST[$ctnum]>0){
+                        $arr[]= array(
+                            'id' => NULL,
+                            'ct_model' => $_POST[$model],
+                            'ct_machine' => $_POST['machine'],
+                            'ct_date' => strtotime($_POST['coatingdate']),
+                            'ct_lot' => $_POST['lotnum'],
+                            'ct_user' => $_POST['ctuser'],
+                            'start_time' => strtotime($_POST['coatingtime']),
+                            'over_time' => NULL,
+                            'ct_num' => $_POST[$ctnum],
+                            'create_user' => getLoginRealname(),
+                            'spec_t' => NULL,
+                            'spec_r' => NULL,
+                            'ck_num' => NULL,
+                            'status' => '1',
+                            'create_time' => time(),
+                            'update_time' => NULL,
+                            'tips' => $_POST[$tips]
+                        );
+                    }else{
+                        continue;
+                    }
+                }
+				$res = D("Coating")->insertCoating($arr);
+				if($res){
+					return show(0, '镀膜数据添加成功!');
+				}else{
+					return show(1, '镀膜数据添加失败!');
+				}
+			}catch(Exception $e){
+				return show(1, $e->getMessage());
+			}
         }else{
 			$lensNumData = D("Coating")->getNotNullModel();//获取在库非0的全部型号
 			$coatingUser = D("Coating")->getCtUser();//获取镀膜担当列表
 			$machineList = D("Coating")->getMachineList();//获取镀膜设备列表
+            // print_r($lensNumData);exit;
 			$this->assign('lensnum',$lensNumData);
 			$this->assign('ctuser',$coatingUser);
 			$this->assign('machine',$machineList);

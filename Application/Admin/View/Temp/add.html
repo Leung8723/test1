@@ -169,7 +169,7 @@ layui.use(['form','layer','laydate'],function() {
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
-	$.post("admin.php?c=temp&a=tempAdd",data.field,function(result){;
+	$.post("admin.php?c=temp&a=add",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
 			<!-- self.location.reload(); -->

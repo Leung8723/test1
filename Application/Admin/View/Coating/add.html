@@ -100,30 +100,29 @@
                 </div>
               </tr>
               <?php }?>
+          </div>
 			<div class="layui-input-block">
 			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-			</div>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
         </form>
-        </div>
-      </div>
     </div>
   </div>
+</div>
 <script>
 var SCOPE = {
   'jump_url': '/admin.php?c=coating',
 }
-//layui
-layui.use(['form','layer','laydate'],function() {
+//lay-form
+layui.use(['form','layer','laydate'], function(){
   var form = layui.form;
   var laydate = layui.laydate;
   var url = SCOPE.jump_url;
-//监听提交
-  form.on('submit(formDemo)',function(data){
+  //监听提交
+  form.on('submit(formDemo)', function(data){
 	$.post("admin.php?c=coating&a=add",data.field,function(result){;
 		if(result.status == 1){
-			layer.msg(result.message, {icon: 2,time: 3000});
-			self.location.reload();
+			layer.msg(result.message, {icon: 5,time: 3000});
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 3000});
 			window.location.href=url;
@@ -131,16 +130,16 @@ layui.use(['form','layer','laydate'],function() {
 	},"JSON");
 	return false;
   });
-//date
+  //date
   laydate.render({
-	elem: '#coatingdate'
+    elem: '#enterdate'
 	,type: 'date'
 	,value: new Date()
 	,theme: 'molv'
   });
-//time
+  //time
   laydate.render({
-	elem: '#coatingtime'
+    elem: '#entertime'
 	,type: 'time'
 	,value: new Date()
 	,theme: 'molv'

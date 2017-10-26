@@ -20,79 +20,82 @@
 		</div>
 		<!-- /.row -->
 		<form class="layui-form" method="post" action="">
-		  <div class="layui-row">
-		   <div class="layui-form-item">
-		   <td>
-			<div class="layui-col-md3">
-			  <label class="layui-form-label">日期</label>
-				<div class="layui-input-inline">
-				  <input class="layui-input" name="enterdate" id="enterdate" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
-				</div>
-			</div>
-			</td>
-		   <td>
-			<div class="layui-col-md3">
-			  <label class="layui-form-label">时间</label>
-				<div class="layui-input-inline">
-				  <input class="layui-input" name="entertime" id="entertime" type="text" placeholder="hh:mm:ss">
-				</div>
-			</div>
-			</td>
-			<td>
-			  <div class="layui-col-md3">
-				<label for="inputId" class="layui-form-label">担当</label>
-				  <div class="layui-input-inline">
-				  <select name="mduser" lay-verify="required" lay-search="">
-				    <option value="">==请选择成型担当==</option>
-					  <foreach name="mduser" item="mduser">
-					    <option value="{$mduser.md_name}">{$mduser.md_name}</option>
-					  </foreach>
-				  </select>
-				  </div>
-			  </div>
-			</td>
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">日期</label>
+                     <div class="layui-input-inline">
+                       <input class="layui-input" name="enterdate" id="enterdate" placeholder="yyyy-MM-dd" type="text" value="{$lastlens}">
+                     </div>
+                  </div>
+                </td>
+              <td>
+			    <div class="layui-col-md3">
+			      <label class="layui-form-label">时间</label>
+				    <div class="layui-input-inline">
+				      <input class="layui-input" name="entertime" id="entertime" type="text" placeholder="hh:mm:ss">
+				    </div>
+			    </div>
+			  </td>
+			  <td>
+			    <div class="layui-col-md3">
+				  <label for="inputId" class="layui-form-label">担当</label>
+				    <div class="layui-input-inline">
+				    <select name="mduser" lay-verify="required" lay-search="">
+				      <option value="">==请选择成型担当==</option>
+					    <foreach name="mdusers" item="vo">
+					      <option value="{$vo.name}">{$vo.name}</option>
+					    </foreach>
+				    </select>
+				    </div>
+			    </div>
+			  </td>
+              </div>
+            </tr>
 			<!-- 1 -->
-			</br></br></br>
 			<tr>
-			  <td>
-				<div class="layui-col-md3">
-				  <label for="inputId" class="layui-form-label">型号</label>
-				  <div class="layui-input-inline">
-				  <select name="model" lay-verify="required" lay-search="">
-				    <option value="">==请输入型号全称==</option>
-					  <foreach name="enterlens" item="enterlens">
-					    <option value="{$enterlens.model}">{$enterlens.model}</option>
-					  </foreach>
-				  </select>
+              <div class="layui-row">
+			    <td>
+				  <div class="layui-col-md3">
+				    <label for="inputId" class="layui-form-label">型号</label>
+				    <div class="layui-input-inline">
+				    <select name="model" lay-verify="required" lay-search="">
+				      <option value="">==请输入型号全称==</option>
+					    <foreach name="enterlens" item="vo">
+					      <option value="{$vo.model}">{$vo.model}</option>
+					    </foreach>
+				    </select>
+				    </div>
 				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md3">
-				<label class="layui-form-label">数量</label>
-				  <div class="layui-input-inline">
-					<input name="etnum" lay-verify="number" autocomplete="on" class="layui-input" type="text">
+			    </td>
+			    <td>
+				  <div class="layui-col-md3">
+				  <label class="layui-form-label">数量</label>
+				    <div class="layui-input-inline">
+				      <input name="etnum" lay-verify="number" autocomplete="on" class="layui-input" type="text">
+				    </div>
 				  </div>
-				</div>
-			  </td>
-			  <td>
-				<div class="layui-col-md6">
-				<label class="layui-form-label">备注</label>
-				  <div class="layui-input-inline">
-					<input name="tips" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+			    </td>
+			    <td>
+				  <div class="layui-col-md6">
+				  <label class="layui-form-label">备注</label>
+				    <div class="layui-input-inline">
+					  <input name="tips" lay-verify="text" autocomplete="off" class="layui-input" type="text">
+				    </div>
 				  </div>
-				</div>
-			  </td>
+			    </td>
+			  </div>
 			</tr>
-		  </div>
 		    <div class="layui-form-item">
 			  <div class="layui-input-block">
 			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
 			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			  </div>
 		    </div>
-		  </div>
-		</form>  
+          </div>
+		</form>
     </div>
   </div>
 </div>
@@ -100,7 +103,7 @@
 var SCOPE = {
 'jump_url' : '/admin.php?c=enter',
 }
-//layui
+//lay-form
 layui.use(['form','layer','laydate'], function(){
   var form = layui.form;
   var laydate = layui.laydate;
@@ -117,11 +120,11 @@ layui.use(['form','layer','laydate'], function(){
 	},"JSON");
 	return false;
   });
-  
   //date
   laydate.render({
     elem: '#enterdate'
 	,type: 'date'
+	,value: new Date()
 	,theme: 'molv'
   });
   //time
@@ -141,9 +144,7 @@ function checkTime(i){
     return i;
 }
 var myDate = new Date();
-var result1 = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes())s;
-var result2 = myDate.getFullYear() + '-' + checkTime(myDate.getMonth()+1) + '-' + checkTime(myDate.getDate());
-document.getElementById("entertime").value=result1;
-document.getElementById("enterdate").value=result2;
+var result = checkTime(myDate.getHours())+':'+checkTime(myDate.getMinutes());
+document.getElementById("entertime").value=result;
 </script>
 <include file="Index/footer" />
