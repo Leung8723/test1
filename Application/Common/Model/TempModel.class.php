@@ -31,7 +31,7 @@ class TempModel extends Model {
 		if(!$data||!is_array($data)){
 			throw_exception('登记数据不完全');
 		}
-		return $this->_db->addAll($data);
+		return $this->_db->add($data);
 	}	
 	
 	//修改状态,删除&恢复

@@ -25,8 +25,8 @@ class CoatingController extends CommonController {
             try{
                 $arr = array();
                 for($i=0;$i<$length;$i++){
-                    $model = 'ct_model'.$i;
-                    $ctnum = 'ct_num'.$i;
+                    $model = 'model'.$i;
+                    $ctnum = 'num'.$i;
                     $tips = 'tips'.$i;
                     if($_POST[$ctnum]>0){
                         $arr[]= array(

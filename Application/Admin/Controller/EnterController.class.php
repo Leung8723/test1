@@ -84,8 +84,8 @@ class EnterController extends CommonController {
 			);
             $id = $_POST['id'];
 			try {
-				$id = D("Enter")->updateLensById($id, $arr);
-				if($id !== false) {
+				$res = D("Enter")->updateLensById($id, $arr);
+				if($res !== false) {
 					return show(0, '第'.$_POST['id'].'条 镀膜信息更新成功!');
 				}else{
 					return show(1, '镀膜信息更新失败!');
@@ -203,5 +203,31 @@ class EnterController extends CommonController {
         }catch(Exception $e) {
             return show(1, $e->getMessage());
         }
+    }
+    //表单单元格改数
+    public function updatenum() {
+        $ctnum = $_POST['data']['et_num'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($ctnum||$tips) {
+			$arr = array(
+				'id' => $_POST['data']['id'],
+				'et_num' => $_POST['data']['et_num'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $_POST['data']['tips'],
+			);
+			try {
+				$res = D("Enter")->updateLensById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['id'].'条 入库数据更新成功!');
+				}else{
+					return show(1, '入库数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有排序信息或序号为非数字!');
     }
 }

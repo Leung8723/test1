@@ -1,0 +1,1 @@
+a:5:{s:5:"title";s:15:"我是测试版";s:8:"keywords";s:6:"测试";s:11:"description";s:12:"测试网站";s:9:"dumpmysql";s:1:"1";s:10:"cacheindex";s:1:"1";}

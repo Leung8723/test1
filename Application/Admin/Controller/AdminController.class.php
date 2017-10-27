@@ -44,6 +44,7 @@ class AdminController extends CommonController {
 			$data['realname'] = $_POST['realname'];
 			$data['password'] = getMd5Password($_POST['newpassword']);
 			$data['mobile'] = $_POST['mobile'];
+			$data['skline'] = $_POST['skline'];
 			$data['email'] = $_POST['email'];
 			$data['power'] = 1;
 			$data['status'] = 1;

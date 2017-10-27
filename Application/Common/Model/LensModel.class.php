@@ -62,4 +62,18 @@ class LensModel extends Model {
         $data['status'] = $status;
         return $this->_db->where('id='.$id)->save($data);
     }
+    //查找材质列表
+    public function getMaterialList() {
+		$data = array(
+			'status' => array('eq',1),
+		);
+		return M('lens')->where($data)->field('material')->order('material asc')->distinct(true)->select();
+    }
+    //查找色相列表
+    public function getColorList() {
+		$data = array(
+			'status' => array('eq',1),
+		);
+		return M('lens')->where($data)->field('color')->order('color asc')->distinct(true)->select();
+    }
 }

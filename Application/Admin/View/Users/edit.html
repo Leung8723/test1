@@ -94,7 +94,7 @@
 				  <label for="dept" class="layui-form-label">部署</label>
 				    <div class="layui-input-block"style="width: 160px;">
                       <select name="dept" lay-verify="required" lay-search="">
-                        <option value="">-请选择所属部门-</option>
+                        <option value="">=请选择所属部门=</option>
                         <foreach name="dept" item="vo">
                           <option value="{$vo}">{$vo}</option></foreach>
                       </select>
@@ -109,7 +109,7 @@
                   <div class="layui-col-md4">
                     <label class="layui-form-label">入社日</label>
                     <div class="layui-input-block" style="width: 160px;"">
-                      <input class="layui-input" name="joindate" id="joindate" value="{$userData.joindate}" type="text"></div>
+                      <input class="layui-input" name="joindate" id="joindate" value="{$userData.joindate|date="Y-m-d",###}" type="text"></div>
                   </div>
                 </td>
 			  </div>
@@ -124,11 +124,13 @@
                   </div>
                 </td>
 			  </div>
-			</tr></br>
-                <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
-                  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-                </div>
+			</tr>
+            <tr>
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
+              </div>
+            </tr>
         </form>
         </div>
       </div>
@@ -139,8 +141,9 @@ var SCOPE = {
   'jump_url': '/admin.php?c=users',
 }
 //layui
-layui.use(['form','layer'],function() {
+layui.use(['form','layer','laydate'],function() {
   var form = layui.form;
+  var laydate = layui.laydate;
   var url = SCOPE.jump_url;
 //监听提交
   form.on('submit(formDemo)',function(data){
@@ -155,5 +158,12 @@ layui.use(['form','layer'],function() {
 	},"JSON");
 	return false;
   });
+//date
+  laydate.render({
+	elem: '#joindate'
+	,type: 'date'
+	,theme: 'molv'
+  });
+});
 </script>
 <include file="Index/footer" />

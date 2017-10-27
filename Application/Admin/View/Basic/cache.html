@@ -1,57 +1,66 @@
 <include file="Index/header" />
 <body>
 <div id="wrapper">
-
   <include file="Index/nav"/>
-<div id="page-wrapper">
-
+  <div id="page-wrapper">
 	<div class="container-fluid">
-
-		<!-- Page Heading -->
-		<include file="Basic/button"/>
-		<!-- /.row -->
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="inputname" class="col-sm-2 control-label">更新首页缓存:</label>
-					<div class="col-sm-5">
-						<button type="button" class="btn" id="cache-index">确定更新</button>
-					</div>
-				</div>
-
-				
-
-			</div>
-
-		</div>
-		<!-- /.row -->
-
+      </br></br></br></br>
+	  <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=basic"> 配置管理</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> 基本配置
+            </li>
+          </ol>
+        </div>
+      </div>
+      <form class="layui-form" method="post" action="">
+      <div class="layui-row">
+        <div class="layui-col-md6">
+          <label class="layui-form-label" style="width: 120px;">更新缓存:</label>
+            <!-- <div class="layui-form-item"> -->
+              <!-- <div class="layui-input-inline"> -->
+                <button  id="cache-index" lay-submit lay-filter="formDemo" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#x1002; 确定更新</button>
+              <!-- </div> -->
+            <!-- </div> -->
+        </div>
+      </div>
+      </form>
+		<!-- <div class="row"> -->
+			<!-- <div class="col-lg-6"> -->
+				<!-- <div class="form-group"> -->
+					<!-- <label for="inputname" class="col-sm-2 control-label">更新首页缓存:</label> -->
+					<!-- <div class="col-sm-5"> -->
+						<!-- <button type="button" class="btn" id="cache-index">确定更新</button> -->
+				    <!-- </div> -->
+				<!-- </div> -->
+			<!-- </div> -->
+		<!-- </div> -->
 	</div>
-	<!-- /.container-fluid -->
-
+  </div>
 </div>
-<!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
 <script type="text/javascript" src="/Public/js/admin/form.js"></script>
 <script>
-  $("#cache-index").click(function(){
 
-	var url = 'index.php?c=index&a=build_html';
-	var jump_url = '/admin.php?c=basic&a=cache';
-	var postData = {};
-
-	$.post(url, postData,function(result){
-	  if(result.status==1) {
-		// 成功
-		return dialog.success(result.message,jump_url);
-	  }else if(result.status==0) {
-		return dialog.error(result.message);
-	  }
-
-	},"JSON");
+//layui
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  form.on('submit(formDemo)',function(){
+    var url = 'index.php?c=index&a=build_html';
+    var jump_url = '/admin.php?c=basic&a=cache';
+    var postData = {};
+    $.post(url, postData,function(result){
+      if(result.status==1) {
+        return dialog.success(result.message,jump_url);
+      }else if(result.status==0) {
+        return dialog.error(result.message);
+      }
+    },"JSON");
   });
-
+});
 </script>
 <include file="Index/footer" />

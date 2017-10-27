@@ -54,7 +54,7 @@ class CoatingModel extends Model {
 		$sql = 'TRUNCATE `sk_count`';
 		M()->execute($sql);
 		M('count')->addAll($arr);
-		return $arr;
+        return array_merge($arr);
     }
 	//查找镀膜担当列表
     public function getCtUser() {

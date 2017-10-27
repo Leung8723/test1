@@ -1,84 +1,124 @@
 <include file="Index/header" />
 <body>
 <div id="wrapper">
-
   <include file="Index/nav"/>
-<div id="page-wrapper">
-
+  <div id="page-wrapper">
 	<div class="container-fluid">
-
-		<!-- Page Heading -->
-		<include file="Basic/button"/>
-		<!-- /.row -->
-
-		<div class="row">
-			<div class="col-lg-6">
-
-				<form class="form-horizontal" id="singcms-form">
-					<div class="form-group">
-						<label for="inputname" class="col-sm-2 control-label">站点标题:</label>
-						<div class="col-sm-5">
-							<input type="text" name="title" value="{$vo.title}" class="form-control" id="inputname" placeholder="请填写站点标题">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">站点关键词:</label>
-						<div class="col-sm-5">
-							<input type="text" class="form-control" value="{$vo.keywords}" name="keywords" id="inputPassword3" placeholder="请填写站点关键词">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">站点描述:</label>
-						<div class="col-sm-5">
-							<textarea class="form-control" rows="3" name="description">{$vo.description}</textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">是否自动备份数据库:</label>
-						<div class="col-sm-5">
-							<input type="radio" name="dumpmysql" id="optionsRadiosInline1" value="1" <if condition="$vo['dumpmysql'] eq 1">checked</if>> 是
-                            <input type="radio" name="dumpmysql" id="optionsRadiosInline2" value="0" <if condition="$vo['dumpmysql'] eq 0">checked</if>> 否
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">是否自动生成首页缓存:</label>
-						<div class="col-sm-5">
-							<input type="radio" name="cacheindex" id="optionsRadiosInline1" value="1" <if condition="$vo['cacheindex'] eq 1">checked</if>> 是
-                            <input type="radio" name="cacheindex" id="optionsRadiosInline2" value="0" <if condition="$vo['cacheindex'] eq 0">checked</if>> 否
-						</div>
-					</div>
-
-
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
-						</div>
-					</div>
-				</form>
-
-
-			</div>
-
-		</div>
-		<!-- /.row -->
-
+      </br></br></br></br>
+	  <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-dashboard"></i><a href="/admin.php?c=basic"> 配置管理</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-edit"></i> 基本配置
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.row -->
+	  <div class="layui-form-item">
+	    <button  id="button-add" type="button" class="layui-btn layui-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#x1002; 缓存配置</button>
+	  </div>
+		<form class="layui-form" method="post" action="">
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+                    <label class="layui-form-label" style="width: 140px;">站点标题</label>
+                     <div class="layui-input-inline">
+                       <input class="layui-input" name="title" type="text" value="{$vo.title}" placeholder="请填写站点标题">
+                     </div>
+                  </div>
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="layui-row">
+              <td>
+			    <div class="layui-col-md6">
+			      <label class="layui-form-label" style="width: 140px;">站点关键词</label>
+				    <div class="layui-input-inline">
+				      <input class="layui-input" name="keywords" type="text" value="{$vo.keywords}" placeholder="请填写站点关键词">
+				    </div>
+			    </div>
+			  </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="layui-row">
+              <td>
+			    <div class="layui-col-md6">
+			      <label class="layui-form-label" style="width: 140px;">站点描述</label>
+				    <div class="layui-input-inline">
+				      <input class="layui-input" name="description" type="text" value="{$vo.description}" placeholder="请填写站点关键词">
+				    </div>
+			    </div>
+			  </td>
+              </div>
+            </tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+                    <label class="layui-form-label" style="width: 140px;">数据库自动备份</label>
+                    <div class="layui-input-inline">
+                      <input type="radio" name="dumpmysql" id="optionsRadiosInline1" value="1" title="是" <if condition="$vo['dumpmysql'] eq 1">checked</if>>
+                      <input type="radio" name="dumpmysql" id="optionsRadiosInline1" value="0" title="否" <if condition="$vo['dumpmysql'] eq 0">checked</if>></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+			<tr>
+			  <div class="layui-row">
+                <td>
+                  <div class="layui-col-md6">
+                    <label class="layui-form-label" style="width: 140px;">首页自动缓存</label>
+                    <div class="layui-input-inline">
+                      <input type="radio" name="cacheindex" id="optionsRadiosInline1" value="1" title="是" <if condition="$vo['cacheindex'] eq 1">checked</if>>
+                      <input type="radio" name="cacheindex" id="optionsRadiosInline1" value="0" title="否" <if condition="$vo['cacheindex'] eq 0">checked</if>></div>
+                  </div>
+                </td>
+			  </div>
+			</tr>
+		    <div class="layui-form-item">
+			  <div class="layui-input-inline">
+			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			  </div>
+		    </div>
+		  </div>
+		</form>
 	</div>
-	<!-- /.container-fluid -->
-
+  </div>
 </div>
-<!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
 <script type="text/javascript" src="/Public/js/admin/form.js"></script>
 <script>
-	var SCOPE = {
-		'save_url' : '/admin.php?c=basic&a=add',
-		'jump_url' : '/admin.php?c=basic',
-	};
-
+var SCOPE = {
+  'add_url' : '/admin.php?c=basic&a=cache',
+  'save_url' : '/admin.php?c=basic&a=add',
+  'jump_url' : '/admin.php?c=basic',
+};
+//layui
+layui.use(['form','layer'],function() {
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+//监听提交
+  form.on('submit(formDemo)',function(data){
+	$.post("admin.php?c=basic&a=add",data.field,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+});
 </script>
 <include file="Index/footer" />

@@ -18,58 +18,96 @@
           </ol>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6">
-          <form class="form-horizontal" id="singcms-form">
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">型号:</label>
-              <div class="col-sm-5">
-                <input type="text" name="model" class="form-control" id="inputname" placeholder="请填写型号全称">
+        <form class="layui-form" method="post" action="">
+          <div class="layui-form-item">
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">型号</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="model" type="text" lay-verify="required|model" placeholder="请填写型号全称" value=""></div>
+                  </div>
+                </td>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">规格:</label>
-              <div class="col-sm-5">
-                <input type="text" name="specs" class="form-control" id="inputname" placeholder="请填写每板镜片数量">
+            </tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">材质</label>
+                    <div class="layui-input-inline">
+                      <select name="material" lay-verify="required" lay-search="">
+                        <option value="">==请选择镜片材质==</option>
+                        <foreach name="materials" item="vo">
+                          <option value="{$vo.material}">{$vo.material}</option></foreach>
+                      </select>
+                    </div>
+                  </div>
+                </td>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">色相:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="color">
-                  <option value="">==请选择色相基准==</option>
-                    <foreach name="lensColorType" item="color">
-                      <option value="{$key}">{$color}</option>
-                    </foreach>
-                </select>
+            </tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">规格</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input" name="specs" type="text" lay-verify="required|number" placeholder="请填写每板镜片数量" value=""></div>
+                  </div>
+                </td>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="inputname" class="col-sm-2 control-label">材质:</label>
-              <div class="col-sm-5">
-                <select class="form-control" name="material">
-					<option value="">==请选择镜片材质==</option>
-						<foreach name="lensMaterialType" item="material">
-							<option value="{$key}">{$material}</option>
-						</foreach>
-                </select>
+            </tr>
+            <tr>
+              <div class="layui-row">
+                <td>
+                  <div class="layui-col-md3">
+                    <label class="layui-form-label">色相</label>
+                    <div class="layui-input-inline">
+                      <select name="color" lay-verify="required" lay-search="">
+                        <option value="">==请选择镜片色相==</option>
+                        <foreach name="colors" item="vo">
+                          <option value="{$vo.color}">{$vo.color}</option></foreach>
+                      </select>
+                    </div>
+                  </div>
+                </td>
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="singcms-button-submit">提交</button>
+            </tr>
+            <tr>
+			  <div class="layui-input-block">
+			    <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
+			    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
               </div>
-            </div>
-          </form>
-        </div>
-      </div>
+            </tr>
+          </div>
+        </form>
     </div>
   </div>
 </div>
 <script>
-  var SCOPE = {
-    'save_url' : '/admin.php?c=lens&a=add',
-    'jump_url' : '/admin.php?c=lens&a=add',
-  };
+var SCOPE = {
+'jump_url' : '/admin.php?c=lens',
+};
+//lay-form
+layui.use(['form','layer'], function(){
+  var form = layui.form;
+  var url = SCOPE.jump_url;
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+	$.post("admin.php?c=lens&a=add",data.field,function(result){;
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
+  });
+  form.verify({
+	model: [/^[A-Z][A-Z0-9-]+L[0-9]+\-[0-9-]/, '型号名首字母大写英文，包含L镜片数及末尾跟随-金型次数！']
+  });
+});
 </script>
 <include file="Index/footer" />

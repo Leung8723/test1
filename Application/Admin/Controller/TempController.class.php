@@ -39,14 +39,14 @@ class TempController extends CommonController {
 				'hum6' => $_POST['hum6'],
 				'create_user' => getLoginRealname(),
                 'create_time' => time(),
-				'status' => 1,
+                'update_time' => NULL,
+				'status' => '1',
 				'tips' => $_POST['tips']
 			);
 			try {
 				$res = D("Temp")->insertTemp($arr);
 				if($res) {
                     return show(0, '温湿度登记成功!');
-					
 				}else{
                     return show(1, '温湿度登记失败!');
 				}

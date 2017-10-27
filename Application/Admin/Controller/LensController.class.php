@@ -44,43 +44,16 @@ class LensController extends CommonController {
 				}
             }
         }else {
-			$lensMaterialType = C("LENS_MATERIAL");
-			$lensColorType = C("COLOR_TYPE");
-            $this->assign('lensColorType', $lensColorType);
-            $this->assign('lensMaterialType', $lensMaterialType);
+            $materialList = D('Lens')->getMaterialList();
+            $colorList = D('Lens')->getColorList();
+            $this->assign('colors', $colorList);
+            $this->assign('materials', $materialList);
             $this->display();
         }
     }
 	//编辑主页
     public function edit() {
         $newsId = $_GET['id'];
-        if(!$newsId) {
-            $this->redirect('/admin.php?c=lens');
-        }
-        $news = D("Lens")->find($newsId);
-        if(!$news) {
-            $this->redirect('/admin.php?c=lens');
-        }
-		$lensMaterialType = C("LENS_MATERIAL");
-		$lensColorType = C("COLOR_TYPE");
-		$this->assign('lensColorType', $lensColorType);
-		$this->assign('lensMaterialType', $lensMaterialType);
-        $this->assign('lens',$news);
-        $this->display();
-    }
-	//删除列表主页
-	public function hidden() {
-		$conds = array();
-		$title = $_GET['id'];
-        if($title) {
-            $conds['id'] = $title;
-        }
-        $webSiteData = D("Lens")->getHiddenLensData();
-        $this->assign('lens',$webSiteData);
-        $this->display();
-    }
-	//修改型号模块
-	public function updateLens(){
         if($_POST) {
             if(!isset($_POST['model']) || !$_POST['model']) {
                 return show(1,'型号名不存在');
@@ -107,12 +80,31 @@ class LensController extends CommonController {
 				}
             }
         }else {
-			$lensMaterialType = C("LENS_MATERIAL");
-			$lensColorType = C("COLOR_TYPE");
-            $this->assign('lensColorType', $lensColorType);
-            $this->assign('lensMaterialType', $lensMaterialType);
+            if(!$newsId) {
+                $this->redirect('/admin.php?c=lens');
+            }
+            $news = D("Lens")->find($newsId);
+            if(!$news) {
+                $this->redirect('/admin.php?c=lens');
+            }
+            $materialList = D('Lens')->getMaterialList();
+            $colorList = D('Lens')->getColorList();
+            $this->assign('colors', $colorList);
+            $this->assign('materials', $materialList);
+            $this->assign('lens',$news);
             $this->display();
         }
+    }
+	//删除列表主页
+	public function hidden() {
+		$conds = array();
+		$title = $_GET['id'];
+        if($title) {
+            $conds['id'] = $title;
+        }
+        $webSiteData = D("Lens")->getHiddenLensData();
+        $this->assign('lens',$webSiteData);
+        $this->display();
     }
 	//删除模块
     public function del() {

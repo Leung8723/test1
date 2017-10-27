@@ -1,17 +1,13 @@
 <?php
 namespace Common\Model;
 use Think\Model;
-
 /**
- * 基本设置
- * @author  singwa
+ * 基本设置model操作
+ * @author 善子先森
  */
 class BasicModel extends Model {
-
 	public function __construct() {
-
 	}
-
 	public function save($data = array()) {
 		if(!$data) {
 			throw_exception('没有提交的数据');
@@ -19,12 +15,7 @@ class BasicModel extends Model {
 		$id = F('basic_web_config', $data);
 		return $id;
 	}
-
 	public function select() {
 		return F("basic_web_config");
 	}
-
-
-
-
 }

@@ -38,7 +38,7 @@
 			  <th lay-data="{field:'md_user', width:80, align:'center', sort:true}">入库</th>
 			  <th lay-data="{field:'create_time', width:70, align:'center'}">提交</th>
 			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
-			  <th lay-data="{field:'tips', width:180, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:180, align:'center', edit: 'text'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed: 'right'}">操作</th>
 			</tr>
 			</thead>
@@ -70,6 +70,7 @@
 </script>
 <script>
 var SCOPE = {
+'jump_url' : '/admin.php?c=enter',
 'edit_url' : '/admin.php?c=enter&a=edit',
 'add_url' : '/admin.php?c=enter&a=add',
 'new_url' : '/admin.php?c=enter&a=addnew',
@@ -107,6 +108,20 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
       window.location.href=url;
     }
+  });
+//监听单元格编辑
+  table.on('edit(demo)', function(obj){
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=enter&a=updatenum",obj,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
   });
 });
 </script>

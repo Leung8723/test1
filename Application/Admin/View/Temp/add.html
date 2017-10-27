@@ -172,10 +172,10 @@ layui.use(['form','layer','laydate'],function() {
 	$.post("admin.php?c=temp&a=add",data.field,function(result){;
 		if(result.status == 1){
 			layer.msg(result.message, {icon: 2,time: 3000});
-			<!-- self.location.reload(); -->
+			self.location.reload();
 		}else if(result.status == 0){
 			layer.msg(result.message, {icon: 1,time: 3000});
-			<!-- window.location.href=url; -->
+			window.location.href=url;
 		}
 	},"JSON");
 	return false;

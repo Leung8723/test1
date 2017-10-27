@@ -38,6 +38,7 @@
                     <label class="layui-form-label">日期</label>
                     <div class="layui-input-inline">
                       <input class="layui-input" name="temp_date" id="temp_date" type="text" placeholder="yyyy-MM-dd" lay-verify="required" value="{$tempData.temp_date|date="Y-m-d",###}"></div>
+                    
                   </div>
                 </td>
                 <td>
@@ -45,10 +46,11 @@
                     <label class="layui-form-label">地点</label>
                     <div class="layui-input-inline">
                       <select name="place" id="place" lay-verify="required" lay-search="">
-                        <option value="">==请选择登记区域==</option>
+                        <option value="{$tempData.place}">==请选择登记区域==</option>
                         <foreach name="place" item="place">
                           <option value="{$place.place}">{$place.place}</option></foreach>
                       </select>
+                    </div>
                   </div>
                 </td>
               </div>
@@ -163,10 +165,11 @@
             </tr>
 			<div class="layui-input-block">
 			  <button class="layui-btn" lay-submit lay-filter="formDemo">立即更新</button>
-			  <button type="reset" class="layui-btn layui-btn-primary">重置</button></div>
-			</div>
+			  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
         </form>
-        </div>
+        
       </div>
     </div>
   </div>
