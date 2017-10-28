@@ -47,8 +47,6 @@ class LensModel extends Model {
         if(!$data || !is_array($data)) {
 			throw_exception('信息不完整');
         }
-        $data['create_user'] =  getLoginRealname();
-		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
 	//更新状态

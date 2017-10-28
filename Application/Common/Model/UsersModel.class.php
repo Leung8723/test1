@@ -58,7 +58,7 @@ class UsersModel extends Model {
         return $this->_db->where('id='.$id)->find();
     }
 	//修改人员数据
-    public function updateUserById($data) {
+    public function updateUserById($id, $data) {
 		$id = $data['id'];
         if(!$id || !is_numeric($id)) {
             throw_exception('id不合法');
@@ -66,9 +66,6 @@ class UsersModel extends Model {
         if(!$data || !is_array($data)) {
 			throw_exception('信息不完整');
         }
-        $data['status'] =  '1';
-        $data['create_user'] =  getLoginRealname();
-		$data['update_time'] =  time();
         return $this->_db->where('id='.$id)->save($data);
     }
 }

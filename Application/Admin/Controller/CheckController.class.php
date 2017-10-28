@@ -31,6 +31,7 @@ class CheckController extends CommonController {
 				'bads' => $_POST['bads'],
 				'liangdian' => $_POST['liangdian'],
 				'yiwu' => $_POST['yiwu'],
+				'cuowei' => $_POST['cuowei'],
 				'henji' => $_POST['henji'],
 				'qipao' => $_POST['qipao'],
 				'fm' => $_POST['fm'],
@@ -104,6 +105,7 @@ class CheckController extends CommonController {
 				'bads' => $_POST['bads'],
 				'liangdian' => $_POST['liangdian'],
 				'yiwu' => $_POST['yiwu'],
+				'cuowei' => $_POST['cuowei'],
 				'henji' => $_POST['henji'],
 				'qipao' => $_POST['qipao'],
 				'fm' => $_POST['fm'],
@@ -211,5 +213,67 @@ class CheckController extends CommonController {
         }catch(Exception $e) {
             return show(1, $e->getMessage());
         }
+    }
+    //表中更改检查数量
+    public function updatenum() {
+        $num = $_POST['value'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($num||$tips) {
+			$arr1 = array(
+				'liangdian' => $_POST['data']['liangdian'],
+				'yiwu' => $_POST['data']['yiwu'],
+				'cuowei' => $_POST['data']['cuowei'],
+				'henji' => $_POST['data']['henji'],
+                
+				'qipao' => $_POST['data']['qipao'],
+				'fm' => $_POST['data']['fm'],
+				'paopan' => $_POST['data']['paopan'],
+				'loss' => $_POST['data']['loss'],
+                
+				'wuqian' => $_POST['data']['wuqian'],
+				'zhuangfan' => $_POST['data']['zhuangfan'],
+				'banyue' => $_POST['data']['banyue'],
+				'xiaoyi' => $_POST['data']['xiaoyi'],
+                
+				'caixian' => $_POST['data']['caixian'],
+				'gate' => $_POST['data']['gate'],
+				'huahen' => $_POST['data']['huahen'],
+				'heidian' => $_POST['data']['heidian'],
+                
+				'chengxing' => $_POST['data']['chengxing'],
+				'yahen' => $_POST['data']['yahen'],
+				'dumo' => $_POST['data']['dumo'],
+				'fabai' => $_POST['data']['fabai'],
+                
+				'xihua' => $_POST['data']['xihua'],
+				'caiyi' => $_POST['data']['caiyi'],
+				'chengdian' => $_POST['data']['chengdian'],
+				'others' => $_POST['data']['others'],
+			);
+            $arr2 = array();
+            $goods = $_POST['data']['num'] - array_sum($arr1);
+            $bads = array_sum($arr1);
+            $arr2 = array(
+				'id' => $id,
+                'goods' => $goods,
+                'bads' => $bads,
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $_POST['data']['tips'],
+            );
+            $arr = array_merge($arr1, $arr2); 
+			try {
+				$res = D("Check")->updateLensById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['id'].'条 检查数据更新成功!');
+				}else{
+					return show(1, '检查数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有更改不良项目或备注信息!');
     }
 }

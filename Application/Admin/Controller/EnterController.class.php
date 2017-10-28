@@ -228,6 +228,6 @@ class EnterController extends CommonController {
 				return show(1, $e->getMessage());
 			}
         }
-        return show(1, '没有排序信息或序号为非数字!');
+        return show(1, '没有更改数量或备注信息!');
     }
 }

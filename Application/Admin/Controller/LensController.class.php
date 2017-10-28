@@ -68,10 +68,19 @@ class LensController extends CommonController {
                 return show(1,'材质不能为空');
             }
             if($_POST['model']) {
-				$newsId = $_POST['id'];
+				$id = $_POST['id'];
 				try {
-					$id = D("Lens")->updateLensById($newsId,$_POST);
-					if($id !== false) {
+                    $arr = array(
+                        'id' => $_POST['model'],
+                        'model' => $_POST['model'],
+                        'material' => $_POST['material'],
+                        'specs' => $_POST['specs'],
+                        'color' => $_POST['color'],
+                        'create_user' => getLoginRealname(),
+                        'update_time' => time(),
+                    );
+					$res = D("Lens")->updateLensById($id,$arr);
+					if($res !== false) {
 						return show(0, $_POST['model'].' 更新型号成功');
 					}
 					return show(1, '更新型号失败');
@@ -147,5 +156,31 @@ class LensController extends CommonController {
         }catch(Exception $e) {
             return show(1, $e->getMessage());
         }
+    }
+    //表中更改数据
+    public function updatenum() {
+        $num = $_POST['value'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($num||$tips) {
+			$arr = array(
+				'id' => $id,
+				'specs' => $_POST['data']['specs'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $tips,
+			);
+			try {
+				$res = D("Lens")->updateLensById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['id'].'条 数据更新成功!');
+				}else{
+					return show(1, '数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有更改规格或备注信息!');
     }
 }

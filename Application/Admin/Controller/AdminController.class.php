@@ -123,4 +123,32 @@ class AdminController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
+    //表中更改数据
+    public function updatenum() {
+        $num = $_POST['value'];
+        $id = $_POST['data']['admin_id'];
+        if($num) {
+			$arr = array(
+				'admin_id' => $id,
+				'realname' => $_POST['data']['realname'],
+				'username' => $_POST['data']['username'],
+				'mobile' => $_POST['data']['mobile'],
+				'skline' => $_POST['data']['skline'],
+				'email' => $_POST['data']['email'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+			);
+			try {
+				$res = D("Admin")->updateAdminById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['admin_id'].'条 数据更新成功!');
+				}else{
+					return show(1, '数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有更改数据信息!');
+    }
 }

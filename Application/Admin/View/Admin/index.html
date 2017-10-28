@@ -28,11 +28,11 @@
 		  <thead>
 			<tr>
 			  <th lay-data="{field:'admin_id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
-			  <th lay-data="{field:'realname', width:80, align:'center', sort:true, fixed: 'left'}">姓名</th>
-			  <th lay-data="{field:'username', width:120, align:'center', fixed: 'left', edit: 'text'}">用户名</th>
-			  <th lay-data="{field:'mobile', width:120,  align:'center', edit: 'text'}">手机号</th>
-			  <th lay-data="{field:'skline', width:70, align:'center', edit: 'text'}">内线</th>
-			  <th lay-data="{field:'email', width:160, align:'center'}">E-mail</th>
+			  <th lay-data="{field:'realname', width:80, align:'center', sort:true, fixed: 'left', edit: 'text'}">姓名</th>
+			  <th lay-data="{field:'username', width:120, align:'center', fixed: 'left', edit: 'text', edit: 'text'}">用户名</th>
+			  <th lay-data="{field:'mobile', width:120,  align:'center', edit: 'text', edit: 'text'}">手机号</th>
+			  <th lay-data="{field:'skline', width:70, align:'center', edit: 'text', edit: 'text'}">内线</th>
+			  <th lay-data="{field:'email', width:160, align:'center', edit: 'text'}">E-mail</th>
 			  <th lay-data="{field:'power', width:70, align:'center'}">权限组</th>
 			  <th lay-data="{field:'lastlogintime', width:160, align:'center'}">登录时间</th>
 			  <th lay-data="{field:'lastloginip', width:160, align:'center'}">登录设备</th>
@@ -51,7 +51,7 @@
 				<td>{$vo.username}</td>
 				<td><if condition="$vo['mobile'] eq NULL">-<else/>{$vo.mobile}</if></td>
 				<td><if condition="$vo['skline'] eq NULL">-<else/>{$vo.skline}</if></td>
-				<td><if condition="$vo['email'] eq NULL">-<else/><a href="mailto:{$vo.email}">{$vo.email}</a></if></td>
+				<td><if condition="$vo['email'] eq NULL">-<else/>{$vo.email}</if></td>
 				<td><if condition="$vo['power'] eq NULL">-<else/>{$vo.power}</if></td>
 				<td><if condition="$vo['lastlogintime'] eq NULL">-<else/>{$vo.lastlogintime|date="Y-m-d H:i:s",###}</if></td>
 				<td><if condition="$vo['lastloginip'] eq NULL">-<else/>{$vo.lastloginip}</if></td>
@@ -74,9 +74,10 @@
 </script>
 <script>
 var SCOPE = {
-	'add_url' : '/admin.php?c=admin&a=add',
-	'edit_url' : '/admin.php?c=admin&a=personal',
-	'hide_url' : '/admin.php?c=admin&a=hidden',
+  'jump_url' : '/admin.php?c=admin',
+  'add_url' : '/admin.php?c=admin&a=add',
+  'edit_url' : '/admin.php?c=admin&a=personal',
+  'hide_url' : '/admin.php?c=admin&a=hidden',
 }
 //layer-table
 layui.use('table', function(){
@@ -108,6 +109,20 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
       window.location.href=url;
     }
+  });
+//监听单元格编辑
+  table.on('edit(demo)', function(obj){
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=admin&a=updatenum",obj,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
   });
 });
 </script>

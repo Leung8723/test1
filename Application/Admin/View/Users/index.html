@@ -28,17 +28,17 @@
 		  <thead>
 			<tr>
 			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
-			  <th lay-data="{field:'name', width:80, align:'center', sort:true, fixed: 'left'}">姓名</th>
-			  <th lay-data="{field:'workid', width:70, align:'center'}">工号</th>
+			  <th lay-data="{field:'name', width:80, align:'center', sort:true, fixed: 'left', edit: 'text'}">姓名</th>
+			  <th lay-data="{field:'workid', width:70, align:'center', edit: 'text'}">工号</th>
 			  <th lay-data="{field:'sexual', width:70, align:'center'}">性别</th>
-			  <th lay-data="{field:'cardid', width:160, align:'center'}">身份证</th>
-			  <th lay-data="{field:'mobile', width:120, align:'center'}">手机</th>
+			  <th lay-data="{field:'cardid', width:160, align:'center', edit: 'text'}">身份证</th>
+			  <th lay-data="{field:'mobile', width:120, align:'center', edit: 'text'}">手机</th>
 			  <th lay-data="{field:'dept', width:80, align:'center', sort:true}">部署</th>
 			  <th lay-data="{field:'joindate', width:100, align:'center'}">入社日</th>
 			  <th lay-data="{field:'create_user', width:80, align:'center'}">操作者</th>
 			  <th lay-data="{field:'create_time', width:160, align:'center'}">创建时间</th>
 			  <th lay-data="{field:'update_time', width:160, align:'center'}">更新时间</th>
-			  <th lay-data="{field:'tips', width:80, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:80, align:'center', edit: 'text'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed: 'right'}">操作</th>
 			</tr>
 		  </thead>
@@ -72,6 +72,7 @@
 </script>
 <script>
 var SCOPE = {
+'jump_url' : '/admin.php?c=users',
 'edit_url' : '/admin.php?c=users&a=edit',
 'add_url' : '/admin.php?c=users&a=add',
 'del_url' : '/admin.php?c=users&a=del',
@@ -107,6 +108,20 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
       window.location.href=url;
     }
+  });
+//监听单元格编辑
+  table.on('edit(demo)', function(obj){
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=users&a=updatenum",obj,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
   });
 });
 </script>

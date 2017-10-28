@@ -38,7 +38,7 @@
 			  <th lay-data="{field:'start_time', width:70, align:'center'}">投入</th>
 			  <th lay-data="{field:'over_time', width:70, align:'center'}">出库</th>
 			  <th lay-data="{field:'spec_t', width:70, align:'center'}">分光</th>
-			  <th lay-data="{field:'tips', width:100, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:100, align:'center', edit: 'text'}">备注</th>
 			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
 			  <th lay-data="{field:'create_time', width:70, align:'center'}">提交</th>
 			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
@@ -77,6 +77,7 @@
 </script>
 <script>
 var SCOPE = {
+'jump_url' : '/admin.php?c=coating',
 'edit_url' : '/admin.php?c=coating&a=edit',
 'add_url' : '/admin.php?c=coating&a=add',
 'new_url' : '/admin.php?c=coating&a=addnew',
@@ -113,24 +114,19 @@ layui.use('table', function(){
       window.location.href=url;
     }
   });
-  //监听单元格编辑
+//监听单元格编辑
   table.on('edit(demo)', function(obj){
-    var value = obj.value //得到修改后的值
-    ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-	var postdata = [];
-	postdata['id'] = data.id;
-	postdata['ct_num'] = value;
-	$.post("/admin.php?c=coating&a=editnum", postdata, function(result){
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=coating&a=updatenum",obj,function(result){
 		if(result.status == 1){
-			layer.msg(postdata, {icon: 2,time: 30000});
-			layer.msg(result.message, {icon: 2,time: 30000});
-			<!-- self.location.reload(); -->
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
 		}else if(result.status == 0){
-			layer.msg(result.message, {icon: 1,time: 30000});
-			<!-- self.location.reload(); -->
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
 		}
 	},"JSON");
+	return false;
   });
 });
 </script>

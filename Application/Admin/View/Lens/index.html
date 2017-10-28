@@ -29,13 +29,13 @@
 			<tr>
 			  <th lay-data="{field:'id', width:70, align:'center', sort:true, fixed: 'left'}">ID</th>
 			  <th lay-data="{field:'model', width:120, align:'center', sort:true, fixed: 'left'}">型号</th>
-			  <th lay-data="{field:'specs', width:70, align:'center'}">规格</th>
+			  <th lay-data="{field:'specs', width:70, align:'center', edit: 'text'}">规格</th>
 			  <th lay-data="{field:'color', width:70, align:'center'}">色相</th>
 			  <th lay-data="{field:'material', width:80, align:'center'}">材质</th>
 			  <th lay-data="{field:'create_user', width:80, align:'center'}">操作者</th>
 			  <th lay-data="{field:'create_time', width:160, align:'center'}">创建时间</th>
 			  <th lay-data="{field:'update_time', width:160, align:'center'}">更新时间</th>
-			  <th lay-data="{field:'tips', width:160, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:160, align:'center', edit: 'text'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed: 'right'}">操作</th>
 			</tr>
 		  </thead>
@@ -66,6 +66,7 @@
 </script>
 <script>
 var SCOPE = {
+'jump_url' : '/admin.php?c=lens',
 'edit_url' : '/admin.php?c=lens&a=edit',
 'add_url' : '/admin.php?c=lens&a=add',
 'hide_url' : '/admin.php?c=lens&a=hidden',
@@ -100,6 +101,20 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
       window.location.href=url;
     }
+  });
+//监听单元格编辑
+  table.on('edit(demo)', function(obj){
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=lens&a=updatenum",obj,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
   });
 });
 </script>

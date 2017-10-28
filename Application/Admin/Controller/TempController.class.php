@@ -160,4 +160,41 @@ class TempController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
+    //表中更改镀膜数量
+    public function updatenum() {
+        $num = $_POST['value'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($num||$tips) {
+			$arr = array(
+				'id' => $id,
+				'temp1' => $_POST['data']['temp1'],
+				'hum1' => $_POST['data']['hum1'],
+				'temp2' => $_POST['data']['temp2'],
+				'hum2' => $_POST['data']['hum2'],
+				'temp3' => $_POST['data']['temp3'],
+				'hum3' => $_POST['data']['hum3'],
+				'temp4' => $_POST['data']['temp4'],
+				'hum4' => $_POST['data']['hum4'],
+				'temp5' => $_POST['data']['temp5'],
+				'hum5' => $_POST['data']['hum5'],
+				'temp6' => $_POST['data']['temp6'],
+				'hum6' => $_POST['data']['hum6'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $_POST['data']['tips'],
+			);
+			try {
+				$res = D("Temp")->updateTempById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['id'].'条 温湿度数据更新成功!');
+				}else{
+					return show(1, '镀膜数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有更改温湿度或备注信息!');
+    }
 }

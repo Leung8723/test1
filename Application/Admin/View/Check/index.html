@@ -35,33 +35,33 @@
 			  <th lay-data="{field:'bads', width:80, align:'center'}">不良数</th>
 			  <th lay-data="{field:'badscount', width:80, align:'center'}">不良率</th>
 			  <th lay-data="{field:'liangdian', width:70, align:'center', edit: 'text'}">亮点</th>
-			  <th lay-data="{field:'yiwu', width:70, align:'center'}">异物</th>
-			  <th lay-data="{field:'cuowei', width:70, align:'center'}">错位</th>
-			  <th lay-data="{field:'henji', width:70, align:'center'}">痕迹</th>
-			  <th lay-data="{field:'qipao', width:70, align:'center'}">气泡</th>
-			  <th lay-data="{field:'fm', width:70, align:'center'}">F/M</th>
-			  <th lay-data="{field:'paopan', width:70, align:'center'}">跑盘</th>
-			  <th lay-data="{field:'loss', width:70, align:'center'}">LOSS</th>
-			  <th lay-data="{field:'wuqian', width:70, align:'center'}">无签</th>
-			  <th lay-data="{field:'zhuangfan', width:70, align:'center'}">装反</th>
-			  <th lay-data="{field:'banyue', width:70, align:'center'}">半月</th>
-			  <th lay-data="{field:'xiaoyi', width:70, align:'center'}">小异</th>
-			  <th lay-data="{field:'caixian', width:70, align:'center'}">材线</th>
-			  <th lay-data="{field:'gate', width:70, align:'center'}">GATE</th>
-			  <th lay-data="{field:'huahen', width:70, align:'center'}">划痕</th>
-			  <th lay-data="{field:'heidian', width:70, align:'center'}">黑点</th>
-			  <th lay-data="{field:'chengxing', width:70, align:'center'}">成型</th>
-			  <th lay-data="{field:'yahen', width:70, align:'center'}">压痕</th>
-			  <th lay-data="{field:'dumo', width:70, align:'center'}">镀膜</th>
-			  <th lay-data="{field:'fabai', width:70, align:'center'}">发白</th>
-			  <th lay-data="{field:'xihua', width:70, align:'center'}">吸划</th>
-			  <th lay-data="{field:'caiyi', width:70, align:'center'}">材异</th>
-			  <th lay-data="{field:'chengdian', width:70, align:'center'}">成点</th>
-			  <th lay-data="{field:'others', width:70, align:'center'}">其他</th>
+			  <th lay-data="{field:'yiwu', width:70, align:'center', edit: 'text'}">异物</th>
+			  <th lay-data="{field:'cuowei', width:70, align:'center', edit: 'text'}">错位</th>
+			  <th lay-data="{field:'henji', width:70, align:'center', edit: 'text'}">痕迹</th>
+			  <th lay-data="{field:'qipao', width:70, align:'center', edit: 'text'}">气泡</th>
+			  <th lay-data="{field:'fm', width:70, align:'center', edit: 'text'}">F/M</th>
+			  <th lay-data="{field:'paopan', width:70, align:'center', edit: 'text'}">跑盘</th>
+			  <th lay-data="{field:'loss', width:70, align:'center', edit: 'text'}">LOSS</th>
+			  <th lay-data="{field:'wuqian', width:70, align:'center', edit: 'text'}">无签</th>
+			  <th lay-data="{field:'zhuangfan', width:70, align:'center', edit: 'text'}">装反</th>
+			  <th lay-data="{field:'banyue', width:70, align:'center', edit: 'text'}">半月</th>
+			  <th lay-data="{field:'xiaoyi', width:70, align:'center', edit: 'text'}">小异</th>
+			  <th lay-data="{field:'caixian', width:70, align:'center', edit: 'text'}">材线</th>
+			  <th lay-data="{field:'gate', width:70, align:'center', edit: 'text'}">GATE</th>
+			  <th lay-data="{field:'huahen', width:70, align:'center', edit: 'text'}">划痕</th>
+			  <th lay-data="{field:'heidian', width:70, align:'center', edit: 'text'}">黑点</th>
+			  <th lay-data="{field:'chengxing', width:70, align:'center', edit: 'text'}">成型</th>
+			  <th lay-data="{field:'yahen', width:70, align:'center', edit: 'text'}">压痕</th>
+			  <th lay-data="{field:'dumo', width:70, align:'center', edit: 'text'}">镀膜</th>
+			  <th lay-data="{field:'fabai', width:70, align:'center', edit: 'text'}">发白</th>
+			  <th lay-data="{field:'xihua', width:70, align:'center', edit: 'text'}">吸划</th>
+			  <th lay-data="{field:'caiyi', width:70, align:'center', edit: 'text'}">材异</th>
+			  <th lay-data="{field:'chengdian', width:70, align:'center', edit: 'text'}">成点</th>
+			  <th lay-data="{field:'others', width:70, align:'center', edit: 'text'}">其他</th>
               <th lay-data="{field:'user', width:80, align:'center'}">检查者</th>
 			  <th lay-data="{field:'create_user', width:70, align:'center'}">操作者</th>
 			  <th lay-data="{field:'update_time', width:130, align:'center'}">更新时间</th>
-			  <th lay-data="{field:'tips', width:130, align:'center'}">备注</th>
+			  <th lay-data="{field:'tips', width:130, align:'center', edit: 'text'}">备注</th>
 			  <th lay-data="{width:120, align:'center', toolbar: '#barDemo1', fixed:'right'}">操作</th>
 			</tr>
 		  </thead>
@@ -74,7 +74,7 @@
 				<td>{$vo.num}</td>
 				<td>{$vo.goods}</td>
 				<td>{$vo.bads}</td>
-				<td>{$vo['bads']/$vo['num']*100|round=###,2}%</td>
+				<td><if condition="$vo['bads']/$vo['num']*100 gt 5">{$vo['bads']/$vo['num']*100|round=###,2}%<else/><style="font color="#FF0000";"></else/>{$vo['bads']/$vo['num']*100|round=###,2}%</if></td>
 				<td>{$vo.liangdian}</td>
 				<td>{$vo.yiwu}</td>
 				<td>{$vo.cuowei}</td>
@@ -118,6 +118,7 @@
 </script>
 <script>
 var SCOPE = {
+'jump_url' : '/admin.php?c=check',
 'edit_url' : '/admin.php?c=check&a=edit',
 'add_url' : '/admin.php?c=check&a=add',
 'new_url' : '/admin.php?c=check&a=addnew',
@@ -155,12 +156,19 @@ layui.use('table', function(){
       window.location.href=url;
     }
   });
-  //监听单元格编辑
+//监听单元格编辑
   table.on('edit(demo)', function(obj){
-    var value = obj.value //得到修改后的值
-    ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+    var url = SCOPE.jump_url;
+	$.post("admin.php?c=check&a=updatenum",obj,function(result){
+		if(result.status == 1){
+			layer.msg(result.message, {icon: 2,time: 3000});
+			self.location.reload();
+		}else if(result.status == 0){
+			layer.msg(result.message, {icon: 1,time: 3000});
+			window.location.href=url;
+		}
+	},"JSON");
+	return false;
   });
 });
 </script>

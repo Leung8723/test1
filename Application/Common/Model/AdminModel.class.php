@@ -85,4 +85,14 @@ class AdminModel extends Model {
 		$res = $this->_db->where($data)->order('admin_id asc')->select();
 		return $res;
     }
+	//修改数据
+    public function updateAdminById($id, $arr) {
+        if(!$id || !is_numeric($id)) {
+            throw_exception('id不合法');
+        }
+        if(!$arr || !is_array($arr)) {
+			throw_exception('信息不完整');
+        }
+        return $this->_db->where('admin_id='.$id)->save($arr);
+    }
 }

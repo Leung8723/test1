@@ -111,16 +111,4 @@ class CoatingModel extends Model {
 		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
-	//表中更改镀膜数量
-	public function updateNumById($id, $num) {
-        if(!is_numeric($num)) {
-            throw_exception('数量不能为非数字');
-        }
-        if(!$id || !is_numeric($id)) {
-            throw_exception('id不合法');
-        }
-        $data['id'] = $id;
-        $data['ct_num'] = $num;
-        return $this->_db->where('id='.$id)->save($data);
-    }
 }

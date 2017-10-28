@@ -169,25 +169,30 @@ class CoatingController extends CommonController {
             return show(1, $e->getMessage());
         }
     }
-	//表中更改镀膜数量
-    public function editnum() {
-        try {
-            if ($_POST) {
-                $id = $_POST['id'];
-                $num = $_POST['ct_num'];
-                if (!$id) {
-                    return show(1, 'ID不存在');
-                }
-                $res = D("Coating")->updateNumById($id, $num);
-                if($res){
-                    return show(0,  '第'.$_POST['id'].'条镀膜数更改为:'.$_POST['ct_num'].'成功!');
-                }else{
-                    return show(1, '镀膜数量更改失败');
-                }
-            }
-            return show(1, '没有提交的内容');
-        }catch(Exception $e) {
-            return show(1, $e->getMessage());
+    //表中更改数据
+    public function updatenum() {
+        $num = $_POST['value'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($num||$tips) {
+			$arr = array(
+				'id' => $id,
+				'ct_num' => $_POST['data']['ct_num'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $tips,
+			);
+			try {
+				$res = D("Coating")->updateLensById($id, $arr);
+				if($res !== false) {
+					return show(0, '第'.$arr['id'].'条 镀膜数据更新成功!');
+				}else{
+					return show(1, '镀膜数据更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
         }
+        return show(1, '没有更改数量或备注信息!');
     }
 }

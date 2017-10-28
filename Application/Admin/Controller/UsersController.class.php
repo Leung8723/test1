@@ -57,8 +57,22 @@ class UsersController extends CommonController {
 		$userId = $_GET['id'];
 		if($_POST){
 			try {
-				$id = D("Users")->updateUserById($_POST);
-				if($id !== false) {
+                $id = $_POST['id'];
+                $arr = array(
+                    'id' => $id,
+                    'name' => $_POST['name'],
+                    'workid' => $_POST['workid'],
+                    'sexual' => $_POST['sexual'],
+                    'cardid' => $_POST['cardid'],
+                    'mobile' => $_POST['mobile'],
+                    'dept' => $_POST['dept'],
+                    'joindate' => strtotime($_POST['joindate']),
+                    'create_user' => getLoginRealname(),
+                    'update_time' => time(),
+                    'tips' => $_POST['tips'],
+                );
+				$res = D("Users")->updateUserById($id, $arr);
+				if($res !== false) {
 					return show(0, $_POST['name'].'的个人信息更新成功!');
 				}else{
 					return show(1, '镀膜信息更新失败!');
@@ -132,5 +146,34 @@ class UsersController extends CommonController {
         }catch(Exception $e) {
             return show(1, $e->getMessage());
         }
+    }
+    //表中更改数据
+    public function updatenum() {
+        $num = $_POST['value'];
+        $tips = $_POST['data']['tips'];
+        $id = $_POST['data']['id'];
+        if($num||$tips) {
+			$arr = array(
+				'id' => $id,
+				'name' => $_POST['data']['name'],
+				'workid' => $_POST['data']['workid'],
+				'cardid' => $_POST['data']['cardid'],
+				'mobile' => $_POST['data']['mobile'],
+				'create_user' => getLoginRealname(),
+                'update_time' => time(),
+                'tips' => $tips,
+			);
+			try {
+				$res = D("Users")->updateUserById($id, $arr);
+				if($res !== false) {
+					return show(0, $arr['name'].'的个人信息更新成功!');
+				}else{
+					return show(1, '信息更新失败!');
+				}
+			}catch(Exception $e) {
+				return show(1, $e->getMessage());
+			}
+        }
+        return show(1, '没有更改个人或备注信息!');
     }
 }
