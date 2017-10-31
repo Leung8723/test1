@@ -111,4 +111,15 @@ class CoatingModel extends Model {
 		$res = $this->_db->where($data)->order('id desc')->select();
 		return $res;
     }
+    //导出月间数量
+    public function exportCoatingForExcel() {
+        $starttime=mktime(0,0,0,date("m"),1,date("Y"));
+        $nowtime = time();
+        $feild = array(
+			'status' => array('eq',1),
+			'et_date' => array('between',array($starttime,$nowtime)),
+		);
+        $data = M("enter")->where($feild)->order('id asc')->select();
+        return $data;
+    }
 }

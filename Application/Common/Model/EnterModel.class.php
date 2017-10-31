@@ -106,4 +106,20 @@ class EnterModel extends Model {
 		$res = M('count')->order('model asc')->select();
 		return $res;
     }
+    //导出镀膜入出库
+    public function exportEnterForExcel() {
+        $starttime=mktime(0,0,0,date("m"),1,date("Y"));
+        $nowtime = time();
+        $field = array(
+			'status' => array('eq',1),
+			'et_date' => array('between',array($starttime,$nowtime)),
+		);
+        $field2 = array(
+			'status' => array('eq',1),
+			'ct_date' => array('between',array($starttime,$nowtime)),
+		);
+        $data =  M('enter')->where($field)->field('et_model AS model,SUM(et_num) AS num,et_date AS date')->order('model asc')->group('model,date')->distinct(true)->select();
+        $data2 =  M('Coating')->where($field2)->field('ct_model AS model,SUM(ct_num) AS num,ct_date AS date')->order('model asc')->group('model,date')->distinct(true)->select();
+        return $data2;
+    }
 }
