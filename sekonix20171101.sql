@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-10-31 11:12:44
+-- Generation Time: 2017-11-01 11:30:08
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
   `update_time` int(10) DEFAULT NULL,
   `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_coating`
@@ -147,7 +147,8 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (26, 'MV1419L2-20', 1, 1508342400, 'A01', '马士友', 1508424720, NULL, 2499, '梁国成', NULL, NULL, NULL, 0, 1507987953, 1508424750, '14111'),
 (27, 'MV1419L2-20', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 1, 1509067485, NULL, ''),
 (28, 'MV1419L2-13', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 1, 1509067485, 1509152425, '000102'),
-(29, 'AM1663L1-1', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 0, 1509067485, NULL, '');
+(29, 'AM1663L1-1', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 0, 1509067485, NULL, ''),
+(30, 'SK0544L1-1', 2, 1506700800, 'BBB', '宋晓科', 1509525840, NULL, 1000, '梁国成', NULL, NULL, NULL, 1, 1509515122, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -231,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   `update_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=161 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=162 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_enter`
@@ -314,7 +315,8 @@ INSERT INTO `sk_enter` (`id`, `et_model`, `et_date`, `et_time`, `et_num`, `creat
 (157, 'MV1419L2-20', 1507801416, 1508994360, 1, '梁国成', '刘敏', 0, 1508994372, NULL, ''),
 (158, 'AM1663L1-1', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, 1509152467, ''),
 (159, 'MV1419L2-13', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, NULL, ''),
-(160, 'MV1419L2-20', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, 1509152436, 'test2');
+(160, 'MV1419L2-20', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, 1509152436, 'test2'),
+(161, 'SK0544L1-1', 1506700800, 1509515040, 2000, '梁国成', '王云', 1, 1509515090, NULL, '');
 
 -- --------------------------------------------------------
 

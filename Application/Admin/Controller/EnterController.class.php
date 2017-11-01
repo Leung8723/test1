@@ -137,7 +137,6 @@ class EnterController extends CommonController {
 			$lensModelData = D("Enter")->getNewModel();//获取月间未入库过得全部型号列表
 			$enterLastDate = D("Enter")->getLastDate();//获取最后入库日期
 			$enterMdUser = D("Enter")->getMdUser();//获取成型入库担当列表
-            // print_r($enterMdUser);exit;
 			$this->assign('enterlens',$lensModelData);
 			$this->assign('lastlens',$enterLastDate);
 			$this->assign('mdusers',$enterMdUser);
@@ -231,46 +230,62 @@ class EnterController extends CommonController {
         return show(1, '没有更改数量或备注信息!');
     }
     //镀膜入出库的导出
-    public function getSheet(){
-        
+    public function getSheet(){  
         require "/ThinkPHP/Library/Vendor/PHPExcel/PHPExcel.php";
         Vendor('Classes.PHPExcel');
         $objPHPExcel = new \PHPExcel();
         $objSheet = $objPHPExcel->getActiveSheet();
-        $objSheet->setTitle("人员现况");
-        $data1 = D("Enter")->exportEnterForExcel();
-        $data2 = D("Coating")->exportCoatingForExcel();
-        print_r($data1);exit;
+        $objSheet->setTitle("日间现况");
+        $data = D("Enter")->getLastMonthData();
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//全局水平居中
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);//全局垂直居中
-        $objPHPExcel->getActiveSheet()->mergeCells('A1:I1');//合并单元格
-        $objPHPExcel->getActiveSheet()->getRowDimension('1')->setRowHeight(30);//设置标题行高
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth('8');//设置列宽
-        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth('13');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth('12');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth('10');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('10');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('10');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth('18');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth('18');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth('18');
-        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setName('宋体')->setSize(12)->setBold(true);//设置标题字体/大小/加粗
-        $objPHPExcel->getActiveSheet()->mergeCells('A2:I2');//合并单元格
-        $objPHPExcel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
-        $objPHPExcel->getActiveSheet()->getStyle('I')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
-        $objPHPExcel->getActiveSheet()->getStyle('I3')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//设置单元格水平居中
-        $objPHPExcel->getActiveSheet()->getStyle('A3:I8')->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
-        $objSheet->setCellValue("A1",date("m",$data[1]['et_date'])."月镀膜入出库")->setCellValue("A2","报告生成时间:".date("Y-m-d H:i:s",time()))->setCellValue("A3","ID")->setCellValue("B3","入库型号")->setCellValue("C3","入库日期")->setCellValue("D3","入库数量")
-                ->setCellValue("E3","操作人")->setCellValue("F3","入库担当")->setCellValue("G3","创建时间")->setCellValue("H3","修改时间")
-                ->setCellValue("I3","备注");
-        $j=4;
-        foreach($data1 as $key=>$val){
-            $objSheet->setCellValue("A".$j,$val['id'])->setCellValue("B".$j,$val['et_model'])->setCellValue("C".$j,date("Y-m-d",$val['et_date']))->setCellValue("D".$j,$val['et_num'])
-                    ->setCellValue("E".$j,$val['create_user'])->setCellValue("F".$j,$val['md_user'])->setCellValue("G".$j,date("Y-m-d H:i:s",$val['create_time']))->setCellValue("H".$j,date("Y-m-d H:i:s",$val['update_time']))
-                    ->setCellValue("I".$j,$val['tips']);
-            $j++;
+        $objSheet->mergeCells('A1:AH1');//合并单元格
+        $objSheet->getRowDimension('1')->setRowHeight(30);//设置标题行高
+        $objSheet->getRowDimension('3')->setRowHeight(20);//设置标题行高
+        $objSheet->getRowDimension('4')->setRowHeight(20);//设置标题行高
+        $objSheet->getColumnDimension('A')->setWidth('13');//设置列宽
+        $objSheet->getColumnDimension('B')->setWidth('11');//设置列宽
+        $objSheet->getColumnDimension('C:Z')->setWidth('10');
+        $objSheet->getColumnDimension('AA')->setWidth('10');
+        $objSheet->getColumnDimension('AB')->setWidth('10');
+        $objSheet->getColumnDimension('AC')->setWidth('10');
+        $objSheet->getColumnDimension('AD')->setWidth('10');
+        $objSheet->getColumnDimension('AE')->setWidth('10');
+        $objSheet->getColumnDimension('AF')->setWidth('10');
+        $objSheet->getColumnDimension('AG')->setWidth('15');
+        $objSheet->getColumnDimension('AH')->setWidth('15');
+        $objSheet->getStyle('A1')->getFont()->setName('宋体')->setSize(16)->setBold(true);//设置标题字体/大小/加粗
+        $objSheet->mergeCells('A2:D2');//合并单元格-报告生成时间
+        $objSheet->mergeCells('A3:A4');//合并单元格-型号
+        $objSheet->mergeCells('B3:B4');//合并单元格-型号
+        $objSheet->mergeCells('C3:AG3');//合并单元格-月间统计标题
+        $objSheet->mergeCells('AH3:AH4');//合并单元格-合计
+        $objSheet->mergeCells('AI3:AI4');//合并单元格-备注
+        $objSheet->getStyle('A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
+        $objSheet->getStyle('AI')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
+        $objSheet->getStyle('AI3')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//设置单元格水平居中
+        $objSheet->getStyle('A3:AI15')->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
+        $objSheet->getStyle('A1:AI2')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
+        $objSheet->getStyle('A1:AI2')->getFill()->getStartColor()->setARGB('FFFFFF');
+        $objSheet->getStyle('A3:AI4')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
+        $objSheet->getStyle('A3:AI4')->getFill()->getStartColor()->setARGB('B0C4DE');
+        $objSheet->setCellValue("A1",date("m",$data[1][1][1]['month'])."月镀膜入出库")->setCellValue("A2","报告生成时间:".date("Y-m-d H:i:s",time()))->setCellValue("A3","型号")
+                ->setCellValue("B3","分类")->setCellValue("C3","月间明细")->setCellValue("AH3","合计")->setCellValue("AI3","备注")->setCellValue("C4","1")->setCellValue("D4","2")
+                ->setCellValue("E4","3")->setCellValue("F4","4")->setCellValue("G4","5")->setCellValue("H4","6")->setCellValue("I4","7")->setCellValue("J4","8")
+                ->setCellValue("K4","9")->setCellValue("L4","10")->setCellValue("M4","11")->setCellValue("N4","12")->setCellValue("O4","13")->setCellValue("P4","14")
+                ->setCellValue("Q4","15")->setCellValue("R4","16")->setCellValue("S4","17")->setCellValue("T4","18")->setCellValue("U4","19")->setCellValue("V4","20")
+                ->setCellValue("W4","21")->setCellValue("X4","22")->setCellValue("Y4","23")->setCellValue("Z4","24")->setCellValue("AA4","25")->setCellValue("AB4","26")
+                ->setCellValue("AC4","27")->setCellValue("AD4","28")->setCellValue("AE4","29")->setCellValue("AF4","30")->setCellValue("AG4","31");
+        $j=5;
+        foreach($data as $k=>$v){
+            $cellsdata = "A".$j.":A".($j+3);
+            $objSheet->mergeCells($cellsdata);
+            $objSheet->setCellValue('A'.$j,$k)
+                ->setCellValue("B".$j,"前日在库")->setCellValue("B".($j+1),"入库数量")
+                ->setCellValue("B".($j+2),"镀膜数量")->setCellValue("B".($j+3),"在库数量");
+            $j = $j + 4;
         }
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,"Excel2007");
-        $objWriter->save("./upload/export/".date("m",$val['et_date'])."-CCD Lens Enter&Coating-".date("YmdHis",time()).".xlsx");
+        $objWriter->save("./upload/export/".date("m",$val['et_date'])."-CCD Lens Enter&Coating-".getLoginUsername().time().".xlsx");
     }
 }

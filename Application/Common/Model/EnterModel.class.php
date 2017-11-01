@@ -107,19 +107,64 @@ class EnterModel extends Model {
 		return $res;
     }
     //导出镀膜入出库
-    public function exportEnterForExcel() {
-        $starttime=mktime(0,0,0,date("m"),1,date("Y"));
-        $nowtime = time();
-        $field = array(
+    public function getLastMonthData() {
+        $lastmonthstart = mktime(0, 0, 0, date('m', strtotime('-1 month')), 1, date("Y"));
+        $lastmonthend = mktime(0, 0, 0, date('m', strtotime('0 month')), 1, date("Y"))-1;
+        //-1月入库列表
+        $etfield = array(
 			'status' => array('eq',1),
-			'et_date' => array('between',array($starttime,$nowtime)),
+			'et_date' => array('between',array($lastmonthstart,$lastmonthend)),
 		);
-        $field2 = array(
+        $etdata =  $this->_db->where($etfield)->field("et_model AS model,SUM(et_num) AS etnum,FROM_UNIXTIME(et_date,'%m') AS month,FROM_UNIXTIME(et_date,'%e') AS day")->order('model asc')->group('model')->distinct(true)->select();
+        //-1月镀膜列表
+        $ctfield = array(
 			'status' => array('eq',1),
-			'ct_date' => array('between',array($starttime,$nowtime)),
+			'ct_date' => array('between',array($lastmonthstart,$lastmonthend)),
 		);
-        $data =  M('enter')->where($field)->field('et_model AS model,SUM(et_num) AS num,et_date AS date')->order('model asc')->group('model,date')->distinct(true)->select();
-        $data2 =  M('Coating')->where($field2)->field('ct_model AS model,SUM(ct_num) AS num,ct_date AS date')->order('model asc')->group('model,date')->distinct(true)->select();
-        return $data2;
+        $ctdata =  M('coating')->where($ctfield)->field("ct_model AS model,SUM(ct_num) AS ctnum,FROM_UNIXTIME(ct_date,'%m') AS month,FROM_UNIXTIME(ct_date,'%e') AS day")->order('model asc')->group('model')->distinct(true)->select();
+        
+        //-2月最后在库列表查询
+        $date1 = mktime(0, 0, 0, date('m', strtotime('-2 month')), 1, date("Y"));
+        $date2 = mktime(0, 0, 0, date('m', strtotime('-1 month')), 1, date("Y"))-1;
+        //-2月入库列表
+		$enterdata = $this->_db->where(array('status'=>array('eq',1),'et_date'=>array('between',array($date1,$date2)),))
+        ->field('et_model AS model,SUM(et_num) AS num')->order('model asc')->group('model')->distinct(true)->select();
+        //-2月镀膜列表
+		$coatingdata = M('coating')->where(array('status'=>array('eq',1),'ct_date'=>array('between',array($date1,$date2)),))
+        ->field('ct_model AS model,SUM(ct_num) AS num')->order('model asc')->group('model')->distinct(true)->select();
+        
+		$diffmodel = array_values(array_unique(array_merge(array_column($enterdata,'model'),array_column($coatingdata,'model'))));
+		$diffcount = count($diffmodel);
+		foreach($enterdata as $key => $value){
+			$arr1[] = $value['model'];
+		}
+		foreach($coatingdata as $key => $value){
+			$arr2[] = $value['model'];
+		}
+		$arr = array();
+		for($i=0;$i<$diffcount;$i++){
+			if($diffmodel[$i]== $enterdata[array_search($diffmodel[$i],$arr1)]['model']){
+				if($enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num']!=0){
+					$arr[$i]['model'] = $diffmodel[$i];
+					$arr[$i]['conum'] = $enterdata[array_search($diffmodel[$i],$arr1)]['num'] - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
+                    $arr[$i]['month'] = date("n", $date2);
+                    $arr[$i]['day'] = date("j", $date2);
+				}
+			}else{
+				$arr[$i]['model'] = $diffmodel[$i];
+				$arr[$i]['conum'] = 0 - $coatingdata[array_search($diffmodel[$i],$arr2)]['num'];
+                $arr[$i]['month'] = date("n", $date2);
+                $arr[$i]['day'] = date("j", $date2);
+			}
+		}
+ 
+        $result = array_merge($etdata,$ctdata,$arr);
+        $modelist = count($result);
+        
+        $res = array();
+        foreach ($result as $k => $v) {
+            $res[$v['model']][$v['month']][$v['day']][] = $v;
+        }
+        return $res;
     }
 }
