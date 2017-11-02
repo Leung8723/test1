@@ -12,7 +12,7 @@ class AdminModel extends Model {
 		$this->_db = M('admin');
 	}
     //根据用户名查找
-    public function getAdminByUsername($username='') {
+    public function getAdminByUsername($username) {
         $res = $this->_db->where('username="'.$username.'"')->find();
         return $res;
     }

@@ -23,6 +23,44 @@ CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `sekonix`;
 
 -- --------------------------------------------------------
+DROP TABLE IF EXISTS `sk_admin`;
+CREATE TABLE IF NOT EXISTS `sk_admin` (
+  `admin_id` mediumint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `realname` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '89ca2407297cff2751bbef6eda6593f0',
+  `mobile` varchar(11) DEFAULT NULL,
+  `skline` varchar(6) DEFAULT NULL,
+  `email` varchar(40) DEFAULT NULL,
+  `power` smallint(5) NOT NULL,
+  `lastlogintime` int(10) DEFAULT NULL,
+  `lastloginip` varchar(15) DEFAULT NULL,
+  `create_user` varchar(20) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- 插入之前先把表清空（truncate） `sk_admin`
+--
+
+TRUNCATE TABLE `sk_admin`;
+--
+-- 转存表中的数据 `sk_admin`
+--
+
+INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1509151828, NULL, '梁国成', 1498696655, 1, 1509160756),
+(2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1509091604, NULL, '梁国成', 1498696655, 1, 1508463422),
+(3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 0, 1508218276),
+(4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218153),
+(5, 'zhaoxiangren', '赵向仁', '89ca2407297cff2751bbef6eda6593f0', '18663159117', '191', 'fuqiang.619@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218263),
+(6, 'dongjunchao', '董君超', '89ca2407297cff2751bbef6eda6593f0', '', '193', '', 1, NULL, NULL, '梁国成', 1508218074, 0, NULL),
+(7, 'liangshuangjun', '梁双俊', 'd4c04e5eb37a01f8c13f5aac0720ef56', '13563181918', '191', '', 1, 1508491014, NULL, '梁国成', 1508490709, 0, NULL),
+(8, 'addaj', 'jjjjjj', '42df9593076b552f8bb1e66361bc4843', '1800630324', '199', 'jason.leung@163.com', 1, NULL, NULL, '梁国成', 1509013359, 0, NULL);
+
 
 --
 -- 表的结构 `sk_check`

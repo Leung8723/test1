@@ -237,12 +237,25 @@ class EnterController extends CommonController {
         $objSheet = $objPHPExcel->getActiveSheet();
         $objSheet->setTitle("日间现况");
         $data = D("Enter")->getLastMonthData();
+        //遍历所有数据
+        $res = array();
+        foreach($data as $a=>$b){
+            foreach($b as $c=>$d){
+                foreach($d as $e=>$f){
+                    foreach($f as $g=>$h){
+                        $res[]=$h;
+                    }
+                }
+            }
+        }
+
+        
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//全局水平居中
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);//全局垂直居中
         $objSheet->mergeCells('A1:AH1');//合并单元格
-        $objSheet->getRowDimension('1')->setRowHeight(30);//设置标题行高
-        $objSheet->getRowDimension('3')->setRowHeight(20);//设置标题行高
-        $objSheet->getRowDimension('4')->setRowHeight(20);//设置标题行高
+        $objSheet->getRowDimension('A1:AI1')->setRowHeight(30);//设置标题行高
+        $objSheet->getRowDimension('A3:AI3')->setRowHeight(20);//设置标题行高
+        $objSheet->getRowDimension('A4:AI4')->setRowHeight(20);//设置标题行高
         $objSheet->getColumnDimension('A')->setWidth('13');//设置列宽
         $objSheet->getColumnDimension('B')->setWidth('11');//设置列宽
         $objSheet->getColumnDimension('C:Z')->setWidth('10');
@@ -252,8 +265,9 @@ class EnterController extends CommonController {
         $objSheet->getColumnDimension('AD')->setWidth('10');
         $objSheet->getColumnDimension('AE')->setWidth('10');
         $objSheet->getColumnDimension('AF')->setWidth('10');
-        $objSheet->getColumnDimension('AG')->setWidth('15');
+        $objSheet->getColumnDimension('AG')->setWidth('10');
         $objSheet->getColumnDimension('AH')->setWidth('15');
+        $objSheet->getColumnDimension('AI')->setWidth('15');
         $objSheet->getStyle('A1')->getFont()->setName('宋体')->setSize(16)->setBold(true);//设置标题字体/大小/加粗
         $objSheet->mergeCells('A2:D2');//合并单元格-报告生成时间
         $objSheet->mergeCells('A3:A4');//合并单元格-型号
@@ -264,18 +278,21 @@ class EnterController extends CommonController {
         $objSheet->getStyle('A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
         $objSheet->getStyle('AI')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);//设置单元格左对齐
         $objSheet->getStyle('AI3')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//设置单元格水平居中
-        $objSheet->getStyle('A3:AI15')->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
+        
         $objSheet->getStyle('A1:AI2')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
         $objSheet->getStyle('A1:AI2')->getFill()->getStartColor()->setARGB('FFFFFF');
         $objSheet->getStyle('A3:AI4')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
         $objSheet->getStyle('A3:AI4')->getFill()->getStartColor()->setARGB('B0C4DE');
-        $objSheet->setCellValue("A1",date("m",$data[1][1][1]['month'])."月镀膜入出库")->setCellValue("A2","报告生成时间:".date("Y-m-d H:i:s",time()))->setCellValue("A3","型号")
+        
+        $objSheet->setCellValue("A1",$res[0]['month']."月镀膜入出库")->setCellValue("A2","报告生成时间:".date("Y-m-d H:i:s",time()))->setCellValue("A3","型号")
                 ->setCellValue("B3","分类")->setCellValue("C3","月间明细")->setCellValue("AH3","合计")->setCellValue("AI3","备注")->setCellValue("C4","1")->setCellValue("D4","2")
                 ->setCellValue("E4","3")->setCellValue("F4","4")->setCellValue("G4","5")->setCellValue("H4","6")->setCellValue("I4","7")->setCellValue("J4","8")
                 ->setCellValue("K4","9")->setCellValue("L4","10")->setCellValue("M4","11")->setCellValue("N4","12")->setCellValue("O4","13")->setCellValue("P4","14")
                 ->setCellValue("Q4","15")->setCellValue("R4","16")->setCellValue("S4","17")->setCellValue("T4","18")->setCellValue("U4","19")->setCellValue("V4","20")
                 ->setCellValue("W4","21")->setCellValue("X4","22")->setCellValue("Y4","23")->setCellValue("Z4","24")->setCellValue("AA4","25")->setCellValue("AB4","26")
                 ->setCellValue("AC4","27")->setCellValue("AD4","28")->setCellValue("AE4","29")->setCellValue("AF4","30")->setCellValue("AG4","31");
+        // $a = \PHPExcel_Cell::columnIndexFromString($objSheet->getHighestColumn());
+        // print_r($a);exit;
         $j=5;
         foreach($data as $k=>$v){
             $cellsdata = "A".$j.":A".($j+3);
@@ -283,9 +300,66 @@ class EnterController extends CommonController {
             $objSheet->setCellValue('A'.$j,$k)
                 ->setCellValue("B".$j,"前日在库")->setCellValue("B".($j+1),"入库数量")
                 ->setCellValue("B".($j+2),"镀膜数量")->setCellValue("B".($j+3),"在库数量");
+            /*   //表格边框              
+            $bordercells = "A".($j-2).":AI".($j+3);
+            $styleArray = array(
+                'borders' => array(
+                    'outline' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    ),
+                ),
+            );
+            $objSheet->getStyle($bordercells)->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
+            
+            for($i=0;$i<4;$i++){
+                if($i=0){
+                    $borderline1 = "A".($j+$i-1).":AI".($j+$i-1);
+                    $borderline2 = "A".($j+$i-2).":AI".($j+$i-2);
+                    $objSheet->getStyle($borderline1)->applyFromArray($styleArray);
+                    $objSheet->getStyle($borderline2)->applyFromArray($styleArray);
+                }
+                $borderline3 = "A".($j+$i).":AI".($j+$i);
+                $objSheet->getStyle($borderline3)->applyFromArray($styleArray);
+            }
+            // $objSheet->getStyle($bordercells)->applyFromArray($styleArray);
+             */
             $j = $j + 4;
         }
+        // $objSheet->setCellValueByColumnAndRow(2,5,"1");
+        // $objSheet->setCellValueByColumnAndRow(2,6,"2");
+        // $objSheet->setCellValueByColumnAndRow(2,7,"3");
+        // $objSheet->setCellValueByColumnAndRow(2,8,"4");
+ /*        
+        $f=5;
+        foreach($data as $ke=>$va){
+
+            //写入数据
+            $datanum = count($res);
+            for($i=0;$i<$datanum;$i++){
+                if($res[$i]['model']=$ke){
+                    if(!$res[$i]['conum']){
+                        $lastday = $objSheet->getCellByColumnAndRow($res[$i]['day'],$f+3);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day'],$f+3,$lastday);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+1,$res[$i]['etnum']);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+2,$res[$i]['ctnum']);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+3,$res[$i]['conum']+$res[$i]['etnum']-$res[$i]['ctnum']);
+                    }else{
+                        $objSheet->setCellValueByColumnAndRow(2,$f,$res[$i]['conum']);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+1,$res[$i]['etnum']);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+2,$res[$i]['ctnum']);
+                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+3,$res[$i]['conum']+$res[$i]['etnum']-$res[$i]['ctnum']);
+                    }
+                }
+            $f = $f+4;
+            }
+        }
+*/
+        $lastday = $objSheet->getCellByColumnAndRow($res[0]['day'],8);
+        $objSheet->setCellValueByColumnAndRow(10,6,$lastday);
+        // print_r($lastday);exit;
+        
+        
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,"Excel2007");
-        $objWriter->save("./upload/export/".date("m",$val['et_date'])."-CCD Lens Enter&Coating-".getLoginUsername().time().".xlsx");
+        $objWriter->save("./upload/export/".$res[0]['month']."-CCD Lens Enter&Coating-".getLoginUsername().time().".xlsx");
     }
 }
