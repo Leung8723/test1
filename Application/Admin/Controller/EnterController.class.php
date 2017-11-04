@@ -248,7 +248,6 @@ class EnterController extends CommonController {
                 }
             }
         }
-
         
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//全局水平居中
         $objPHPExcel->setActiveSheetIndex()->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);//全局垂直居中
@@ -291,15 +290,15 @@ class EnterController extends CommonController {
                 ->setCellValue("Q4","15")->setCellValue("R4","16")->setCellValue("S4","17")->setCellValue("T4","18")->setCellValue("U4","19")->setCellValue("V4","20")
                 ->setCellValue("W4","21")->setCellValue("X4","22")->setCellValue("Y4","23")->setCellValue("Z4","24")->setCellValue("AA4","25")->setCellValue("AB4","26")
                 ->setCellValue("AC4","27")->setCellValue("AD4","28")->setCellValue("AE4","29")->setCellValue("AF4","30")->setCellValue("AG4","31");
-        // $a = \PHPExcel_Cell::columnIndexFromString($objSheet->getHighestColumn());
-        // print_r($a);exit;
         $j=5;
+        $datanum = count($res);
         foreach($data as $k=>$v){
             $cellsdata = "A".$j.":A".($j+3);
             $objSheet->mergeCells($cellsdata);
             $objSheet->setCellValue('A'.$j,$k)
                 ->setCellValue("B".$j,"前日在库")->setCellValue("B".($j+1),"入库数量")
                 ->setCellValue("B".($j+2),"镀膜数量")->setCellValue("B".($j+3),"在库数量");
+
             /*   //表格边框              
             $bordercells = "A".($j-2).":AI".($j+3);
             $styleArray = array(
@@ -325,40 +324,39 @@ class EnterController extends CommonController {
              */
             $j = $j + 4;
         }
-        // $objSheet->setCellValueByColumnAndRow(2,5,"1");
-        // $objSheet->setCellValueByColumnAndRow(2,6,"2");
-        // $objSheet->setCellValueByColumnAndRow(2,7,"3");
-        // $objSheet->setCellValueByColumnAndRow(2,8,"4");
- /*        
-        $f=5;
-        foreach($data as $ke=>$va){
 
-            //写入数据
-            $datanum = count($res);
+        $datacount = count($data);
+        $datamodel = array();
+        foreach($data as $key=>$val){
+            $datamodel[]=$key;
+        }
+        for($s=1;$s<=$datacount;$s++){
             for($i=0;$i<$datanum;$i++){
-                if($res[$i]['model']=$ke){
-                    if(!$res[$i]['conum']){
-                        $lastday = $objSheet->getCellByColumnAndRow($res[$i]['day'],$f+3);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day'],$f+3,$lastday);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+1,$res[$i]['etnum']);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+2,$res[$i]['ctnum']);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+3,$res[$i]['conum']+$res[$i]['etnum']-$res[$i]['ctnum']);
-                    }else{
-                        $objSheet->setCellValueByColumnAndRow(2,$f,$res[$i]['conum']);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+1,$res[$i]['etnum']);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+2,$res[$i]['ctnum']);
-                        $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,$f+3,$res[$i]['conum']+$res[$i]['etnum']-$res[$i]['ctnum']);
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['conum']){
+                    $objSheet->setCellValueByColumnAndRow(2,($s*4+1),$res[$i]['conum']);
+                }elseif($res[$i]['model']==$datamodel[$s-1] && !$res[$i]['conum']){
+                    $last = $objSheet->getCellByColumnAndRow($res[$i]['day'],($s*4+4))->getValue();
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+1),$last);
+                }
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['etnum']){
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+2),$res[$i]['etnum']);
+                }
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['ctnum']){
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+3),$res[$i]['ctnum']);
+                }
+                if($res[$i]['model']==$datamodel[$s-1]){
+                    for($d=1;$d<32;$d++){
+                        $last = $objSheet->getCellByColumnAndRow($d,($s*4+4))->getValue();
+                        $objSheet->setCellValueByColumnAndRow($d+1,($s*4+1),$last);
+                        $conum = $objSheet->getCellByColumnAndRow($d+1,($s*4+1))->getValue();
+                        $etnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+2))->getValue();
+                        $ctnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+3))->getValue();
+                        $objSheet->setCellValueByColumnAndRow($d+1,($s*4+4),($conum+$etnum-$ctnum));
                     }
                 }
-            $f = $f+4;
             }
         }
-*/
-        $lastday = $objSheet->getCellByColumnAndRow($res[0]['day'],8);
-        $objSheet->setCellValueByColumnAndRow(10,6,$lastday);
-        // print_r($lastday);exit;
-        
-        
+ 
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,"Excel2007");
         $objWriter->save("./upload/export/".$res[0]['month']."-CCD Lens Enter&Coating-".getLoginUsername().time().".xlsx");
     }

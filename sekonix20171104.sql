@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-11-01 11:30:08
+-- Generation Time: 2017-11-04 04:41:39
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,6 +23,11 @@ CREATE DATABASE IF NOT EXISTS `sekonix` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `sekonix`;
 
 -- --------------------------------------------------------
+
+--
+-- 表的结构 `sk_admin`
+--
+
 DROP TABLE IF EXISTS `sk_admin`;
 CREATE TABLE IF NOT EXISTS `sk_admin` (
   `admin_id` mediumint(6) unsigned NOT NULL AUTO_INCREMENT,
@@ -52,7 +57,7 @@ TRUNCATE TABLE `sk_admin`;
 --
 
 INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`, `skline`, `email`, `power`, `lastlogintime`, `lastloginip`, `create_user`, `create_time`, `status`, `update_time`) VALUES
-(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1509151828, NULL, '梁国成', 1498696655, 1, 1509160756),
+(1, 'jason', '梁国成', '89ca2407297cff2751bbef6eda6593f0', '18006303246', '193', 'jason.leung@163.com', 1, 1509604690, NULL, '梁国成', 1498696655, 1, 1509160756),
 (2, 'dinglinying', '丁林英', '89ca2407297cff2751bbef6eda6593f0', '13021639593', '193', 'xxx@xx.xxx', 1, 1509091604, NULL, '梁国成', 1498696655, 1, 1508463422),
 (3, 'liuchaoqun', '刘超群', '89ca2407297cff2751bbef6eda6593f0', '13287855211', '193', '', 1, NULL, NULL, '梁国成', 1498696655, 0, 1508218276),
 (4, 'qiaojianhui', '乔建辉', '89ca2407297cff2751bbef6eda6593f0', '13869058483', '191', 'q-qjh@163.com', 1, NULL, NULL, '梁国成', 0, 0, 1508218153),
@@ -61,6 +66,7 @@ INSERT INTO `sk_admin` (`admin_id`, `username`, `realname`, `password`, `mobile`
 (7, 'liangshuangjun', '梁双俊', 'd4c04e5eb37a01f8c13f5aac0720ef56', '13563181918', '191', '', 1, 1508491014, NULL, '梁国成', 1508490709, 0, NULL),
 (8, 'addaj', 'jjjjjj', '42df9593076b552f8bb1e66361bc4843', '1800630324', '199', 'jason.leung@163.com', 1, NULL, NULL, '梁国成', 1509013359, 0, NULL);
 
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `sk_check`
@@ -145,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `sk_coating` (
   `update_time` int(10) DEFAULT NULL,
   `tips` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=32 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_coating`
@@ -186,7 +192,8 @@ INSERT INTO `sk_coating` (`id`, `ct_model`, `ct_machine`, `ct_date`, `ct_lot`, `
 (27, 'MV1419L2-20', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 1, 1509067485, NULL, ''),
 (28, 'MV1419L2-13', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 1, 1509067485, 1509152425, '000102'),
 (29, 'AM1663L1-1', 1, 1509033600, '171024A01', '宋晓科', 1509067440, NULL, 1, '梁国成', NULL, NULL, NULL, 0, 1509067485, NULL, ''),
-(30, 'SK0544L1-1', 2, 1506700800, 'BBB', '宋晓科', 1509525840, NULL, 1000, '梁国成', NULL, NULL, NULL, 1, 1509515122, NULL, '');
+(30, 'SK0544L1-1', 2, 1506700800, 'BBB', '宋晓科', 1509525840, NULL, 1000, '梁国成', NULL, NULL, NULL, 1, 1509515122, NULL, ''),
+(31, 'MV1419L2-20', 1, 1506787200, 'A01', '马士友', 1509671040, NULL, 1120, '梁国成', NULL, NULL, NULL, 1, 1509671098, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -270,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `sk_enter` (
   `update_time` int(12) DEFAULT NULL,
   `tips` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=162 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=164 ;
 
 --
 -- 插入之前先把表清空（truncate） `sk_enter`
@@ -354,7 +361,9 @@ INSERT INTO `sk_enter` (`id`, `et_model`, `et_date`, `et_time`, `et_num`, `creat
 (158, 'AM1663L1-1', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, 1509152467, ''),
 (159, 'MV1419L2-13', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, NULL, ''),
 (160, 'MV1419L2-20', 1507801416, 1509009360, 1, '梁国成', '王云', 1, 1509009418, 1509152436, 'test2'),
-(161, 'SK0544L1-1', 1506700800, 1509515040, 2000, '梁国成', '王云', 1, 1509515090, NULL, '');
+(161, 'SK0544L1-1', 1506700800, 1509515040, 2000, '梁国成', '王云', 1, 1509515090, NULL, ''),
+(162, 'MV1419L2-20', 1506787200, 1509671040, 1120, '梁国成', '王云', 1, 1509671079, NULL, ''),
+(163, 'MV1419L2-20', 1506700800, 1509671100, 1120, '梁国成', '王云', 1, 1509671158, NULL, '');
 
 -- --------------------------------------------------------
 
