@@ -290,7 +290,9 @@ class EnterController extends CommonController {
                 ->setCellValue("Q4","15")->setCellValue("R4","16")->setCellValue("S4","17")->setCellValue("T4","18")->setCellValue("U4","19")->setCellValue("V4","20")
                 ->setCellValue("W4","21")->setCellValue("X4","22")->setCellValue("Y4","23")->setCellValue("Z4","24")->setCellValue("AA4","25")->setCellValue("AB4","26")
                 ->setCellValue("AC4","27")->setCellValue("AD4","28")->setCellValue("AE4","29")->setCellValue("AF4","30")->setCellValue("AG4","31");
+        //表格顶部&左侧标题
         $j=5;
+        $datacount = count($data);
         $datanum = count($res);
         foreach($data as $k=>$v){
             $cellsdata = "A".$j.":A".($j+3);
@@ -298,65 +300,63 @@ class EnterController extends CommonController {
             $objSheet->setCellValue('A'.$j,$k)
                 ->setCellValue("B".$j,"前日在库")->setCellValue("B".($j+1),"入库数量")
                 ->setCellValue("B".($j+2),"镀膜数量")->setCellValue("B".($j+3),"在库数量");
-
-            /*   //表格边框              
-            $bordercells = "A".($j-2).":AI".($j+3);
+            $j = $j + 4;
+        }
+/*         
+        //表格边框 有问题
+        $objSheet->getStyle('A3:AI4')->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
+        for($i=5;$i<=($datacount*4+4);$i++){
+            $bordercells = "A".$i.":AI".$i+3;
             $styleArray = array(
                 'borders' => array(
                     'outline' => array(
                         'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                        'color' => array ('argb' => 'FF000000'),
                     ),
                 ),
             );
-            $objSheet->getStyle($bordercells)->getBorders()->getAllBorders()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
-            
-            for($i=0;$i<4;$i++){
-                if($i=0){
-                    $borderline1 = "A".($j+$i-1).":AI".($j+$i-1);
-                    $borderline2 = "A".($j+$i-2).":AI".($j+$i-2);
-                    $objSheet->getStyle($borderline1)->applyFromArray($styleArray);
-                    $objSheet->getStyle($borderline2)->applyFromArray($styleArray);
-                }
-                $borderline3 = "A".($j+$i).":AI".($j+$i);
-                $objSheet->getStyle($borderline3)->applyFromArray($styleArray);
-            }
-            // $objSheet->getStyle($bordercells)->applyFromArray($styleArray);
-             */
-            $j = $j + 4;
+            $objSheet->getStyle($bordercells)->applyFromArray($styleArray);
         }
-
-        $datacount = count($data);
+         */
+        
+        //表格内部数据写入
         $datamodel = array();
         foreach($data as $key=>$val){
             $datamodel[]=$key;
         }
         for($s=1;$s<=$datacount;$s++){
             for($i=0;$i<$datanum;$i++){
-                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['conum']){
-                    $objSheet->setCellValueByColumnAndRow(2,($s*4+1),$res[$i]['conum']);
-                }elseif($res[$i]['model']==$datamodel[$s-1] && !$res[$i]['conum']){
-                    $last = $objSheet->getCellByColumnAndRow($res[$i]['day'],($s*4+4))->getValue();
-                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+1),$last);
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['conum']){//型号相同&存在前日在库信息
+                    $objSheet->setCellValueByColumnAndRow(2,($s*4+1),$res[$i]['conum']);//在库信息填写到1日上月在库
+                }elseif($res[$i]['model']==$datamodel[$s-1] && !$res[$i]['conum']){//型号相同&不存在前日在库信息
+                    $last = $objSheet->getCellByColumnAndRow($res[$i]['day'],($s*4+4))->getValue();//获取当前日期前一天的在库数量
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+1),$last);//将获取到的数量赋值到前日在库上
                 }
-                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['etnum']){
-                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+2),$res[$i]['etnum']);
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['etnum']){//型号相同&存在入库信息
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+2),$res[$i]['etnum']);//将入库数量填入对应日期处
                 }
-                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['ctnum']){
-                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+3),$res[$i]['ctnum']);
+                if($res[$i]['model']==$datamodel[$s-1] && $res[$i]['ctnum']){//型号相同&存在镀膜信息
+                    $objSheet->setCellValueByColumnAndRow($res[$i]['day']+1,($s*4+3),$res[$i]['ctnum']);//将镀膜数量填入对应日期处
                 }
-                if($res[$i]['model']==$datamodel[$s-1]){
-                    for($d=1;$d<32;$d++){
-                        $last = $objSheet->getCellByColumnAndRow($d,($s*4+4))->getValue();
-                        $objSheet->setCellValueByColumnAndRow($d+1,($s*4+1),$last);
-                        $conum = $objSheet->getCellByColumnAndRow($d+1,($s*4+1))->getValue();
-                        $etnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+2))->getValue();
-                        $ctnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+3))->getValue();
-                        $objSheet->setCellValueByColumnAndRow($d+1,($s*4+4),($conum+$etnum-$ctnum));
+                if($res[$i]['model']==$datamodel[$s-1]){//仅型号相同
+                    for($d=1;$d<32;$d++){//自1日起遍历31日,前日在库和在库计算单元格
+                        $last = $objSheet->getCellByColumnAndRow($d,($s*4+4))->getValue();//取指定日期在库数量
+                        if(is_numeric($last)||$last==null){
+                            $objSheet->setCellValueByColumnAndRow($d+1,($s*4+1),$last);//将取得的数量赋值到下一日在库数量处
+                            $conum = $objSheet->getCellByColumnAndRow($d+1,($s*4+1))->getValue();//获取前日在库数
+                            $etnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+2))->getValue();//获取入库数
+                            $ctnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+3))->getValue();//获取镀膜数
+                            $objSheet->setCellValueByColumnAndRow($d+1,($s*4+4),($conum+$etnum-$ctnum));//计算当日在库数并赋值
+                        }
+                            $conum = $objSheet->getCellByColumnAndRow($d+1,($s*4+1))->getValue();//获取前日在库数
+                            $etnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+2))->getValue();//获取入库数
+                            $ctnum = $objSheet->getCellByColumnAndRow($d+1,($s*4+3))->getValue();//获取镀膜数
+                            $objSheet->setCellValueByColumnAndRow($d+1,($s*4+4),($conum+$etnum-$ctnum));//计算当日在库数并赋值
                     }
                 }
             }
         }
- 
+        //写入文件
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,"Excel2007");
         $objWriter->save("./upload/export/".$res[0]['month']."-CCD Lens Enter&Coating-".getLoginUsername().time().".xlsx");
     }
